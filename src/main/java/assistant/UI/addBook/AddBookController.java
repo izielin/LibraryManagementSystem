@@ -1,5 +1,6 @@
-package UI.addBook;
+package assistant.UI.addBook;
 
+import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -23,9 +24,12 @@ public class AddBookController implements Initializable {
     @FXML
     private JFXButton cancelButton;
 
+    //object of DatabaseHandler
+    DatabaseHandler databaseHandler;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        databaseHandler = new DatabaseHandler();
     }
 
     @FXML
