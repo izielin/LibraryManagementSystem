@@ -1,5 +1,6 @@
 package assistant.database;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class DatabaseHandler {
@@ -39,19 +40,42 @@ public class DatabaseHandler {
             } else {
                 // create book table
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
-                        + "	id varchar(200) primary key,"
-                        + "	title varchar(200),"
-                        + "	author varchar(200),"
-                        + "	publisher varchar(100),"
-                        + "	isAvail boolean default true"
+                        + "id varchar(200) primary key, "
+                        + "title varchar(200), "
+                        + "author varchar(200), "
+                        + "publisher varchar(100),"
+                        + "isAvail boolean default true"
                         + " )");
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage() + "--- setupDatabase");
-        } finally {
-
         }
+    }
 
+    public ResultSet execQuery(String query) {
+        // using to get data from db
+        ResultSet resultSet;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (SQLException e) {
+            System.out.println("Exception at execQuery:dataHandler" + e.getLocalizedMessage());
+            return null;
+        }
+        return resultSet;
+    }
+
+    public boolean execAction(String action){
+        // using to doing action in db for example insert data
+        try{
+            statement = connection.createStatement();
+            statement.execute(action);
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage(), "Error occurred", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Exception at execAction:dataHandler" + e.getLocalizedMessage());
+            return false;
+        }
     }
 
 }
