@@ -36,7 +36,7 @@ public class DatabaseHandler {
 
             // check if table already exist
             if (tables.next()) {
-                System.out.println("Table" + TABLE_NAME + " already exists. Ready for go!");
+                System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
             } else {
                 // create book table
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
@@ -44,7 +44,7 @@ public class DatabaseHandler {
                         + "title varchar(200), "
                         + "author varchar(200), "
                         + "publisher varchar(100),"
-                        + "isAvail boolean default true"
+                        + "isAvailable boolean default true"
                         + " )");
             }
         } catch (SQLException e) {

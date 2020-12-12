@@ -7,11 +7,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddBookController implements Initializable {
+    @FXML
+    private AnchorPane rootPane;
     @FXML
     private JFXTextField bookAuthorName;
     @FXML
@@ -31,7 +39,9 @@ public class AddBookController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         databaseHandler = new DatabaseHandler();
+        checkData();
     }
+
 
     @FXML
     private void addBook(ActionEvent actionEvent) {
@@ -55,12 +65,12 @@ public class AddBookController implements Initializable {
                 ")";
 
         System.out.println(action);
-        if ( databaseHandler.execAction(action)){
+        if (databaseHandler.execAction(action)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Book: " + title + "was successfully added to database");
             alert.showAndWait();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Something went wrong");
@@ -71,6 +81,22 @@ public class AddBookController implements Initializable {
 
     @FXML
     private void cancelAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        stage.close();
+    }
+
+
+    private void checkData() {
+        String query = "SELECT title FROM BOOK";
+        ResultSet resultSet = databaseHandler.execQuery(query);
+        try {
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                System.out.println(title);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
 

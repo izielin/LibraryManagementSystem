@@ -1,4 +1,5 @@
-package assistant.UI.addBook;
+package assistant.UI.listBook;
+
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,11 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class LibraryAssistant extends Application {
+public class BookListLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AddBook.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BookList.fxml"));
 
         Scene scene = new Scene(root);
 
