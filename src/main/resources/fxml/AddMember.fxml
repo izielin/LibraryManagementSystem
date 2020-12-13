@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.addBook.AddBookController">
+<AnchorPane fx:id="rootPane" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.addMember.AddMemberController">
    <children>
-      <VBox layoutX="242.0" layoutY="106.0" prefHeight="300.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="252.0" layoutY="116.0" prefHeight="416.0" prefWidth="652.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXTextField fx:id="bookTitle" focusColor="#1976d2" labelFloat="true" promptText="%bookTitle">
+            <JFXTextField fx:id="memberName" focusColor="#1976d2" labelFloat="true" promptText="%memberName">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" top="20.0" />
                </VBox.margin>
@@ -21,7 +21,7 @@
                   <Font size="13.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="bookID" focusColor="#1976d2" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="%bookID">
+            <JFXTextField fx:id="memberID" focusColor="#1976d2" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="%memberID">
                <font>
                   <Font size="13.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="bookAuthorName" focusColor="#1976d2" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="%bookAuthor">
+            <JFXTextField fx:id="memberMobile" focusColor="#1976d2" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="%memberMobile">
                <font>
                   <Font size="13.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="publishingCompanyName" focusColor="#1976d2" labelFloat="true" layoutX="10.0" layoutY="59.0" promptText="%publisher">
+            <JFXTextField fx:id="memberEmail" focusColor="#1976d2" labelFloat="true" layoutX="10.0" layoutY="59.0" promptText="%memberEmail">
                <font>
                   <Font size="13.0" />
                </font>
@@ -47,7 +47,7 @@
             </JFXTextField>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <JFXButton fx:id="saveButton" onAction="#addBook" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/AddBook.css" text="%buttonSave" />
+                  <JFXButton fx:id="saveButton" onAction="#addMember" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/AddBook.css" text="%buttonSave" />
                   <JFXButton fx:id="cancelButton" onAction="#cancelAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/AddBook.css" text="%buttonCancel">
                      <font>
                         <Font size="13.0" />

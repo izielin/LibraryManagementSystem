@@ -13,7 +13,8 @@ public class DatabaseHandler {
 
     public DatabaseHandler() {
         createConnection();
-        setupBookTable();
+        setupBookTable(); // create book table in db
+        setupMemberTable(); // create member table in db
     }
 
     void createConnection() {
@@ -22,6 +23,29 @@ public class DatabaseHandler {
             connection = DriverManager.getConnection(DB_URL); // creating connection
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    void setupMemberTable() {
+        String TABLE_NAME = "MEMBER";
+        try {
+            statement = connection.createStatement();
+
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+
+            if (tables.next()) {
+                System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
+            } else {
+                statement.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "	id varchar(200) primary key,\n"
+                        + "	name varchar(200),\n"
+                        + "	mobile varchar(15),\n"
+                        + "	email varchar(100)\n"
+                        + " )");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage() + " --- setupDatabase");
         }
     }
 

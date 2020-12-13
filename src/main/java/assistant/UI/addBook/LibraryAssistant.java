@@ -6,15 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 
 public class LibraryAssistant extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AddBook.fxml"));
-
+        Locale.setDefault(new Locale("de"));
+        ResourceBundle bundle = ResourceBundle.getBundle("MainBundle");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AddBook.fxml"), bundle);
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.show();
     }
