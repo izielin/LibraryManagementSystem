@@ -1,4 +1,5 @@
-package assistant.UI.listBook;
+package assistant.UI.memberList;
+
 
 
 import javafx.application.Application;
@@ -8,17 +9,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 
-public class BookListLoader extends Application {
+public class MemberListLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Locale.setDefault(new Locale("de"));
+        Locale.setDefault(new Locale("en"));
         ResourceBundle bundle = ResourceBundle.getBundle("MainBundle");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BookList.fxml"), bundle);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MemberList.fxml"), bundle);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

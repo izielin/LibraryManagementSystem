@@ -1,4 +1,4 @@
-package assistant.UI.listBook;
+package assistant.UI.bookList;
 
 import assistant.database.DatabaseHandler;
 import javafx.beans.property.SimpleBooleanProperty;
