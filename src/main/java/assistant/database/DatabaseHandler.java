@@ -15,6 +15,7 @@ public class DatabaseHandler {
         createConnection();
         setupBookTable(); // create book table in db
         setupMemberTable(); // create member table in db
+        setupCheckOutTable(); // create check out table
     }
 
     public static DatabaseHandler getInstance() {
@@ -40,14 +41,17 @@ public class DatabaseHandler {
             ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
 
             if (tables.next()) {
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
+                System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
             } else {
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
-                        + "	id varchar(200) primary key,\n"
-                        + "	name varchar(200),\n"
-                        + "	mobile varchar(15),\n"
-                        + "	email varchar(100)\n"
-                        + " )");
+                        + "id varchar(200) primary key,\n"
+                        + "name varchar(200),\n"
+                        + "mobile varchar(15),\n"
+                        + "email varchar(100)\n"
+                        + ")");
+
+                System.out.println("Table " + TABLE_NAME + " was successfully created!");
+
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage() + " --- setupDatabase");
@@ -75,9 +79,39 @@ public class DatabaseHandler {
                         + "publisher varchar(100),"
                         + "isAvailable boolean default true"
                         + " )");
+
+                System.out.println("Table " + TABLE_NAME + " was successfully created!");
+
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage() + "--- setupDatabase");
+        }
+    }
+
+    void setupCheckOutTable() {
+        String TABLE_NAME = "CHECK_OUT";
+        try {
+
+            statement = connection.createStatement();
+            DatabaseMetaData metaData = connection.getMetaData();
+
+            ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+            if (tables.next()) {
+                System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
+            } else {
+                statement.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "bookID varchar(200) primary key,"
+                        + "memberID varchar(200),"
+                        + "checkOut timestamp default CURRENT_TIMESTAMP,"
+                        + "renew_count integer default 0,"
+                        + "FOREIGN KEY (bookID) REFERENCES BOOK(id),"
+                        + "FOREIGN KEY (memberID) REFERENCES MEMBER(id)"
+                        + " )");
+
+                System.out.println("Table " + TABLE_NAME + " was successfully created!");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage() + " --- setupDatabase");
         }
     }
 
