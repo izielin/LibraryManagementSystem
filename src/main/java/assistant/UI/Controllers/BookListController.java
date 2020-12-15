@@ -1,4 +1,4 @@
-package assistant.UI.bookList;
+package assistant.UI.Controllers;
 
 import assistant.database.DatabaseHandler;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -51,7 +51,7 @@ public class BookListController implements Initializable {
     }
 
     private void loadData() {
-        DatabaseHandler handler = new DatabaseHandler();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
         String query = "SELECT * FROM BOOK";
         ResultSet resultSet = handler.execQuery(query);
         try {

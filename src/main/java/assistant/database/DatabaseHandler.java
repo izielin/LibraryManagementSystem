@@ -4,17 +4,22 @@ import javax.swing.*;
 import java.sql.*;
 
 public class DatabaseHandler {
-    private static DatabaseHandler handler;
+    private static DatabaseHandler handler = null;
 
     private static final String DB_URL = "jdbc:derby:derbyDB;create=true"; // place where database will be create (folder name, if database not exist create one)
     private static Connection connection = null; // store connection between application and database
     private static Statement statement = null; // executing statement (create, delete)
     public String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 
-    public DatabaseHandler() {
+    private DatabaseHandler() {
         createConnection();
         setupBookTable(); // create book table in db
         setupMemberTable(); // create member table in db
+    }
+
+    public static DatabaseHandler getInstance() {
+        // creating one handler for all Controllers, in the first calling, new object will be creating and in the next one, existing object will be return
+        return (handler == null) ? handler = new DatabaseHandler() : handler;
     }
 
     void createConnection() {
@@ -89,9 +94,9 @@ public class DatabaseHandler {
         return resultSet;
     }
 
-    public boolean execAction(String action){
+    public boolean execAction(String action) {
         // using to doing action in db for example insert data
-        try{
+        try {
             statement = connection.createStatement();
             statement.execute(action);
             return true;

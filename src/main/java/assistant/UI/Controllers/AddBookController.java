@@ -1,4 +1,4 @@
-package assistant.UI.addMember;
+package assistant.UI.Controllers;
 
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXButton;
@@ -11,19 +11,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class AddMemberController implements Initializable {
+public class AddBookController implements Initializable {
     @FXML
     private AnchorPane rootPane;
     @FXML
-    private JFXTextField memberName;
+    private JFXTextField bookAuthorName;
     @FXML
-    private JFXTextField memberID;
+    private JFXTextField bookTitle;
     @FXML
-    private JFXTextField memberMobile;
+    private JFXTextField bookID;
     @FXML
-    private JFXTextField memberEmail;
+    private JFXTextField publishingCompanyName;
     @FXML
     private JFXButton saveButton;
     @FXML
@@ -34,40 +38,43 @@ public class AddMemberController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        databaseHandler = new DatabaseHandler();
+        databaseHandler = DatabaseHandler.getInstance();
+        checkData();
     }
 
-    public void addMember(ActionEvent actionEvent) {
-        String name = memberName.getText();
-        String id = memberID.getText();
-        String mobile = memberMobile.getText();
-        String email = memberEmail.getText();
 
-        if (id.isEmpty() || name.isEmpty() || mobile.isEmpty() || email.isEmpty()) {
+    @FXML
+    private void addBook(ActionEvent actionEvent) {
+        String id = bookID.getText();
+        String authorName = bookAuthorName.getText();
+        String title = bookTitle.getText();
+        String publisher = publishingCompanyName.getText();
+
+        if (id.isEmpty() || authorName.isEmpty() || title.isEmpty() || publisher.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Please enter data in all fields");
             alert.showAndWait();
         } else {
-            String action = "INSERT INTO MEMBER VALUES (" +
+            String action = "INSERT INTO BOOK VALUES (" +
                     "'" + id + "'," +
-                    "'" + name + "'," +
-                    "'" + mobile + "'," +
-                    "'" + email + "'" +
+                    "'" + title + "'," +
+                    "'" + authorName + "'," +
+                    "'" + publisher + "'," +
+                    "" + true + "" +
                     ")";
 
             System.out.println(action);
             if (databaseHandler.execAction(action)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);
-                alert.setContentText("Member: " + name + "was successfully added to database");
+                alert.setContentText("Book: " + title + "was successfully added to database");
                 alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setContentText("Something went wrong");
                 alert.showAndWait();
-
             }
         }
     }
@@ -77,4 +84,20 @@ public class AddMemberController implements Initializable {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
+
+
+    private void checkData() {
+        String query = "SELECT title FROM BOOK";
+        ResultSet resultSet = databaseHandler.execQuery(query);
+        try {
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                System.out.println(title);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+
 }

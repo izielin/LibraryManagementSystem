@@ -1,6 +1,5 @@
-package assistant.UI.memberList;
+package assistant.UI.Controllers;
 
-import assistant.UI.bookList.BookListController;
 import assistant.database.DatabaseHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -49,7 +48,7 @@ public class MemberListController implements Initializable {
     }
 
     private void loadData() {
-        DatabaseHandler handler = new DatabaseHandler();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
         String query = "SELECT * FROM MEMBER";
         ResultSet resultSet = handler.execQuery(query);
         try {
