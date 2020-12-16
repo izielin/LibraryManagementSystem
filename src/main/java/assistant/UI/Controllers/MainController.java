@@ -4,6 +4,7 @@ import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -186,7 +187,7 @@ public class MainController implements Initializable {
                 alertError.setContentText("Operation ended unsuccessfully");
                 alertError.showAndWait();
             }
-        } else{
+        } else {
             Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
             alertCancel.setTitle("Cancelled");
             alertCancel.setHeaderText(null);
@@ -270,6 +271,47 @@ public class MainController implements Initializable {
                     alertInfo.setTitle("Success");
                     alertInfo.setContentText("Operation ended successfully");
                     alertInfo.setHeaderText("Book has been Submitted");
+                    alertInfo.showAndWait();
+                } else {
+                    Alert alertError = new Alert(Alert.AlertType.ERROR);
+                    alertError.setTitle("Failed");
+                    alertError.setHeaderText(null);
+                    alertError.setContentText("Operation ended unsuccessfully");
+                    alertError.showAndWait();
+                }
+            } else {
+                Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
+                alertCancel.setTitle("Cancelled");
+                alertCancel.setHeaderText(null);
+                alertCancel.setContentText("Operation was cancelled");
+                alertCancel.showAndWait();
+            }
+        }
+    }
+
+    @FXML
+    private void loadRenewOperation() {
+        if (!isReadyForSubmission) {
+            Alert alertError = new Alert(Alert.AlertType.ERROR);
+            alertError.setTitle("Failed");
+            alertError.setHeaderText(null);
+            alertError.setContentText("Please select book to renew");
+            alertError.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm renew operation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to renew the book?");
+            Optional<ButtonType> response = alert.showAndWait();
+
+            if (response.orElse(null) == ButtonType.OK) {
+                String action = "UPDATE CHECK_OUT SET checkOut = CURRENT_TIMESTAMP, renew_count = renew_count+1 where bookID = '" + bookIdInput.getText() + "'";
+
+                if (databaseHandler.execAction(action)) {
+                    Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
+                    alertInfo.setTitle("Success");
+                    alertInfo.setContentText("Operation ended successfully");
+                    alertInfo.setHeaderText("Book has been successfully renewed");
                     alertInfo.showAndWait();
                 } else {
                     Alert alertError = new Alert(Alert.AlertType.ERROR);
