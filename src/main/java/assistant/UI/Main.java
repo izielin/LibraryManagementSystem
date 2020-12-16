@@ -21,7 +21,7 @@ public class Main  extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(new Locale("de"));
 
         Parent root = FXMLLoader.load(getClass().getResource(FXML_MAIN), getResourceBundle());
         Scene scene = new Scene(root);

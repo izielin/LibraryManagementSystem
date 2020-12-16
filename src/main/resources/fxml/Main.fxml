@@ -134,7 +134,7 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="149.0" prefWidth="645.0">
                                                     <children>
-                                                        <JFXButton buttonType="RAISED" onAction="#loadCheckOutOperation" prefWidth="120.0" stylesheets="@../css/mainStyles.css" text="%buttonCheckOut" textAlignment="CENTER">
+                                                        <JFXButton buttonType="RAISED" onAction="#executeCheckOutOperation" prefWidth="120.0" stylesheets="@../css/mainStyles.css" text="%buttonCheckOut" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -155,14 +155,14 @@
                                     <children>
                                         <BorderPane layoutX="344.0" layoutY="181.0" prefHeight="546.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <top>
-                                                <JFXTextField maxWidth="250.0" prefHeight="25.0" prefWidth="120.0" promptText="%enterBookID" BorderPane.alignment="CENTER">
+                                                <JFXTextField fx:id="bookIdInput" maxWidth="250.0" onAction="#loadBookCheckOut" prefHeight="25.0" prefWidth="120.0" promptText="%enterBookID" BorderPane.alignment="CENTER">
                                                     <BorderPane.margin>
                                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </BorderPane.margin>
                                                 </JFXTextField>
                                             </top>
                                             <center>
-                                                <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                <ListView fx:id="checkOutDataList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                                     <BorderPane.margin>
                                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </BorderPane.margin>

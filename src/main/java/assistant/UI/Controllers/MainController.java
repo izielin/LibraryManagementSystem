@@ -1,6 +1,9 @@
 package assistant.UI.Controllers;
 
 import assistant.database.DatabaseHandler;
+import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,7 +36,11 @@ public class MainController implements Initializable {
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
 
     @FXML
+    private ListView<String> checkOutDataList;
+    @FXML
     private TextField bookIDInput;
+    @FXML
+    private JFXTextField bookIdInput;
     @FXML
     private TextField memberIDInput;
     @FXML
@@ -148,7 +157,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void loadCheckOutOperation(ActionEvent actionEvent) {
+    private void executeCheckOutOperation(ActionEvent actionEvent) {
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
 
@@ -178,5 +187,52 @@ public class MainController implements Initializable {
                 alert.showAndWait();
             }
         }
+    }
+
+    @FXML
+    private void loadBookCheckOut(ActionEvent actionEvent) {
+        ObservableList<String> checkOutData = FXCollections.observableArrayList();
+
+        String id = bookIdInput.getText();
+        String query = "SELECT * FROM CHECK_OUT WHERE bookID = '" + id + "'";
+        ResultSet resultSet = databaseHandler.execQuery(query);
+
+        try {
+            while (resultSet.next()) {
+                String memberID = resultSet.getString("memberID");
+                Timestamp timestamp = resultSet.getTimestamp("checkOut");
+                int renewCount = resultSet.getInt("renew_count");
+
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.timestamp") +": " + timestamp.toGMTString());
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.renew") +": " + renewCount);
+
+                checkOutData.add("");
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.book")+": ");
+                query = "SELECT * FROM BOOK WHERE id = '" + id + "'";
+                ResultSet bookResultSet = databaseHandler.execQuery(query);
+
+                while (bookResultSet.next()) {
+                    checkOutData.add(getResourceBundle().getString("bookTitle") + ": " + bookResultSet.getString("title"));
+                    checkOutData.add(getResourceBundle().getString("bookID") + ": " + bookResultSet.getString("id"));
+                    checkOutData.add(getResourceBundle().getString("bookAuthor") + ": " + bookResultSet.getString("author"));
+                    checkOutData.add(getResourceBundle().getString("publisher") + ": " + bookResultSet.getString("publisher"));
+                }
+
+                checkOutData.add("");
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.member")+": ");
+                query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
+                ResultSet memberResultSet = databaseHandler.execQuery(query);
+                while (memberResultSet.next()) {
+                    checkOutData.add(getResourceBundle().getString("memberName") + ": " + memberResultSet.getString("name"));
+                    checkOutData.add(getResourceBundle().getString("memberMobile") + ": " + memberResultSet.getString("mobile"));
+                    checkOutData.add(getResourceBundle().getString("memberEmail") + ": " + memberResultSet.getString("email"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        checkOutDataList.getItems().setAll(checkOutData);
+
     }
 }
