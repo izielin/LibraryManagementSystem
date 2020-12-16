@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import static assistant.UI.Controllers.MainController.getResourceBundle;
 

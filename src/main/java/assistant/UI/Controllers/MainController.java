@@ -4,7 +4,6 @@ import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,6 +54,7 @@ public class MainController implements Initializable {
     private Text bookAuthor;
 
     DatabaseHandler databaseHandler;
+    boolean isReadyForSubmission = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,22 +66,22 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void loadAddMember(ActionEvent actionEvent) {
+    private void loadAddMember() {
         loadWindow(FXML_ADD_MEMBER);
     }
 
     @FXML
-    private void loadAddBook(ActionEvent actionEvent) {
+    private void loadAddBook() {
         loadWindow(FXML_ADD_BOOK);
     }
 
     @FXML
-    private void loadMemberTable(ActionEvent actionEvent) {
+    private void loadMemberTable() {
         loadWindow(FXML_LIST_MEMBER);
     }
 
     @FXML
-    private void loadBookTable(ActionEvent actionEvent) {
+    private void loadBookTable() {
         loadWindow(FXML_LIST_BOOK);
     }
 
@@ -98,9 +98,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void loadMemberInformation(ActionEvent actionEvent) {
-        String id = memberIDInput.getText();
-        String query = "SELECT * FROM MEMBER WHERE id = '" + id + "'";
+    private void loadMemberInformation() {
+        String memberID = memberIDInput.getText();
+        String query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
         ResultSet resultSet = databaseHandler.execQuery(query);
         boolean flag = false;
         try {
@@ -126,9 +126,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void loadBookInformation(ActionEvent actionEvent) {
-        String id = bookIDInput.getText();
-        String query = "SELECT * FROM BOOK WHERE id = '" + id + "'";
+    private void loadBookInformation() {
+        String bookID = bookIDInput.getText();
+        String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
         ResultSet resultSet = databaseHandler.execQuery(query);
         boolean flag = false;
         try {
@@ -157,7 +157,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void executeCheckOutOperation(ActionEvent actionEvent) {
+    private void executeCheckOutOperation() {
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
 
@@ -167,7 +167,7 @@ public class MainController implements Initializable {
         alert.setContentText("Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
 
         Optional<ButtonType> response = alert.showAndWait();
-        if (response.get() == ButtonType.OK) {
+        if (response.orElse(null) == ButtonType.OK) {
             String action = "INSERT INTO CHECK_OUT(memberID, bookID) VALUES( " +
                     "'" + memberID + "'," +
                     "'" + bookID + "')";
@@ -180,21 +180,28 @@ public class MainController implements Initializable {
                 alertInfo.setContentText("Operation ended successfully");
                 alertInfo.showAndWait();
             } else {
-                Alert alertError = new Alert(Alert.AlertType.INFORMATION);
+                Alert alertError = new Alert(Alert.AlertType.ERROR);
                 alertError.setTitle("Failed");
                 alertError.setHeaderText(null);
                 alertError.setContentText("Operation ended unsuccessfully");
-                alert.showAndWait();
+                alertError.showAndWait();
             }
+        } else{
+            Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
+            alertCancel.setTitle("Cancelled");
+            alertCancel.setHeaderText(null);
+            alertCancel.setContentText("Operation was cancelled");
+            alertCancel.showAndWait();
         }
     }
 
     @FXML
-    private void loadBookCheckOut(ActionEvent actionEvent) {
+    private void loadBookCheckOut() {
         ObservableList<String> checkOutData = FXCollections.observableArrayList();
+        isReadyForSubmission = false;
 
-        String id = bookIdInput.getText();
-        String query = "SELECT * FROM CHECK_OUT WHERE bookID = '" + id + "'";
+        String bookID = bookIdInput.getText();
+        String query = "SELECT * FROM CHECK_OUT WHERE bookID = '" + bookID + "'";
         ResultSet resultSet = databaseHandler.execQuery(query);
 
         try {
@@ -203,12 +210,12 @@ public class MainController implements Initializable {
                 Timestamp timestamp = resultSet.getTimestamp("checkOut");
                 int renewCount = resultSet.getInt("renew_count");
 
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.timestamp") +": " + timestamp.toGMTString());
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.renew") +": " + renewCount);
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.timestamp") + ": " + timestamp.toString());
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.renew") + ": " + renewCount);
 
                 checkOutData.add("");
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.book")+": ");
-                query = "SELECT * FROM BOOK WHERE id = '" + id + "'";
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.book") + ": ");
+                query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
                 ResultSet bookResultSet = databaseHandler.execQuery(query);
 
                 while (bookResultSet.next()) {
@@ -219,7 +226,7 @@ public class MainController implements Initializable {
                 }
 
                 checkOutData.add("");
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.member")+": ");
+                checkOutData.add(getResourceBundle().getString("checkOutDataList.member") + ": ");
                 query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
                 ResultSet memberResultSet = databaseHandler.execQuery(query);
                 while (memberResultSet.next()) {
@@ -227,6 +234,7 @@ public class MainController implements Initializable {
                     checkOutData.add(getResourceBundle().getString("memberMobile") + ": " + memberResultSet.getString("mobile"));
                     checkOutData.add(getResourceBundle().getString("memberEmail") + ": " + memberResultSet.getString("email"));
                 }
+                isReadyForSubmission = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
@@ -234,5 +242,49 @@ public class MainController implements Initializable {
 
         checkOutDataList.getItems().setAll(checkOutData);
 
+    }
+
+    @FXML
+    private void loadSubmissionOperation() {
+        if (!isReadyForSubmission) {
+            Alert alertError = new Alert(Alert.AlertType.ERROR);
+            alertError.setTitle("Failed");
+            alertError.setHeaderText(null);
+            alertError.setContentText("Please select book to submit");
+            alertError.showAndWait();
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm submission operation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to return the book?");
+            Optional<ButtonType> response = alert.showAndWait();
+
+            if (response.orElse(null) == ButtonType.OK) {
+                String bookID = bookIdInput.getText();
+                String actionDelete = "DELETE FROM CHECK_OUT WHERE bookID = '" + bookID + "'";
+                String actionUpdate = "UPDATE BOOK SET isAvailable = true WHERE id = '" + bookID + "'";
+
+                if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
+                    Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
+                    alertInfo.setTitle("Success");
+                    alertInfo.setContentText("Operation ended successfully");
+                    alertInfo.setHeaderText("Book has been Submitted");
+                    alertInfo.showAndWait();
+                } else {
+                    Alert alertError = new Alert(Alert.AlertType.ERROR);
+                    alertError.setTitle("Failed");
+                    alertError.setHeaderText(null);
+                    alertError.setContentText("Operation ended unsuccessfully");
+                    alertError.showAndWait();
+                }
+            } else {
+                Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
+                alertCancel.setTitle("Cancelled");
+                alertCancel.setHeaderText(null);
+                alertCancel.setContentText("Operation was cancelled");
+                alertCancel.showAndWait();
+            }
+        }
     }
 }
