@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="262.0" prefWidth="334.0" stylesheets="@../css/mainStyles.css"
+<AnchorPane fx:id="rootPane" prefHeight="262.0" prefWidth="334.0" stylesheets="@../css/mainStyles.css"
             xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111"
-            fx:controller="assistant.settings.SettingsController">
+            fx:controller="assistant.UI.Controllers.SettingsController">
     <children>
         <VBox prefHeight="219.0" prefWidth="334.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0">
@@ -41,8 +41,8 @@
         <HBox layoutX="-27.0" layoutY="237.0" prefHeight="43.0" prefWidth="334.0" AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <JFXButton onAction="#executeSaveButtonAction" prefHeight="100.0" prefWidth="200.0" text="%buttonSave"/>
-                <JFXButton onAction="#executeCancelButtonAction" prefHeight="100.0" prefWidth="200.0"
+                <JFXButton onAction="#executeSaveAction" prefHeight="100.0" prefWidth="200.0" text="%buttonSave"/>
+                <JFXButton onAction="#executeCancelAction" prefHeight="100.0" prefWidth="200.0"
                            text="%buttonCancel"/>
             </children>
         </HBox>

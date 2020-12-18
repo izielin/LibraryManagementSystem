@@ -10,14 +10,16 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Preferences {
+import static assistant.alert.AlertMaker.showSimpleAlert;
+
+public class Settings {
     public static final String CONFIG_FILE = "config.txt";
     int daysWithoutFee;
     double feePerDay;
     String username;
     String password;
 
-    public Preferences() {
+    public Settings() {
         daysWithoutFee = 14;
         feePerDay = 1.2;
         username = "admin";
@@ -60,31 +62,53 @@ public class Preferences {
         Writer writer = null;
         try {
             // creating default config & saving it to file
-            Preferences preferences = new Preferences();
+            Settings settings = new Settings();
             Gson gson = new Gson();
             writer = new FileWriter(CONFIG_FILE);
-            gson.toJson(preferences, writer);
+            gson.toJson(settings, writer);
         } catch (IOException e) {
-            Logger.getLogger(Preferences.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
                 Objects.requireNonNull(writer).close();
             } catch (IOException e) {
-                Logger.getLogger(Preferences.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
 
-    public static Preferences getPreferences() {
+    public static Settings getSettings() {
         Gson gson = new Gson();
-        Preferences preferences = new Preferences();
+        Settings settings = new Settings();
         try {
-            // reading default preferences from file
-            preferences = gson.fromJson(new FileReader(CONFIG_FILE), Preferences.class);
+            // reading default settings from file
+            settings = gson.fromJson(new FileReader(CONFIG_FILE), Settings.class);
         } catch (IOException e) {
             initConfig();
-            Logger.getLogger(Preferences.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, e);
         }
-        return preferences;
+        return settings;
+    }
+
+    public static void overWriteSettings(Settings settings){
+        Writer writer = null;
+        try {
+            // creating default config & saving it to file
+            Gson gson = new Gson();
+            writer = new FileWriter(CONFIG_FILE);
+            gson.toJson(settings, writer);
+
+            showSimpleAlert("information", "Success", "", "Setting Updated");
+
+        } catch (IOException e) {
+            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, e);
+            showSimpleAlert("error", "Error", "", "Can't save configuration file");
+        } finally {
+            try {
+                Objects.requireNonNull(writer).close();
+            } catch (IOException e) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
     }
 }

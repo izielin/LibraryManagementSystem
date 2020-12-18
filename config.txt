@@ -1,1 +1,1 @@
-{"daysWithoutFee":14,"feePerDay":1.2,"username":"admin","password":"admin"}
+{"daysWithoutFee":15,"feePerDay":1.2999999523162842,"username":"admin-02","password":"zaq1@WSX"}

@@ -37,7 +37,7 @@ public class AddMemberController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
     }
 
-    public void addMember(ActionEvent actionEvent) {
+    public void executeSaveAction(ActionEvent actionEvent) {
         String name = memberName.getText();
         String id = memberID.getText();
         String mobile = memberMobile.getText();
@@ -73,7 +73,7 @@ public class AddMemberController implements Initializable {
     }
 
     @FXML
-    private void cancelAction(ActionEvent actionEvent) {
+    private void executeCancelAction(ActionEvent actionEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }

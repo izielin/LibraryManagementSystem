@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static assistant.alert.AlertMaker.showSimpleAlert;
+
 
 public class MainController implements Initializable {
 
@@ -34,6 +36,7 @@ public class MainController implements Initializable {
     private static final String FXML_LIST_BOOK = "/fxml/BookList.fxml";
     private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
+    private static final String FXML_SETTINGS = "/fxml/Settings.fxml";
 
     @FXML
     private ListView<String> checkOutDataList;
@@ -84,6 +87,11 @@ public class MainController implements Initializable {
     @FXML
     private void loadBookTable() {
         loadWindow(FXML_LIST_BOOK);
+    }
+
+    @FXML
+    private void loadSettings() {
+        loadWindow(FXML_SETTINGS);
     }
 
     void loadWindow(String path) {
@@ -175,24 +183,12 @@ public class MainController implements Initializable {
             String action2 = "UPDATE BOOK SET isAvailable = false WHERE id = '" + bookID + "'";
 
             if (databaseHandler.execAction(action) && databaseHandler.execAction(action2)) {
-                Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
-                alertInfo.setTitle("Success");
-                alertInfo.setHeaderText(null);
-                alertInfo.setContentText("Operation ended successfully");
-                alertInfo.showAndWait();
+                showSimpleAlert("information", "Success", "", "Operation ended successfully");
             } else {
-                Alert alertError = new Alert(Alert.AlertType.ERROR);
-                alertError.setTitle("Failed");
-                alertError.setHeaderText(null);
-                alertError.setContentText("Operation ended unsuccessfully");
-                alertError.showAndWait();
+                showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
             }
         } else {
-            Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
-            alertCancel.setTitle("Cancelled");
-            alertCancel.setHeaderText(null);
-            alertCancel.setContentText("Operation was cancelled");
-            alertCancel.showAndWait();
+            showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
         }
     }
 
@@ -268,23 +264,12 @@ public class MainController implements Initializable {
 
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
                     Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
-                    alertInfo.setTitle("Success");
-                    alertInfo.setContentText("Operation ended successfully");
-                    alertInfo.setHeaderText("Book has been Submitted");
-                    alertInfo.showAndWait();
+                    showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
                 } else {
-                    Alert alertError = new Alert(Alert.AlertType.ERROR);
-                    alertError.setTitle("Failed");
-                    alertError.setHeaderText(null);
-                    alertError.setContentText("Operation ended unsuccessfully");
-                    alertError.showAndWait();
+                    showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
                 }
             } else {
-                Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
-                alertCancel.setTitle("Cancelled");
-                alertCancel.setHeaderText(null);
-                alertCancel.setContentText("Operation was cancelled");
-                alertCancel.showAndWait();
+                showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
             }
         }
     }
@@ -308,24 +293,12 @@ public class MainController implements Initializable {
                 String action = "UPDATE CHECK_OUT SET checkOut = CURRENT_TIMESTAMP, renew_count = renew_count+1 where bookID = '" + bookIdInput.getText() + "'";
 
                 if (databaseHandler.execAction(action)) {
-                    Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
-                    alertInfo.setTitle("Success");
-                    alertInfo.setContentText("Operation ended successfully");
-                    alertInfo.setHeaderText("Book has been successfully renewed");
-                    alertInfo.showAndWait();
+                    showSimpleAlert("information", "Success", "Book has been successfully renewed", "Operation ended successfully");
                 } else {
-                    Alert alertError = new Alert(Alert.AlertType.ERROR);
-                    alertError.setTitle("Failed");
-                    alertError.setHeaderText(null);
-                    alertError.setContentText("Operation ended unsuccessfully");
-                    alertError.showAndWait();
+                    showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
                 }
             } else {
-                Alert alertCancel = new Alert(Alert.AlertType.INFORMATION);
-                alertCancel.setTitle("Cancelled");
-                alertCancel.setHeaderText(null);
-                alertCancel.setContentText("Operation was cancelled");
-                alertCancel.showAndWait();
+                showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
             }
         }
     }

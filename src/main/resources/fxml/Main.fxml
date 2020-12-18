@@ -80,7 +80,7 @@
                            </image>
                         </ImageView>
                      </graphic></Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="120.0" prefWidth="200.0" text="Settings">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadSettings" prefHeight="120.0" prefWidth="200.0" text="Settings">
                      <graphic>
                         <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>

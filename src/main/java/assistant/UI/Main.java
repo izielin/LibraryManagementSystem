@@ -1,7 +1,7 @@
 package assistant.UI;
 
 import assistant.database.DatabaseHandler;
-import assistant.settings.Preferences;
+import assistant.settings.Settings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +13,7 @@ import java.util.Locale;
 import static assistant.UI.Controllers.MainController.getResourceBundle;
 
 public class Main  extends Application {
-    public static final String FXML_MAIN = "/fxml/Settings.fxml";
+    public static final String FXML_MAIN = "/fxml/Main.fxml";
 
     public static void main(String[] args) {
         launch(args);
@@ -30,7 +30,6 @@ public class Main  extends Application {
         primaryStage.show();
 
         new Thread(DatabaseHandler::getInstance).start();
-        Preferences.initConfig();
 
     }
 

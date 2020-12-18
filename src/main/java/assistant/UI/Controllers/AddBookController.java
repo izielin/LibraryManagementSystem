@@ -44,7 +44,7 @@ public class AddBookController implements Initializable {
 
 
     @FXML
-    private void addBook(ActionEvent actionEvent) {
+    private void executeSaveAction(ActionEvent actionEvent) {
         String id = bookID.getText();
         String authorName = bookAuthorName.getText();
         String title = bookTitle.getText();
@@ -80,7 +80,7 @@ public class AddBookController implements Initializable {
     }
 
     @FXML
-    private void cancelAction(ActionEvent actionEvent) {
+    private void executeCancelAction(ActionEvent actionEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
