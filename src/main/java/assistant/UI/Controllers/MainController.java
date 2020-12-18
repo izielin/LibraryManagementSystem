@@ -67,12 +67,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void loadAddMember() {
+    private void executeAddMember() {
         loadWindow(FXML_ADD_MEMBER);
     }
 
     @FXML
-    private void loadAddBook() {
+    private void executeAddBook() {
         loadWindow(FXML_ADD_BOOK);
     }
 

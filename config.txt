@@ -1,0 +1,1 @@
+{"daysWithoutFee":14,"feePerDay":1.2,"username":"admin","password":"admin"}
