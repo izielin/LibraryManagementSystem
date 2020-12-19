@@ -1,6 +1,7 @@
 package assistant.settings;
 
 import com.google.gson.Gson;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,13 +16,13 @@ import static assistant.alert.AlertMaker.showSimpleAlert;
 public class Settings {
     public static final String CONFIG_FILE = "config.txt";
     int daysWithoutFee;
-    double feePerDay;
+    float feePerDay;
     String username;
     String password;
 
     public Settings() {
         daysWithoutFee = 14;
-        feePerDay = 1.2;
+        feePerDay = (float) 1.2;
         username = "admin";
         password = "admin";
     }
@@ -34,11 +35,11 @@ public class Settings {
         this.daysWithoutFee = nDaysWithoutFee;
     }
 
-    public double getFeePerDay() {
+    public float getFeePerDay() {
         return feePerDay;
     }
 
-    public void setFeePerDay(double feePerDay) {
+    public void setFeePerDay(float feePerDay) {
         this.feePerDay = feePerDay;
     }
 
@@ -55,7 +56,7 @@ public class Settings {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = DigestUtils.sha1Hex(password);
     }
 
     public static void initConfig() {
