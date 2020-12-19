@@ -1,5 +1,10 @@
 package assistant.database;
 
+import assistant.UI.Controllers.BookListController;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.*;
 import java.sql.*;
 
@@ -140,6 +145,21 @@ public class DatabaseHandler {
             System.out.println("Exception at execAction:dataHandler" + e.getLocalizedMessage());
             return false;
         }
+    }
+
+    public boolean deleteBook(BookListController.Book book) {
+        try {
+            String deleteStatement = "DELETE FROM BOOK WHERE ID = ?";
+            PreparedStatement statement = connection.prepareStatement(deleteStatement);
+            statement.setString(1, book.getIdProperty());
+            int result = statement.executeUpdate();
+            if (result == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
 }

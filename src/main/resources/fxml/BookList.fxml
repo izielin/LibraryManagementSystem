@@ -1,23 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.BookListController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.BookListController">
    <children>
-      <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columns>
-          <TableColumn fx:id="idColumn" prefWidth="75.0" text="%bookID" />
-          <TableColumn fx:id="titleColumn" prefWidth="75.0" text="%bookTitle" />
-            <TableColumn fx:id="authorColumn" prefWidth="75.0" text="%bookAuthor" />
-            <TableColumn fx:id="publisherColumn" prefWidth="75.0" text="%publisher" />
-            <TableColumn fx:id="availabilityColumn" prefWidth="75.0" text="%availability" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
+      <HBox prefHeight="400.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView fx:id="tableView" onMouseClicked="#handleRowData" prefHeight="400.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="%bookID" />
+                <TableColumn fx:id="titleColumn" prefWidth="75.0" text="%bookTitle" />
+                  <TableColumn fx:id="authorColumn" prefWidth="75.0" text="%bookAuthor" />
+                  <TableColumn fx:id="publisherColumn" prefWidth="75.0" text="%publisher" />
+                  <TableColumn fx:id="availabilityColumn" prefWidth="75.0" text="%availability" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0">
+               <children>
+                  <Label text="Selected Book" />
+                  <TextField fx:id="selectedBookID">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="selectedBookTitle">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="selectedBookAuthor">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="selectedBookPublisher">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <JFXButton onAction="#deleteSelectedBook" text="Delete" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -50,7 +50,6 @@ public class SettingsController implements Initializable {
         newSettings.setPassword(password.getText());
 
         Settings.overWriteSettings(newSettings);
-
     }
 
     @FXML

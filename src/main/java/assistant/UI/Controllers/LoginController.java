@@ -45,7 +45,6 @@ public class LoginController implements Initializable {
             titleLabel.setText("Invalid username or password");
             titleLabel.setStyle("-fx-background-color:#d32f2f;-fx-text-fill:white");
         }
-
     }
 
     @FXML

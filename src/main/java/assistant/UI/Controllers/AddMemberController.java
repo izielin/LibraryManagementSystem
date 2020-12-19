@@ -3,15 +3,15 @@ package assistant.UI.Controllers;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static assistant.alert.AlertMaker.showSimpleAlert;
 
 public class AddMemberController implements Initializable {
     @FXML
@@ -37,17 +37,14 @@ public class AddMemberController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
     }
 
-    public void executeSaveAction(ActionEvent actionEvent) {
+    public void executeSaveAction() {
         String name = memberName.getText();
         String id = memberID.getText();
         String mobile = memberMobile.getText();
         String email = memberEmail.getText();
 
         if (id.isEmpty() || name.isEmpty() || mobile.isEmpty() || email.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Please enter data in all fields");
-            alert.showAndWait();
+            showSimpleAlert("error", "", "", "Please enter data in all fields");
         } else {
             String action = "INSERT INTO MEMBER VALUES (" +
                     "'" + id + "'," +
@@ -55,25 +52,21 @@ public class AddMemberController implements Initializable {
                     "'" + mobile + "'," +
                     "'" + email + "'" +
                     ")";
-
             System.out.println(action);
             if (databaseHandler.execAction(action)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("Member: " + name + "was successfully added to database");
-                alert.showAndWait();
+                showSimpleAlert("information", "", "", "\"Member: \" + name + \"was successfully added to database\"");
+                memberEmail.clear();
+                memberID.clear();
+                memberName.clear();
+                memberMobile.clear();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Something went wrong");
-                alert.showAndWait();
-
+                showSimpleAlert("error", "", "", "Something went wrong");
             }
         }
     }
 
     @FXML
-    private void executeCancelAction(ActionEvent actionEvent) {
+    private void executeCancelAction() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }

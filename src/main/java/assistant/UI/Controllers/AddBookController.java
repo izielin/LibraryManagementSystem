@@ -6,7 +6,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -16,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static assistant.alert.AlertMaker.showSimpleAlert;
 
 public class AddBookController implements Initializable {
     @FXML
@@ -42,19 +43,15 @@ public class AddBookController implements Initializable {
         checkData();
     }
 
-
     @FXML
-    private void executeSaveAction(ActionEvent actionEvent) {
+    private void executeSaveAction() {
         String id = bookID.getText();
         String authorName = bookAuthorName.getText();
         String title = bookTitle.getText();
         String publisher = publishingCompanyName.getText();
 
         if (id.isEmpty() || authorName.isEmpty() || title.isEmpty() || publisher.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Please enter data in all fields");
-            alert.showAndWait();
+            showSimpleAlert("error", "", "", "Please enter data in all fields");
         } else {
             String action = "INSERT INTO BOOK VALUES (" +
                     "'" + id + "'," +
@@ -66,25 +63,22 @@ public class AddBookController implements Initializable {
 
             System.out.println(action);
             if (databaseHandler.execAction(action)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("Book: " + title + "was successfully added to database");
-                alert.showAndWait();
+                showSimpleAlert("information", "", "", "Book: " + title + "was successfully added to database");
+                bookID.clear();
+                bookAuthorName.clear();
+                bookTitle.clear();
+                publishingCompanyName.clear();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Something went wrong");
-                alert.showAndWait();
+                showSimpleAlert("error", "", "", "Something went wrong");
             }
         }
     }
 
     @FXML
-    private void executeCancelAction(ActionEvent actionEvent) {
+    private void executeCancelAction() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
-
 
     private void checkData() {
         String query = "SELECT title FROM BOOK";
@@ -98,6 +92,4 @@ public class AddBookController implements Initializable {
             Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
-
 }

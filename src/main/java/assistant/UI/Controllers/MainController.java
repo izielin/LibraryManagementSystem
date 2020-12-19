@@ -183,7 +183,7 @@ public class MainController implements Initializable {
             if (databaseHandler.execAction(action) && databaseHandler.execAction(action2)) {
                 showSimpleAlert("information", "Success", "", "Operation ended successfully");
             } else {
-                showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
+                showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
             }
         } else {
             showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
@@ -253,7 +253,7 @@ public class MainController implements Initializable {
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
                     showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
                 } else {
-                    showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
+                    showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                 }
             } else {
                 showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
@@ -273,7 +273,7 @@ public class MainController implements Initializable {
                 if (databaseHandler.execAction(action)) {
                     showSimpleAlert("information", "Success", "Book has been successfully renewed", "Operation ended successfully");
                 } else {
-                    showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
+                    showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                 }
             } else {
                 showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
