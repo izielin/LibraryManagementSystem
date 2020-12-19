@@ -3,15 +3,17 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Run using IntelliJ](#Run using IntelliJ)
+* [Run using IntelliJ](#Run-using-IntelliJ)
 
 ## General info
-
+This is a library management software developed using JavaFX programming language.
 
 ## Technologies
 Project is created with following technologies:
-* JavaFx 15
-
+* [JFoenix](https://github.com/jfoenixadmin/JFoenix) - JavaFX Material Design Library
+* [Apache Derby](https://db.apache.org/derby/) - Standalone Relational database
+* [Apache Commons](https://commons.apache.org/) - For creating SHA hash
+* [GSon](https://github.com/google/gson) - JSON Library. Used for storing configuration
 
 ## Run using IntelliJ
 If you want to run this app using IntelliJ you have to Add VM options.

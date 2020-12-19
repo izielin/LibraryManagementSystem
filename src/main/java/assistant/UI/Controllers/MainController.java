@@ -1,5 +1,6 @@
 package assistant.UI.Controllers;
 
+import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -101,6 +102,7 @@ public class MainController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.show();
+            Utils.setIcon(stage);
         } catch (IOException e) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
         }

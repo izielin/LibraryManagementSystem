@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
     @FXML
     private void LoginAction() {
         titleLabel.setText("Library Assistant Login");
-        titleLabel.setStyle("-fx-background-color:#1976D2;-fx-text-fikll:white");
+        titleLabel.setStyle("-fx-background-color:#56BFA1;-fx-text-fikll:white");
 
         String username = usernameInput.getText();
         String password = DigestUtils.sha1Hex(passwordInput.getText());
