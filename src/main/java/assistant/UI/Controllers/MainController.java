@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -27,6 +26,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static assistant.alert.AlertMaker.alertConfirm;
 import static assistant.alert.AlertMaker.showSimpleAlert;
 
 
@@ -37,6 +37,7 @@ public class MainController implements Initializable {
     private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
     private static final String FXML_SETTINGS = "/fxml/Settings.fxml";
+
 
     @FXML
     private ListView<String> checkOutDataList;
@@ -94,9 +95,9 @@ public class MainController implements Initializable {
         loadWindow(FXML_SETTINGS);
     }
 
-    void loadWindow(String path) {
+    public static void loadWindow(String path) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource(path), getResourceBundle());
+            Parent parent = FXMLLoader.load(MainController.class.getResource(path), getResourceBundle());
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.show();
@@ -170,12 +171,7 @@ public class MainController implements Initializable {
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm chek out Operation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
-
-        Optional<ButtonType> response = alert.showAndWait();
+        Optional<ButtonType> response = alertConfirm("Confirm chek book out operation", "", "Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
         if (response.orElse(null) == ButtonType.OK) {
             String action = "INSERT INTO CHECK_OUT(memberID, bookID) VALUES( " +
                     "'" + memberID + "'," +
@@ -244,26 +240,15 @@ public class MainController implements Initializable {
     @FXML
     private void loadSubmissionOperation() {
         if (!isReadyForSubmission) {
-            Alert alertError = new Alert(Alert.AlertType.ERROR);
-            alertError.setTitle("Failed");
-            alertError.setHeaderText(null);
-            alertError.setContentText("Please select book to submit");
-            alertError.showAndWait();
+            showSimpleAlert("error", "Failed", "", "Please select book to submit");
         } else {
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm submission operation");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to return the book?");
-            Optional<ButtonType> response = alert.showAndWait();
-
+            Optional<ButtonType> response = alertConfirm("Confirm submission operation", "", "Are you sure you want to return the book?");
             if (response.orElse(null) == ButtonType.OK) {
                 String bookID = bookIdInput.getText();
                 String actionDelete = "DELETE FROM CHECK_OUT WHERE bookID = '" + bookID + "'";
                 String actionUpdate = "UPDATE BOOK SET isAvailable = true WHERE id = '" + bookID + "'";
 
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
-                    Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
                     showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
                 } else {
                     showSimpleAlert("error", "Success", "", "Operation ended unsuccessfully");
@@ -277,18 +262,9 @@ public class MainController implements Initializable {
     @FXML
     private void loadRenewOperation() {
         if (!isReadyForSubmission) {
-            Alert alertError = new Alert(Alert.AlertType.ERROR);
-            alertError.setTitle("Failed");
-            alertError.setHeaderText(null);
-            alertError.setContentText("Please select book to renew");
-            alertError.showAndWait();
+            showSimpleAlert("error", "Failed", "", "Please select book to renew");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm renew operation");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to renew the book?");
-            Optional<ButtonType> response = alert.showAndWait();
-
+            Optional<ButtonType> response = alertConfirm("Confirm renew operation", "", "Are you sure you want to renew the book?");
             if (response.orElse(null) == ButtonType.OK) {
                 String action = "UPDATE CHECK_OUT SET checkOut = CURRENT_TIMESTAMP, renew_count = renew_count+1 where bookID = '" + bookIdInput.getText() + "'";
 
@@ -301,5 +277,39 @@ public class MainController implements Initializable {
                 showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
             }
         }
+    }
+
+    @FXML
+    private void MenuCloseApplication(ActionEvent actionEvent) {
+        Optional<ButtonType> result = alertConfirm("Close Application", "", "Are you sure you want to close app?");
+        if (result.orElse(null) == ButtonType.OK) {
+            System.exit(0);
+        }
+    }
+
+    @FXML
+    private void MenuAddBook(ActionEvent actionEvent) {
+        loadWindow(FXML_ADD_BOOK);
+    }
+
+    @FXML
+    private void MenuAddMember(ActionEvent actionEvent) {
+        loadWindow(FXML_ADD_MEMBER);
+    }
+
+    @FXML
+    private void MenuViewBook(ActionEvent actionEvent) {
+        loadWindow(FXML_LIST_BOOK);
+    }
+
+    @FXML
+    private void MenuViewMember(ActionEvent actionEvent) {
+        loadWindow(FXML_LIST_MEMBER);
+    }
+
+    @FXML
+    private void MenuFullScreen(ActionEvent actionEvent) {
+        Stage stage = ((Stage) bookTitle.getScene().getWindow());
+        stage.setFullScreen(!stage.isFullScreen());
     }
 }

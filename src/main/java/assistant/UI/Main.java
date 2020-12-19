@@ -13,7 +13,7 @@ import java.util.Locale;
 import static assistant.UI.Controllers.MainController.getResourceBundle;
 
 public class Main  extends Application {
-    public static final String FXML_MAIN = "/fxml/Main.fxml";
+    public static final String FXML_FILE = "/fxml/Login.fxml";
 
     public static void main(String[] args) {
         launch(args);
@@ -23,7 +23,7 @@ public class Main  extends Application {
     public void start(Stage primaryStage) throws Exception {
         Locale.setDefault(new Locale("en"));
 
-        Parent root = FXMLLoader.load(getClass().getResource(FXML_MAIN), getResourceBundle());
+        Parent root = FXMLLoader.load(getClass().getResource(FXML_FILE), getResourceBundle());
         Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);

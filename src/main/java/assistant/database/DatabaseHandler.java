@@ -28,7 +28,8 @@ public class DatabaseHandler {
             Class.forName(driver).getDeclaredConstructor(); // creating an instance of class
             connection = DriverManager.getConnection(DB_URL); // creating connection
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Can not load database", "DatabaseError", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
 

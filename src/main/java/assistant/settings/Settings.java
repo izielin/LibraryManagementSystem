@@ -24,7 +24,7 @@ public class Settings {
         daysWithoutFee = 14;
         feePerDay = (float) 1.2;
         username = "admin";
-        password = "admin";
+        setPassword("admin");
     }
 
     public int getDaysWithoutFee() {
@@ -56,7 +56,10 @@ public class Settings {
     }
 
     public void setPassword(String password) {
-        this.password = DigestUtils.sha1Hex(password);
+        if (password.length() < 16)
+            this.password = DigestUtils.sha1Hex(password);
+        else
+            this.password = password;
     }
 
     public static void initConfig() {
@@ -73,6 +76,7 @@ public class Settings {
             try {
                 Objects.requireNonNull(writer).close();
             } catch (IOException e) {
+                initConfig();
                 Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, e);
             }
         }
@@ -91,7 +95,7 @@ public class Settings {
         return settings;
     }
 
-    public static void overWriteSettings(Settings settings){
+    public static void overWriteSettings(Settings settings) {
         Writer writer = null;
         try {
             // creating default config & saving it to file
