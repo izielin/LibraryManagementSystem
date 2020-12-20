@@ -1,6 +1,7 @@
 package assistant.database;
 
-import assistant.UI.Controllers.BookListController;
+import assistant.UI.Controllers.BookListController.Book;
+import assistant.UI.Controllers.MemberListController.Member;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,7 @@ public class DatabaseHandler {
     void createConnection() {
         try {
             Class.forName(driver).getDeclaredConstructor(); // creating an instance of class
-            connection = DriverManager.getConnection(DB_URL); // creating connection
+            connection = DriverManager.getConnection(DB_URL); // creating connection (session) with a database.
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Can not load database", "DatabaseError", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
@@ -39,16 +40,23 @@ public class DatabaseHandler {
     }
 
     void setupMemberTable() {
-        String TABLE_NAME = "MEMBER";
+        String TABLE_NAME = "MEMBER"; // initialize table name
         try {
-            statement = connection.createStatement();
+            statement = connection.createStatement(); // creating a Statement object for sending SQL statements to the database.
 
+            /*
+           DatabaseMetaData -> Comprehensive information about the database as a whole. The metadata includes information about the database's tables, its supported SQL grammar,
+           its stored procedures, the capabilities of this connection, and so on.
+           getMetaData -> Retrieves a DatabaseMetaData object that contains metadata about the database to which this Connection object represents a connection.
+             */
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
 
+            // check if table already exist
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
             } else {
+                // creating  member table
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "id varchar(200) primary key,\n"
                         + "name varchar(200),\n"
@@ -65,10 +73,10 @@ public class DatabaseHandler {
     }
 
     void setupBookTable() {
-        String TABLE_NAME = "BOOK";
+        String TABLE_NAME = "BOOK"; // initialize table name
 
         try {
-            statement = connection.createStatement();
+            statement = connection.createStatement(); // creating a Statement object for sending SQL statements to the database.
 
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
@@ -77,7 +85,7 @@ public class DatabaseHandler {
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
             } else {
-                // create book table
+                // creating book table
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "id varchar(200) primary key, "
                         + "title varchar(200), "
@@ -95,16 +103,18 @@ public class DatabaseHandler {
     }
 
     void setupCheckOutTable() {
-        String TABLE_NAME = "CHECK_OUT";
+        String TABLE_NAME = "CHECK_OUT"; // initialize table name
         try {
 
-            statement = connection.createStatement();
+            statement = connection.createStatement(); // creating a Statement object for sending SQL statements to the database.
             DatabaseMetaData metaData = connection.getMetaData();
 
             ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+           // check if table already exist
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
             } else {
+                // creating check out table
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "bookID varchar(200) primary key,"
                         + "memberID varchar(200),"
@@ -122,11 +132,11 @@ public class DatabaseHandler {
     }
 
     public ResultSet execQuery(String query) {
-        // using to get data from db
+        // method using to get data from db
         ResultSet resultSet;
         try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
+            statement = connection.createStatement(); // creating a Statement object for sending SQL statements to the database.
+            resultSet = statement.executeQuery(query); // executing query
         } catch (SQLException e) {
             System.out.println("Exception at execQuery:dataHandler" + e.getLocalizedMessage());
             return null;
@@ -135,9 +145,9 @@ public class DatabaseHandler {
     }
 
     public boolean execAction(String action) {
-        // using to doing action in db for example insert data
+        // method using to doing other action in db (insert data, update)
         try {
-            statement = connection.createStatement();
+            statement = connection.createStatement(); // creating a Statement object for sending SQL statements to the database.
             statement.execute(action);
             return true;
         } catch (SQLException e) {
@@ -147,14 +157,66 @@ public class DatabaseHandler {
         }
     }
 
-    public boolean deleteBook(BookListController.Book book) {
+    public boolean deleteBook(Book book) {
+        // method using to delete record from db
         try {
-            String deleteStatement = "DELETE FROM BOOK WHERE ID = ?";
-            PreparedStatement statement = connection.prepareStatement(deleteStatement);
+            String deleteStatement = "DELETE FROM BOOK WHERE ID = ?"; // selecting an item to delete
+            PreparedStatement statement = connection.prepareStatement(deleteStatement); // deletion operation
             statement.setString(1, book.getIdProperty());
             int result = statement.executeUpdate();
             if (result == 1) {
                 return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean deleteMember(Member member) {
+        try {
+            String deleteStatement = "DELETE FROM MEMBER WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(deleteStatement);
+            statement.setString(1, member.getIdProperty());
+            int res = statement.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean isInMagazine(Book book){
+        // method using to check if the book is lent to someone
+        try {
+            String checkStatement = "SELECT COUNT(*) FROM CHECK_OUT WHERE bookID = ?"; // chek if item is in the check out table
+            // prepareStatement -> Create a PreparedStatement object for sending parameterized SQL statements to the database.
+            PreparedStatement statement = connection.prepareStatement(checkStatement);
+            statement.setString(1, book.getIdProperty());
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                int count = resultSet.getInt(1); // selecting int on 1st index (indexes starts from 1 not form 0)
+                return count == 0; // if count != 0 it means that book is lend to someone ant can't be deleted
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
+
+    public boolean isMemberHasAnyBooks(Member member)
+    {
+        try {
+            String checkStatement = "SELECT COUNT(*) FROM CHECK_OUT WHERE memberID=?";
+            PreparedStatement statement = connection.prepareStatement(checkStatement);
+            statement.setString(1, member.getIdProperty());
+            ResultSet rs = statement.executeQuery();
+            if(rs.next())
+            {
+                int count = rs.getInt(1);
+                return (count>0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);

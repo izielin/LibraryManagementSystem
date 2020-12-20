@@ -12,7 +12,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static assistant.UI.Controllers.MainController.loadWindow;
+import static assistant.Utils.Utils.loadWindow;
 
 public class LoginController implements Initializable {
 

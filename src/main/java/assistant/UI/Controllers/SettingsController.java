@@ -42,7 +42,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void executeSaveAction(ActionEvent event) {
+    private void executeSaveAction() {
         Settings newSettings = Settings.getSettings();
         newSettings.setDaysWithoutFee(Integer.parseInt(daysWithoutFee.getText()));
         newSettings.setFeePerDay(Float.parseFloat(feePerDay.getText()));
@@ -53,7 +53,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void executeCancelAction(ActionEvent event) {
+    private void executeCancelAction() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }

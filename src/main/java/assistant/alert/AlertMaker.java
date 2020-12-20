@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class AlertMaker {
     public static void showSimpleAlert(String type, String title, String header, String content) {
+        // choose alerts type
         Alert alert;
         if (type.equals("information"))
             alert = new Alert(Alert.AlertType.INFORMATION);
@@ -15,6 +16,7 @@ public class AlertMaker {
         else
             alert = new Alert(Alert.AlertType.CONFIRMATION);
 
+        // set alerts elements
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);

@@ -1,23 +1,17 @@
 package assistant.UI.Controllers;
 
-import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +21,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static assistant.Utils.Utils.getResourceBundle;
+import static assistant.Utils.Utils.loadWindow;
 import static assistant.alert.AlertMaker.alertConfirm;
 import static assistant.alert.AlertMaker.showSimpleAlert;
 
@@ -67,10 +63,7 @@ public class MainController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
     }
 
-    public static ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("MainBundle");
-    }
-
+    // open other windows
     @FXML
     private void executeAddMember() {
         loadWindow(FXML_ADD_MEMBER);
@@ -96,18 +89,41 @@ public class MainController implements Initializable {
         loadWindow(FXML_SETTINGS);
     }
 
-    public static void loadWindow(String path) {
-        try {
-            Parent parent = FXMLLoader.load(MainController.class.getResource(path), getResourceBundle());
-            Stage stage = new Stage();
-            stage.setScene(new Scene(parent));
-            stage.show();
-            Utils.setIcon(stage);
-        } catch (IOException e) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+    // menu actions
+    @FXML
+    private void MenuCloseApplication() {
+        Optional<ButtonType> result = alertConfirm("Close Application", "", "Are you sure you want to close app?");
+        if (result.orElse(null) == ButtonType.OK) {
+            System.exit(0);
         }
-
     }
+
+    @FXML
+    private void MenuAddBook() {
+        loadWindow(FXML_ADD_BOOK);
+    }
+
+    @FXML
+    private void MenuAddMember() {
+        loadWindow(FXML_ADD_MEMBER);
+    }
+
+    @FXML
+    private void MenuViewBook() {
+        loadWindow(FXML_LIST_BOOK);
+    }
+
+    @FXML
+    private void MenuViewMember() {
+        loadWindow(FXML_LIST_MEMBER);
+    }
+
+    @FXML
+    private void MenuFullScreen() {
+        Stage stage = ((Stage) bookTitle.getScene().getWindow());
+        stage.setFullScreen(!stage.isFullScreen());
+    }
+
 
     @FXML
     private void loadMemberInformation() {
@@ -134,7 +150,6 @@ public class MainController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @FXML
@@ -173,7 +188,9 @@ public class MainController implements Initializable {
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
 
-        Optional<ButtonType> response = alertConfirm("Confirm chek book out operation", "", "Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
+        Optional<ButtonType> response = alertConfirm("Confirm chek book out operation", "",
+                "Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
+
         if (response.orElse(null) == ButtonType.OK) {
             String action = "INSERT INTO CHECK_OUT(memberID, bookID) VALUES( " +
                     "'" + memberID + "'," +
@@ -234,9 +251,7 @@ public class MainController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         checkOutDataList.getItems().setAll(checkOutData);
-
     }
 
     @FXML
@@ -281,37 +296,4 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML
-    private void MenuCloseApplication(ActionEvent actionEvent) {
-        Optional<ButtonType> result = alertConfirm("Close Application", "", "Are you sure you want to close app?");
-        if (result.orElse(null) == ButtonType.OK) {
-            System.exit(0);
-        }
-    }
-
-    @FXML
-    private void MenuAddBook(ActionEvent actionEvent) {
-        loadWindow(FXML_ADD_BOOK);
-    }
-
-    @FXML
-    private void MenuAddMember(ActionEvent actionEvent) {
-        loadWindow(FXML_ADD_MEMBER);
-    }
-
-    @FXML
-    private void MenuViewBook(ActionEvent actionEvent) {
-        loadWindow(FXML_LIST_BOOK);
-    }
-
-    @FXML
-    private void MenuViewMember(ActionEvent actionEvent) {
-        loadWindow(FXML_LIST_MEMBER);
-    }
-
-    @FXML
-    private void MenuFullScreen(ActionEvent actionEvent) {
-        Stage stage = ((Stage) bookTitle.getScene().getWindow());
-        stage.setFullScreen(!stage.isFullScreen());
-    }
 }

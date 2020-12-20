@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -13,9 +14,13 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static assistant.alert.AlertMaker.alertConfirm;
+import static assistant.alert.AlertMaker.showSimpleAlert;
 
 public class MemberListController implements Initializable {
     ObservableList<Member> list = FXCollections.observableArrayList();
@@ -69,6 +74,32 @@ public class MemberListController implements Initializable {
         tableView.getItems().setAll(list); // associating list containing all members records from db with table
     }
 
+    @FXML
+    private void executeMemberDelete() {
+        //Fetch the selected row
+        MemberListController.Member selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        if (selectedForDeletion == null) {
+            showSimpleAlert("error","No member selected", "Please select a member for deletion.","");
+            return;
+        }
+        if (DatabaseHandler.getInstance().isMemberHasAnyBooks(selectedForDeletion)) {
+            showSimpleAlert("error","Cant be deleted", "This member has some books.","");
+        }else {
+            Optional<ButtonType> response =alertConfirm("Deleting book", "Are you sure want to delete " + selectedForDeletion.getNameProperty() + " ?","");
+
+        if (response.orElse(null) == ButtonType.OK) {
+            boolean result = DatabaseHandler.getInstance().deleteMember(selectedForDeletion);
+            if (result) {
+                showSimpleAlert("information","Book deleted", selectedForDeletion.getNameProperty() + " was deleted successfully.","");
+                list.remove(selectedForDeletion);
+            } else {
+                showSimpleAlert("error", "Failed", selectedForDeletion.getNameProperty() + " could not be deleted", "");
+            }
+        } else {
+            showSimpleAlert("error","Deletion cancelled", "Deletion process cancelled", "");
+        }
+        }
+    }
 
     public static class Member {
         private final SimpleStringProperty nameProperty;

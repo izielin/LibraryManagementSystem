@@ -62,6 +62,7 @@ public class BookListController implements Initializable {
     }
 
     private void initColumn() {
+        // initialize values in columns
         titleColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().titleProperty);
         idColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().idProperty);
         authorColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().authorProperty);
@@ -75,6 +76,7 @@ public class BookListController implements Initializable {
         ResultSet resultSet = handler.execQuery(query);
         try {
             while (resultSet.next()) {
+                // getting data from db
                 String title = resultSet.getString("title");
                 String author = resultSet.getString("author");
                 String id = resultSet.getString("id");
@@ -92,50 +94,13 @@ public class BookListController implements Initializable {
         tableView.getItems().setAll(list); // associating list containing all books records from db with table
     }
 
-    public void deleteSelectedBook() {
-
-        if (!selectedBookID.getText().isEmpty()) {
-            String bookID = selectedBookID.getText();
-            String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
-            Optional<ButtonType> response = alertConfirm("Confirm delete operation",
-                    "Are you sure you want to delete the '" + selectedBookTitle.getText() + "' book?",
-                    "Are you sure you want to return the book?");
-            if (response.orElse(null) == ButtonType.OK) {
-                ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
-                try {
-                    while (resultSet.next()) {
-                        Book book = new Book(resultSet.getString("title"), resultSet.getString("id"),
-                                resultSet.getString("author"), resultSet.getString("publisher"),
-                                resultSet.getBoolean("isAvailable"));
-                        boolean result = DatabaseHandler.getInstance().deleteBook(book);
-                        if (result) {
-                            showSimpleAlert("information", "Book deleted", "", "Book '"
-                                    + selectedBookTitle.getText() + "' was successfully deleted");
-                            selectedBookTitle.clear();
-                            selectedBookID.clear();
-                            selectedBookAuthor.clear();
-                            selectedBookPublisher.clear();
-                        } else {
-                            showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
-                        }
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
-            }
-        } else {
-            showSimpleAlert("error", "No book selected", "No data to load", "Please select row with book to delete");
-        }
-    }
-
     public void handleRowData(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 2) {
-            Book rowData = tableView.getSelectionModel().getSelectedItem();
-            if (rowData == null) {
+        if (mouseEvent.getClickCount() == 2) { // checking the number of mouse clicks on a single row
+            Book rowData = tableView.getSelectionModel().getSelectedItem(); // creating Book object from data in selected row
+            if (rowData == null) { // check if selected row is not null
                 showSimpleAlert("error", "No book selected", "No data to load", "Please select row with book data");
             } else {
+                //passing values to text fields
                 selectedBookID.setText(rowData.getIdProperty());
                 selectedBookTitle.setText(rowData.getTitleProperty());
                 selectedBookAuthor.setText(rowData.getAuthorProperty());
@@ -144,6 +109,50 @@ public class BookListController implements Initializable {
         }
     }
 
+    public void deleteSelectedBook() {
+        // check if selectedBookID text field is empty, if not, it means that the book to be deleted has been selected
+        if (!selectedBookID.getText().isEmpty()) {
+            String bookID = selectedBookID.getText(); // get id of selected book
+            String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
+
+            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            try {
+                while (resultSet.next()) {
+                    // create Book object contains data form db
+                    Book book = new Book(resultSet.getString("title"), resultSet.getString("id"),
+                            resultSet.getString("author"), resultSet.getString("publisher"),
+                            resultSet.getBoolean("isAvailable"));
+
+                    // create confirmation alert
+                    Optional<ButtonType> response = alertConfirm("Confirm delete operation",
+                            "Are you sure you want to delete the '" + selectedBookTitle.getText() + "' book?",
+                            "Are you sure you want to delete the book?");
+                    if (response.orElse(null) == ButtonType.OK) {
+                        // check if selected is not lent to someone
+                        if (!DatabaseHandler.getInstance().isInMagazine(book))
+                            showSimpleAlert("error", "Cant be deleted", "", "This book is already checked out and can't be deleted.");
+                        else {
+                            if (DatabaseHandler.getInstance().deleteBook(book)) { // execute deleting operation
+                                showSimpleAlert("information", "Book deleted", "", "Book '"
+                                        + selectedBookTitle.getText() + "' was successfully deleted");
+                                // clear text fields
+                                selectedBookTitle.clear();
+                                selectedBookID.clear();
+                                selectedBookAuthor.clear();
+                                selectedBookPublisher.clear();
+                            } else
+                                showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
+                        }
+                    } else
+                        showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            showSimpleAlert("error", "No book selected", "No data to load", "Please select row with book to delete");
+        }
+    }
 
     public static class Book {
         private final SimpleStringProperty titleProperty;

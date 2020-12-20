@@ -3,7 +3,6 @@ package assistant.UI.Controllers;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -40,19 +39,21 @@ public class AddBookController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         databaseHandler = DatabaseHandler.getInstance();
-        checkData();
     }
 
     @FXML
     private void executeSaveAction() {
+        // retrieving user input of the book data from JFXTextField fields
         String id = bookID.getText();
         String authorName = bookAuthorName.getText();
         String title = bookTitle.getText();
         String publisher = publishingCompanyName.getText();
 
+        // checking if any of the fields is empty
         if (id.isEmpty() || authorName.isEmpty() || title.isEmpty() || publisher.isEmpty()) {
             showSimpleAlert("error", "", "", "Please enter data in all fields");
         } else {
+            // creating a command to add data to a table
             String action = "INSERT INTO BOOK VALUES (" +
                     "'" + id + "'," +
                     "'" + title + "'," +
@@ -61,9 +62,9 @@ public class AddBookController implements Initializable {
                     "" + true + "" +
                     ")";
 
-            System.out.println(action);
-            if (databaseHandler.execAction(action)) {
+            if (databaseHandler.execAction(action)) { // performing the data adding operation
                 showSimpleAlert("information", "", "", "Book: " + title + "was successfully added to database");
+                // clearing the input fields
                 bookID.clear();
                 bookAuthorName.clear();
                 bookTitle.clear();
@@ -76,20 +77,9 @@ public class AddBookController implements Initializable {
 
     @FXML
     private void executeCancelAction() {
+        // closing current window
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
 
-    private void checkData() {
-        String query = "SELECT title FROM BOOK";
-        ResultSet resultSet = databaseHandler.execQuery(query);
-        try {
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                System.out.println(title);
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
 }

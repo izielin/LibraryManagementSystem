@@ -54,7 +54,7 @@ public class AddMemberController implements Initializable {
                     ")";
             System.out.println(action);
             if (databaseHandler.execAction(action)) {
-                showSimpleAlert("information", "", "", "\"Member: \" + name + \"was successfully added to database\"");
+                showSimpleAlert("information", "", "", "Member: " + name + "was successfully added to database");
                 memberEmail.clear();
                 memberID.clear();
                 memberName.clear();
