@@ -1,5 +1,6 @@
 package assistant.UI.Controllers;
 
+import assistant.Utils.Utils;
 import assistant.alert.AlertMaker;
 import assistant.database.DatabaseHandler;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,28 +9,38 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static assistant.Utils.Utils.getResourceBundle;
+import static assistant.Utils.Utils.loadWindow;
 import static assistant.alert.AlertMaker.alertConfirm;
 import static assistant.alert.AlertMaker.showSimpleAlert;
 
 public class BookListController implements Initializable {
 
     ObservableList<Book> list = FXCollections.observableArrayList();
+    private static final String FXML_ADD_BOOK = "/fxml/AddBook.fxml";
+
 
     @FXML
     private AnchorPane rootPane;
@@ -61,7 +72,8 @@ public class BookListController implements Initializable {
         loadData();
     }
 
-    private void initColumn() {
+    @FXML
+    public void initColumn() {
         // initialize values in columns
         titleColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().titleProperty);
         idColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().idProperty);
@@ -70,7 +82,8 @@ public class BookListController implements Initializable {
         availabilityColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().availabilityProperty);
     }
 
-    private void loadData() {
+    public void loadData() {
+        list.clear();
         DatabaseHandler handler = DatabaseHandler.getInstance();
         String query = "SELECT * FROM BOOK";
         ResultSet resultSet = handler.execQuery(query);
@@ -94,7 +107,8 @@ public class BookListController implements Initializable {
         tableView.getItems().setAll(list); // associating list containing all books records from db with table
     }
 
-    public void handleRowData(MouseEvent mouseEvent) {
+    @FXML
+    private void handleRowData(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) { // checking the number of mouse clicks on a single row
             Book rowData = tableView.getSelectionModel().getSelectedItem(); // creating Book object from data in selected row
             if (rowData == null) { // check if selected row is not null
@@ -109,7 +123,8 @@ public class BookListController implements Initializable {
         }
     }
 
-    public void deleteSelectedBook() {
+    @FXML
+    private void deleteSelectedBook() {
         // check if selectedBookID text field is empty, if not, it means that the book to be deleted has been selected
         if (!selectedBookID.getText().isEmpty()) {
             String bookID = selectedBookID.getText(); // get id of selected book
@@ -152,6 +167,46 @@ public class BookListController implements Initializable {
         } else {
             showSimpleAlert("error", "No book selected", "No data to load", "Please select row with book to delete");
         }
+    }
+
+    @FXML
+    private void updateSelectedBook() {
+        Book book = null;
+        if (!selectedBookID.getText().isEmpty()) {
+            String bookID = selectedBookID.getText(); // get id of selected book
+            String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
+            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            try {
+                if (resultSet.next()) {
+                    // create Book object contains data form db
+                    book = new Book(resultSet.getString("title"), resultSet.getString("id"),
+                            resultSet.getString("author"), resultSet.getString("publisher"),
+                            resultSet.getBoolean("isAvailable"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_ADD_BOOK), getResourceBundle());
+                Parent parent = loader.load();
+                AddBookController controller = loader.getController();
+                if (book != null) controller.inflateUI(book);
+                Stage stage = new Stage();
+                stage.setScene(new Scene(parent));
+                stage.show();
+                Utils.setIcon(stage);
+
+                stage.setOnHidden((e)-> executeRefresh()); //refresh table
+            } catch (IOException e) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+            }
+        } else {
+            showSimpleAlert("error", "No book selected", "No data to load", "Please select row with book to delete");
+        }
+    }
+
+    public void executeRefresh() {
+        loadData();
     }
 
     public static class Book {

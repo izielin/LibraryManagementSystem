@@ -110,7 +110,7 @@ public class DatabaseHandler {
             DatabaseMetaData metaData = connection.getMetaData();
 
             ResultSet tables = metaData.getTables(null, null, TABLE_NAME.toUpperCase(), null);
-           // check if table already exist
+            // check if table already exist
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists. Ready for go!");
             } else {
@@ -188,15 +188,15 @@ public class DatabaseHandler {
         return false;
     }
 
-    public boolean isInMagazine(Book book){
+    public boolean isInMagazine(Book book) {
         // method using to check if the book is lent to someone
         try {
             String checkStatement = "SELECT COUNT(*) FROM CHECK_OUT WHERE bookID = ?"; // chek if item is in the check out table
             // prepareStatement -> Create a PreparedStatement object for sending parameterized SQL statements to the database.
             PreparedStatement statement = connection.prepareStatement(checkStatement);
-            statement.setString(1, book.getIdProperty());
+            statement.setString(1, book.getIdProperty()); // replacement of an question mark by valuer returned by book.getIdProperty()
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 int count = resultSet.getInt(1); // selecting int on 1st index (indexes starts from 1 not form 0)
                 return count == 0; // if count != 0 it means that book is lend to someone ant can't be deleted
             }
@@ -206,22 +206,37 @@ public class DatabaseHandler {
         return true;
     }
 
-    public boolean isMemberHasAnyBooks(Member member)
-    {
+    public boolean isMemberHasAnyBooks(Member member) {
         try {
             String checkStatement = "SELECT COUNT(*) FROM CHECK_OUT WHERE memberID=?";
             PreparedStatement statement = connection.prepareStatement(checkStatement);
             statement.setString(1, member.getIdProperty());
             ResultSet rs = statement.executeQuery();
-            if(rs.next())
-            {
+            if (rs.next()) {
                 int count = rs.getInt(1);
-                return (count>0);
+                return (count > 0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
+
+    public boolean updateBook(Book book) {
+        try {
+            String update = "UPDATE BOOK SET TITLE=?, AUTHOR=?, PUBLISHER=? WHERE ID=?";
+            PreparedStatement statement = connection.prepareStatement(update);
+            statement.setString(1, book.getTitleProperty());
+            statement.setString(2, book.getAuthorProperty());
+            statement.setString(3, book.getPublisherProperty());
+            statement.setString(4, book.getIdProperty());
+            int result = statement.executeUpdate();
+            return result == 1;
+        } catch (SQLException e) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
+
 
 }
