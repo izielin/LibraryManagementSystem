@@ -1,0 +1,63 @@
+{
+    -fx-primary:#2A2E37;
+    -fx-secondary: #FFFF8D;
+    -fx-primarytext:#B2B2B2;
+}
+
+.root {
+    -fx-background-color: -fx-primary;
+}
+
+.glyph-icon, .menu-icon
+{
+    -fx-fill: -fx-primarytext;
+}
+
+.menu-icon:hover
+{
+    -fx-fill: -fx-secondary;
+}
+
+.button{
+    -fx-text-fill: -fx-primarytext;
+}
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: -fx-primarytext;
+}
+
+.label {
+    -fx-text-fill: -fx-primary;
+}
+
+
+/*Login Screen Styles*/
+.login-button
+{
+    -fx-border-color: -fx-secondary;
+    -fx-background-color: transparent;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-text-fill:  -fx-secondary;
+}
+.login-button:hover{
+    -fx-border-color: -fx-secondary;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.text-field
+{
+    -fx-text-fill: -fx-primarytext;
+    -fx-font-size : 13pt;
+    -jfx-focus-color: -fx-secondary;
+}
+
+.wrong-credentials
+{
+    -jfx-unfocus-color: -fx-red;
+    -jfx-focus-color: -fx-red;
+}
+
+

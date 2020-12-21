@@ -5,10 +5,12 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,9 +23,8 @@ public class LoginController implements Initializable {
     @FXML
     private JFXPasswordField passwordInput;
 
+    double x, y;
     Settings settings;
-    @FXML
-    private Label titleLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -31,19 +32,16 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void LoginAction() {
-        titleLabel.setText("Library Assistant Login");
-        titleLabel.setStyle("-fx-background-color:#56BFA1;-fx-text-fikll:white");
-
+    private void LoginAction() throws IOException {
         String username = usernameInput.getText();
         String password = DigestUtils.sha1Hex(passwordInput.getText());
 
         if (username.equals(settings.getUsername()) && password.equals(settings.getPassword())) {
             closeStage();
-            loadWindow("/fxml/Main.fxml");
+            loadWindow("/fxml/Main.fxml", "Library Assistant Login");
         } else {
-            titleLabel.setText("Invalid username or password");
-            titleLabel.setStyle("-fx-background-color:#d32f2f;-fx-text-fill:white");
+            usernameInput.getStyleClass().add("wrong-credentials");
+            passwordInput.getStyleClass().add("wrong-credentials");
         }
     }
 
@@ -54,5 +52,37 @@ public class LoginController implements Initializable {
 
     private void closeStage() {
         ((Stage) usernameInput.getScene().getWindow()).close();
+    }
+
+    @FXML
+    private void close(MouseEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
+    private void fullScreen(MouseEvent event) {
+        Stage stage = (Stage) usernameInput.getScene().getWindow();
+        stage.setFullScreen(true);
+
+    }
+
+    @FXML
+    private void minimize(MouseEvent event) {
+        Stage stage = (Stage) usernameInput.getScene().getWindow();
+        stage.setIconified(true);
+
+    }
+
+    public void dragged(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage.setX(mouseEvent.getScreenX() + x);
+        stage.setY(mouseEvent.getScreenY() + y);
+
+    }
+
+    public void pressed(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        x = stage.getX() - mouseEvent.getScreenX();
+        y = stage.getY() - mouseEvent.getScreenY();
     }
 }

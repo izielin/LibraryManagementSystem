@@ -160,7 +160,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="149.0" prefWidth="645.0">
                                     <JFXButton buttonType="RAISED" onAction="#executeCheckOutOperation"
-                                               prefWidth="180.0" stylesheets="@../css/mainStyles.css"
+                                               prefWidth="180.0" stylesheets="@../css/dark-theme.css"
                                                text="%buttonCheckOut" textAlignment="CENTER">
                                         <font>
                                             <Font size="14.0"/>
@@ -205,7 +205,7 @@
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
                                           BorderPane.alignment="CENTER">
                                         <JFXButton buttonType="RAISED" onAction="#loadRenewOperation" prefWidth="180.0"
-                                                   stylesheets="@../css/mainStyles.css" text="%buttonRenew"
+                                                   stylesheets="@../css/dark-theme.css" text="%buttonRenew"
                                                    textAlignment="CENTER">
                                             <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
@@ -224,7 +224,7 @@
                                             </graphic>
                                         </JFXButton>
                                         <JFXButton buttonType="RAISED" onAction="#loadSubmissionOperation"
-                                                   prefWidth="180.0" stylesheets="@../css/mainStyles.css"
+                                                   prefWidth="180.0" stylesheets="@../css/dark-theme.css"
                                                    text="%buttonSubmission" textAlignment="CENTER">
                                             <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>

@@ -46,9 +46,9 @@
             </JFXTextField>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <JFXButton fx:id="saveButton" onAction="#executeSaveAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/mainStyles.css" text="%buttonSave" />
-                  <JFXButton fx:id="saveAndCloseButton" onAction="#executeSaveAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/mainStyles.css" text="%buttonSaveClose" />
-                  <JFXButton fx:id="cancelButton" onAction="#executeCancelAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/mainStyles.css" text="%buttonCancel">
+                  <JFXButton fx:id="saveButton" onAction="#executeSaveAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/dark-theme.css" text="%buttonSave" />
+                  <JFXButton fx:id="saveAndCloseButton" onAction="#executeSaveAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/dark-theme.css" text="%buttonSaveClose" />
+                  <JFXButton fx:id="cancelButton" onAction="#executeCancelAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/dark-theme.css" text="%buttonCancel">
                      <font>
                         <Font size="13.0" />
                      </font>

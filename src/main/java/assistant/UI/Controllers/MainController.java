@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -66,27 +65,27 @@ public class MainController implements Initializable {
     // open other windows
     @FXML
     private void executeAddMember() {
-        loadWindow(FXML_ADD_MEMBER);
+        loadWindow(FXML_ADD_MEMBER, "Add Member");
     }
 
     @FXML
     private void executeAddBook() {
-        loadWindow(FXML_ADD_BOOK);
+        loadWindow(FXML_ADD_BOOK, "Add Book");
     }
 
     @FXML
     private void loadMemberTable() {
-        loadWindow(FXML_LIST_MEMBER);
+        loadWindow(FXML_LIST_MEMBER, "Member List");
     }
 
     @FXML
     private void loadBookTable() {
-        loadWindow(FXML_LIST_BOOK);
+        loadWindow(FXML_LIST_BOOK, "Book List");
     }
 
     @FXML
     private void loadSettings() {
-        loadWindow(FXML_SETTINGS);
+        loadWindow(FXML_SETTINGS, "Settings");
     }
 
     // menu actions
@@ -100,22 +99,22 @@ public class MainController implements Initializable {
 
     @FXML
     private void MenuAddBook() {
-        loadWindow(FXML_ADD_BOOK);
+        executeAddBook();
     }
 
     @FXML
     private void MenuAddMember() {
-        loadWindow(FXML_ADD_MEMBER);
+        executeAddMember();
     }
 
     @FXML
     private void MenuViewBook() {
-        loadWindow(FXML_LIST_BOOK);
+        loadBookTable();
     }
 
     @FXML
     private void MenuViewMember() {
-        loadWindow(FXML_LIST_MEMBER);
+        loadMemberTable();
     }
 
     @FXML
@@ -275,7 +274,7 @@ public class MainController implements Initializable {
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
                     showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
                     bookIdInput.clear();
-                    checkOutDataList.getItems().clear();;
+                    checkOutDataList.getItems().clear();
                 } else {
                     showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                 }

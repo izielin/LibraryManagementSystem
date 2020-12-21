@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        loadWindow(FXML_FILE);
+        loadWindow(FXML_FILE, "Library Management System");
         new Thread(DatabaseHandler::getInstance).start();
 
     }
