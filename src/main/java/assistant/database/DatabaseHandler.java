@@ -238,5 +238,20 @@ public class DatabaseHandler {
         return false;
     }
 
-
+    public boolean updateMember(Member member)
+    {
+        try {
+            String update = "UPDATE MEMBER SET NAME=?, EMAIL=?, MOBILE=? WHERE ID=?";
+            PreparedStatement statement = connection.prepareStatement(update);
+            statement.setString(1, member.getNameProperty());
+            statement.setString(2, member.getEmailProperty());
+            statement.setString(3, member.getMobileProperty());
+            statement.setString(4, member.getIdProperty());
+            int res = statement.executeUpdate();
+            return (res>0);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }

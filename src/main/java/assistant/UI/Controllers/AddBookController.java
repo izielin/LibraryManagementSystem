@@ -4,18 +4,20 @@ import assistant.UI.Controllers.BookListController.Book;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static assistant.Utils.Utils.getResourceBundle;
 import static assistant.alert.AlertMaker.showSimpleAlert;
 
 public class AddBookController implements Initializable {
+
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -30,6 +32,8 @@ public class AddBookController implements Initializable {
     private JFXButton saveButton;
     @FXML
     private JFXButton cancelButton;
+    @FXML
+    private JFXButton saveAndCloseButton;
 
     //object of DatabaseHandler
     DatabaseHandler databaseHandler;
@@ -41,7 +45,7 @@ public class AddBookController implements Initializable {
     }
 
     @FXML
-    private void executeSaveAction() {
+    private void executeSaveAction(ActionEvent event) {
         // retrieving user input of the book data from JFXTextField fields
         String id = bookID.getText();
         String authorName = bookAuthorName.getText();
@@ -77,6 +81,12 @@ public class AddBookController implements Initializable {
                     bookAuthorName.clear();
                     bookTitle.clear();
                     publishingCompanyName.clear();
+                    try {
+                        Button button = (Button) event.getSource();
+                        if (button.getId().equals("saveAndCloseButton"))
+                            ((Stage) bookID.getScene().getWindow()).close();
+                    } catch (ClassCastException ignored) {
+                    }
                 } else {
                     showSimpleAlert("error", "", "", "Something went wrong");
                 }
@@ -99,6 +109,5 @@ public class AddBookController implements Initializable {
         bookID.setEditable(false);
         isInEditMode = true;
     }
-
-
 }
+

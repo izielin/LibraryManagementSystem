@@ -39,11 +39,11 @@ public class MainController implements Initializable {
     @FXML
     private ListView<String> checkOutDataList;
     @FXML
-    private TextField bookIDInput;
+    private JFXTextField bookIDInput;
     @FXML
     private JFXTextField bookIdInput;
     @FXML
-    private TextField memberIDInput;
+    private JFXTextField memberIDInput;
     @FXML
     private Text bookStatus;
     @FXML
@@ -199,6 +199,13 @@ public class MainController implements Initializable {
 
             if (databaseHandler.execAction(action) && databaseHandler.execAction(action2)) {
                 showSimpleAlert("information", "Success", "", "Operation ended successfully");
+                memberIDInput.clear();
+                bookIDInput.clear();
+                bookTitle.setText(getResourceBundle().getString("bookTitle"));
+                bookAuthor.setText(getResourceBundle().getString("bookAuthor"));
+                bookStatus.setText(getResourceBundle().getString("availability"));
+                memberName.setText(getResourceBundle().getString("memberName"));
+                memberContact.setText(getResourceBundle().getString("memberContact"));
             } else {
                 showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
             }
@@ -267,6 +274,8 @@ public class MainController implements Initializable {
 
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
                     showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
+                    bookIdInput.clear();
+                    checkOutDataList.getItems().clear();;
                 } else {
                     showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                 }
@@ -287,6 +296,8 @@ public class MainController implements Initializable {
 
                 if (databaseHandler.execAction(action)) {
                     showSimpleAlert("information", "Success", "Book has been successfully renewed", "Operation ended successfully");
+                    checkOutDataList.getItems().clear();
+                    loadBookCheckOut();
                 } else {
                     showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                 }

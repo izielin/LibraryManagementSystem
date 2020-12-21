@@ -1,16 +1,25 @@
 package assistant.UI.Controllers;
 
+import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,11 +28,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static assistant.Utils.Utils.getResourceBundle;
 import static assistant.alert.AlertMaker.alertConfirm;
 import static assistant.alert.AlertMaker.showSimpleAlert;
 
 public class MemberListController implements Initializable {
     ObservableList<Member> list = FXCollections.observableArrayList();
+    private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
+
 
     @FXML
     private AnchorPane rootPane;
@@ -37,7 +49,14 @@ public class MemberListController implements Initializable {
     private TableColumn<Member, String> mobileColumn;
     @FXML
     private TableColumn<Member, String> emailColumn;
-
+    @FXML
+    private TextField selectedMemberID;
+    @FXML
+    private TextField selectedMemberName;
+    @FXML
+    private TextField selectedMemberMobile;
+    @FXML
+    private TextField selectedMemberEmail;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +72,7 @@ public class MemberListController implements Initializable {
     }
 
     private void loadData() {
+        list.clear();
         DatabaseHandler handler = DatabaseHandler.getInstance();
         String query = "SELECT * FROM MEMBER";
         ResultSet resultSet = handler.execQuery(query);
@@ -100,6 +120,104 @@ public class MemberListController implements Initializable {
         }
         }
     }
+
+    @FXML
+    private void handleRowData(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2) { // checking the number of mouse clicks on a single row
+            Member rowData = tableView.getSelectionModel().getSelectedItem(); // creating Book object from data in selected row
+            if (rowData == null) { // check if selected row is not null
+                showSimpleAlert("error", "No member selected", "No data to load", "Please select row with book data");
+            } else {
+                //passing values to text fields
+                selectedMemberID.setText(rowData.getIdProperty());
+                selectedMemberName.setText(rowData.getNameProperty());
+                selectedMemberMobile.setText(rowData.getMobileProperty());
+                selectedMemberEmail.setText(rowData.getEmailProperty());
+            }
+        }
+    }
+
+    public void deleteSelectedMember() {
+        // check if selectedBookID text field is empty, if not, it means that the book to be deleted has been selected
+        if (!selectedMemberID.getText().isEmpty()) {
+            String memberID = selectedMemberID.getText(); // get id of selected book
+            String query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
+
+            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            try {
+                while (resultSet.next()) {
+                    // create Book object contains data form db
+                    Member member = new Member(resultSet.getString("name"), resultSet.getString("id"),
+                            resultSet.getString("mobile"), resultSet.getString("email"));
+
+                    // create confirmation alert
+                    Optional<ButtonType> response = alertConfirm("Confirm delete operation",
+                            "Are you sure you want to delete the " + selectedMemberName.getText() + "?",
+                            "Are you sure you want to delete member?");
+                    if (response.orElse(null) == ButtonType.OK) {
+                        // check if selected is not lent to someone
+
+                            if (DatabaseHandler.getInstance().deleteMember(member)) { // execute deleting operation
+                                showSimpleAlert("information", "Member deleted", "", "Member "
+                                        + selectedMemberName.getText() + " was successfully deleted");
+                                // clear text fields
+                                selectedMemberName.clear();
+                                selectedMemberID.clear();
+                                selectedMemberMobile.clear();
+                                selectedMemberEmail.clear();
+                                executeRefresh();
+                            } else
+                                showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
+
+                    } else
+                        showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            showSimpleAlert("error", "No member selected", "No data to load", "Please select row with member to delete");
+        }
+    }
+
+    public void updateSelectedMember() {
+        Member member = null;
+        if (!selectedMemberID.getText().isEmpty()) {
+            String memberID = selectedMemberID.getText(); // get id of selected book
+            String query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
+            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            try {
+                if (resultSet.next()) {
+                    // create Book object contains data form db
+                    member = new Member(resultSet.getString("name"), resultSet.getString("id"),
+                            resultSet.getString("mobile"), resultSet.getString("email"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_ADD_MEMBER), getResourceBundle());
+                Parent parent = loader.load();
+                AddMemberController controller = loader.getController();
+                if (member != null) controller.inflateUI(member);
+                Stage stage = new Stage();
+                stage.setScene(new Scene(parent));
+                stage.show();
+                Utils.setIcon(stage);
+
+                stage.setOnHidden((e)-> executeRefresh()); //refresh table
+            } catch (IOException e) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+            }
+        } else {
+            showSimpleAlert("error", "No member selected", "No data to load", "Please select row with member to delete");
+        }
+    }
+
+    public void executeRefresh() {
+        loadData();
+    }
+
 
     public static class Member {
         private final SimpleStringProperty nameProperty;

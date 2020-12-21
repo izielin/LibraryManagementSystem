@@ -155,6 +155,7 @@ public class BookListController implements Initializable {
                                 selectedBookID.clear();
                                 selectedBookAuthor.clear();
                                 selectedBookPublisher.clear();
+                                executeRefresh();
                             } else
                                 showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                         }

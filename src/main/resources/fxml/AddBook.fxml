@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.AddBookController">
    <children>
       <VBox layoutX="242.0" layoutY="106.0" prefHeight="300.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -37,7 +36,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="publishingCompanyName" focusColor="#56BFA1" labelFloat="true" layoutX="10.0" layoutY="59.0" promptText="%publisher">
+            <JFXTextField fx:id="publishingCompanyName" focusColor="#56BFA1"  onAction="#executeSaveAction" labelFloat="true" layoutX="10.0" layoutY="59.0" promptText="%publisher">
                <font>
                   <Font size="13.0" />
                </font>
@@ -48,6 +47,7 @@
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <JFXButton fx:id="saveButton" onAction="#executeSaveAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/mainStyles.css" text="%buttonSave" />
+                  <JFXButton fx:id="saveAndCloseButton" onAction="#executeSaveAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/mainStyles.css" text="%buttonSaveClose" />
                   <JFXButton fx:id="cancelButton" onAction="#executeCancelAction" prefHeight="70.0" prefWidth="250.0" stylesheets="@../css/mainStyles.css" text="%buttonCancel">
                      <font>
                         <Font size="13.0" />

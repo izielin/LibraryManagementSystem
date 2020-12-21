@@ -1,30 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.MemberListController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.MemberListController">
     <children>
-        <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <columns>
-                <TableColumn fx:id="idColumn" prefWidth="75.0" text="%memberID" />
-                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="%memberName" />
-                <TableColumn fx:id="mobileColumn" prefWidth="75.0" text="%memberMobile" />
-                <TableColumn fx:id="emailColumn" prefWidth="75.0" text="%memberEmail" />
-            </columns>
-            <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-            <contextMenu>
-                <ContextMenu>
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#executeMemberDelete" text="Delete" />
-                    </items>
-                </ContextMenu>
-            </contextMenu>
-        </TableView>
+      <HBox prefHeight="400.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+              <TableView fx:id="tableView" onMouseClicked="#handleRowData" prefHeight="600.0" prefWidth="800.0">
+                  <columns>
+                      <TableColumn fx:id="idColumn" prefWidth="75.0" text="%memberID" />
+                      <TableColumn fx:id="nameColumn" prefWidth="75.0" text="%memberName" />
+                      <TableColumn fx:id="mobileColumn" prefWidth="75.0" text="%memberMobile" />
+                      <TableColumn fx:id="emailColumn" prefWidth="75.0" text="%memberEmail" />
+                  </columns>
+                  <columnResizePolicy>
+                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                  </columnResizePolicy>
+                  <contextMenu>
+                      <ContextMenu>
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#executeMemberDelete" text="Delete" />
+                          </items>
+                      </ContextMenu>
+                  </contextMenu>
+              </TableView>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0">
+               <children>
+                  <Label fx:id="titleLabel" alignment="CENTER" prefHeight="52.0" prefWidth="300.0" style="-fx-background-color: #56BFA1; -fx-text-fill: white;" text="Selected Member" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="selectedMemberID" promptText="%memberID">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="selectedMemberName" promptText="%memberName">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="selectedMemberMobile" promptText="%memberMobile">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="selectedMemberEmail" promptText="%memberEmail">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton onAction="#deleteSelectedMember" prefHeight="40.0" prefWidth="100.0" stylesheets="@../css/mainStyles.css" text="Delete">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#updateSelectedMember" prefHeight="40.0" prefWidth="100.0" stylesheets="@../css/mainStyles.css" text="Update">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>
