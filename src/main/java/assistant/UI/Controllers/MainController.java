@@ -1,16 +1,28 @@
 package assistant.UI.Controllers;
 
+import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,9 +44,11 @@ public class MainController implements Initializable {
     private static final String FXML_LIST_BOOK = "/fxml/BookList.fxml";
     private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
-    private static final String FXML_SETTINGS = "/fxml/Settings.fxml";
+    private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
 
 
+    @FXML
+    private BorderPane rootPane;
     @FXML
     private ListView<String> checkOutDataList;
     @FXML
@@ -54,38 +68,45 @@ public class MainController implements Initializable {
     @FXML
     private Text bookAuthor;
 
+    @FXML
+    private JFXHamburger hamburger;
+    @FXML
+    private JFXDrawer drawer;
+
     DatabaseHandler databaseHandler;
     boolean isReadyForSubmission = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         databaseHandler = DatabaseHandler.getInstance();
+        setTitleBar();
+
+        initDrawer();
     }
 
-    // open other windows
-    @FXML
-    private void executeAddMember() {
-        loadWindow(FXML_ADD_MEMBER, "Add Member");
+    private void initDrawer() {
+        try {
+            VBox toolbar = FXMLLoader.load(getClass().getResource(FXML_TOOLBAR), getResourceBundle());
+            drawer.setSidePane(toolbar);
+        } catch (IOException e) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        HamburgerSlideCloseTransition task = new HamburgerSlideCloseTransition(hamburger);
+        task.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (Event event) -> {
+            task.setRate(task.getRate() * -1);
+            task.play();
+            if (drawer.isOpened()) {
+                drawer.close();
+            } else {
+                drawer.open();
+            }
+        });
+
     }
 
-    @FXML
-    private void executeAddBook() {
-        loadWindow(FXML_ADD_BOOK, "Add Book");
-    }
-
-    @FXML
-    private void loadMemberTable() {
-        loadWindow(FXML_LIST_MEMBER, "Member List");
-    }
-
-    @FXML
-    private void loadBookTable() {
-        loadWindow(FXML_LIST_BOOK, "Book List");
-    }
-
-    @FXML
-    private void loadSettings() {
-        loadWindow(FXML_SETTINGS, "Settings");
+    public void setTitleBar() {
+        rootPane.setTop(Utils.fxmlLoader("/fxml/CustomTitleBar.fxml"));
     }
 
     // menu actions
@@ -99,22 +120,22 @@ public class MainController implements Initializable {
 
     @FXML
     private void MenuAddBook() {
-        executeAddBook();
+        loadWindow(FXML_ADD_BOOK);
     }
 
     @FXML
     private void MenuAddMember() {
-        executeAddMember();
+        loadWindow(FXML_ADD_MEMBER);
     }
 
     @FXML
     private void MenuViewBook() {
-        loadBookTable();
+    loadWindow(FXML_LIST_BOOK);
     }
 
     @FXML
     private void MenuViewMember() {
-        loadMemberTable();
+        loadWindow(FXML_LIST_MEMBER);
     }
 
     @FXML
@@ -122,7 +143,6 @@ public class MainController implements Initializable {
         Stage stage = ((Stage) bookTitle.getScene().getWindow());
         stage.setFullScreen(!stage.isFullScreen());
     }
-
 
     @FXML
     private void loadMemberInformation() {

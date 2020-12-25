@@ -1,6 +1,8 @@
 package assistant.Utils;
 
+import assistant.UI.Controllers.LoginController;
 import assistant.UI.Controllers.MainController;
+import assistant.UI.Controllers.TitleBarController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -29,11 +32,12 @@ public class Utils {
         return ResourceBundle.getBundle("MainBundle");
     }
 
-    public static void loadWindow(String path, String title) {
+    public static void loadWindow(String path) {
 
         try {
             Locale.setDefault(new Locale("en")); // setting local zone
-            Parent parent = FXMLLoader.load(MainController.class.getResource(path), getResourceBundle());
+            FXMLLoader loader = new FXMLLoader(MainController.class.getResource(path), getResourceBundle());
+            Parent parent = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.initStyle(StageStyle.UNDECORATED);
@@ -42,12 +46,22 @@ public class Utils {
                 ResizeHelper.addResizeListener(stage);
             }
 
-            stage.setTitle(title);
             stage.show();
             Utils.setIcon(stage);
+
         } catch (IOException e) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
         }
 
+    }
+
+    public static Pane fxmlLoader(String path) {
+        FXMLLoader loader = new FXMLLoader(MainController.class.getResource(path), getResourceBundle());
+        try {
+            return loader.load();
+        } catch (Exception e) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
     }
 }

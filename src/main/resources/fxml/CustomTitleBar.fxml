@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.TitleBarController">
+   <children>
+      <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragged="#dragged" onMousePressed="#pressed" styleClass="root" stylesheets="@../css/dark-theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton onMouseClicked="#minimize" prefWidth="25.0">
+               <graphic>
+                  <FontAwesomeIcon glyphName="MINUS" styleClass="menu-icon">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIcon>
+               </graphic>
+            </JFXButton>
+            <JFXButton onMouseClicked="#fullScreen" prefWidth="25.0">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CIRCLE" styleClass="menu-icon">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIcon>
+               </graphic>
+            </JFXButton>
+            <JFXButton onMouseClicked="#close" prefWidth="25.0">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CLOSE" styleClass="menu-icon">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIcon>
+               </graphic>
+            </JFXButton>
+         </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </HBox>
+   </children>
+</AnchorPane>

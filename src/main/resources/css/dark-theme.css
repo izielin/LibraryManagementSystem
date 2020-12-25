@@ -1,63 +1,192 @@
 {
-    -fx-primary:#2A2E37;
-    -fx-secondary: #FFFF8D;
-    -fx-primarytext:#B2B2B2;
+    -fx-dark:#2A2E37;
+    -fx-yellow: #FFFF8D;
+    -fx-gray:#B2B2B2;
+    -fx-red : #FF4A4A;
+
 }
 
 .root {
-    -fx-background-color: -fx-primary;
+    -fx-background-color: -fx-dark;
 }
 
 .glyph-icon, .menu-icon
 {
-    -fx-fill: -fx-primarytext;
+    -fx-fill: -fx-gray;
+}
+
+.icon {
+    -fx-fill: -fx-dark;
+}
+
+.alert-text{
+    -fx-fill: -fx-red;
 }
 
 .menu-icon:hover
 {
-    -fx-fill: -fx-secondary;
+    -fx-fill: -fx-yellow;
 }
 
 .button{
-    -fx-text-fill: -fx-primarytext;
+    -fx-text-fill: -fx-gray;
 }
 .separator *.line {
     -fx-border-style: solid;
     -fx-border-width: 0 0 1 0;
-    -fx-border-color: -fx-primarytext;
+    -fx-border-color: -fx-gray;
 }
 
 .label {
-    -fx-text-fill: -fx-primary;
+    -fx-text-fill: -fx-dark;
 }
 
 
 /*Login Screen Styles*/
 .login-button
 {
-    -fx-border-color: -fx-secondary;
-    -fx-background-color: transparent;
-    -fx-border-radius: 20;
-    -fx-background-radius: 20;
-    -fx-text-fill:  -fx-secondary;
+    -fx-border-color: -fx-yellow;
+    -fx-background-color: -fx-yellow;
+    -fx-text-fill:  -fx-dark;
 }
 .login-button:hover{
-    -fx-border-color: -fx-secondary;
-    -fx-background-color: -fx-secondary;
-    -fx-text-fill: -fx-primary;
+    -fx-border-color: -fx-yellow;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-yellow;
 }
+
+.forgot-button
+{
+    -fx-background-color: transparent;
+    -fx-text-fill:  -fx-gray;
+    -fx-border-color: -fx-gray;
+    -fx-border-width: 0 0 1 0;
+}
+.login-button:hover{
+    -fx-text-fill: -fx-yellow;
+}
+
+.check-box{
+    -fx-text-fill: -fx-gray;
+    -fx-font-size: 15;
+
+}
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: -fx-gray;
+    -fx-border-width: 1px;
+}
+
 
 .text-field
 {
-    -fx-text-fill: -fx-primarytext;
+    -fx-text-fill: -fx-gray;
     -fx-font-size : 13pt;
-    -jfx-focus-color: -fx-secondary;
+    -jfx-focus-color: -fx-yellow;
 }
 
-.wrong-credentials
+.wrong-login-data
 {
     -jfx-unfocus-color: -fx-red;
     -jfx-focus-color: -fx-red;
 }
 
 
+.custom-background {
+    -fx-background-color: linear-gradient(to right, -fx-yellow, -fx-dark);
+}
+
+/* Main Screen Style */
+
+/* Table Pane Style*/
+.tab{
+    -fx-background-color: -fx-dark;
+    -fx-pref-width: 350;
+    -fx-pref-height: 60;
+}
+
+.tab-header-background{
+    -fx-background-color: -fx-dark;
+    -fx-pref-height: 60;
+}
+
+.tab-label{
+    -fx-text-fill: -fx-gray;
+    -fx-font-size: 10pt;
+}
+
+
+.tab-main{
+    -fx-pref-height : 60;
+    -fx-max-height : 60;
+}
+
+.settings-tab{
+    -fx-background-color: derive(-fx-dark, 10%);
+    -fx-padding: 5px 20px 5px 20px;
+}
+
+.settings-tab:selected{
+    -fx-background-color: -fx-yellow;
+}
+
+.settings-tab:selected .tab-label{
+    -fx-text-fill: -fx-dark;
+}
+
+.settings-tab .tab-header-background{
+    -fx-background-color: derive(-fx-dark, -50%);
+}
+
+/*Menu bar Styling*/
+.menu-bar{
+    -fx-font-size: 14;
+    -fx-base : -fx-dark;
+    -fx-background-color: -fx-dark;
+}
+
+.menu-item:focused {
+    -fx-background-color: -fx-gray;
+}
+
+.context-menu {
+    -fx-background-color: #323640;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+    -fx-padding: 0.3em 0.083em 0.67em 0.083em;
+}
+
+.menu-bar .label {
+    -fx-text-fill: -fx-gray;
+}
+
+/* ToolBar style*/
+
+/*Hamburger Styling*/
+.jfx-hamburger{
+    -fx-spacing: 7;
+}
+
+.jfx-hamburger StackPane {
+    -fx-background-color: -fx-yellow;
+    -fx-background-radius: 5px;
+}
+
+/*Toolbar buttons*/
+.toolbar-button
+{
+    -fx-border-color: transparent;
+    -fx-background-color: derive(-fx-dark, 10%);
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+}
+.toolbar-button:hover
+{
+    -fx-background-color: -fx-yellow;
+    -fx-text-fill: -fx-dark;
+}
+
+.toolbar-button:hover .glyph-icon, .toolbar-button:hover .glyph-icon
+{
+    -fx-fill: -fx-dark;
+}

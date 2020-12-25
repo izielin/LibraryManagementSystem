@@ -9,9 +9,10 @@
     <version>2.0</version>
 
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <maven.compiler.source>15.0.1</maven.compiler.source>
+        <maven.compiler.target>15.0.1</maven.compiler.target>
     </properties>
+
 
     <dependencies>
         <dependency>
@@ -22,7 +23,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>15</version>
+            <version>15.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.jfoenix</groupId>

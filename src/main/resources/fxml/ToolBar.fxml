@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="150.0" stylesheets="@../css/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ToolBarController">
+   <children>
+      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#executeAddMember" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.addMember">
+         <graphic>
+            <FontAwesomeIcon glyphName="USER_PLUS" size="25" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#executeAddBook" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.addBook">
+         <graphic>
+            <FontAwesomeIcon glyphName="BOOK" size="25" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadMemberTable" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.viewMembers">
+         <graphic>
+            <FontAwesomeIcon glyphName="TH_LIST" size="25" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadBookTable" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.viewBooks">
+         <graphic>
+            <FontAwesomeIcon glyphName="TH" size="25" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadSettings" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="Settings">
+         <graphic>
+            <FontAwesomeIcon glyphName="COGS" size="25" />
+         </graphic>
+      </JFXButton>
+   </children>
+</VBox>

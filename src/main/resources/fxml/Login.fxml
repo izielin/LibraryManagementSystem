@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
@@ -7,120 +8,159 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.LoginController">
-   <children>
-      <VBox prefHeight="513.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.LoginController">
+   <center>
+      <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark-theme.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" styleClass="root">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
+            <VBox prefHeight="520.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <FontAwesomeIcon glyphName="MINUS" onMouseClicked="#minimize" styleClass="menu-icon">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </FontAwesomeIcon>
-                  <FontAwesomeIcon glyphName="CIRCLE" onMouseClicked="#fullScreen" styleClass="menu-icon">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </FontAwesomeIcon>
-                  <FontAwesomeIcon glyphName="CLOSE" onMouseClicked="#close" styleClass="menu-icon">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </FontAwesomeIcon>
-               </children>
-            </HBox>
-            <AnchorPane prefHeight="500.0" prefWidth="850.0" styleClass="root">
-               <children>
-                  <HBox prefHeight="476.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="520.0" prefWidth="800.0" styleClass="root">
                      <children>
-                        <AnchorPane prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: #FFFF8D;">
+                        <HBox prefHeight="500.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="503.0" prefWidth="382.0">
+                              <AnchorPane prefHeight="500.0" prefWidth="739.0" styleClass="custom-background">
                                  <children>
-                                    <ImageView fitHeight="176.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/icon.png" />
-                                       </image>
-                                       <VBox.margin>
-                                          <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-                                       </VBox.margin>
-                                    </ImageView>
-                                    <Label alignment="CENTER" prefHeight="23.0" prefWidth="254.0" text="Library Management System" textFill="WHITE">
-                                       <font>
-                                          <Font name="Segoe UI" size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="30.0" right="30.0" top="30.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label alignment="CENTER" prefHeight="23.0" prefWidth="205.0" text="Transfer books' set to the internet" textFill="WHITE">
-                                       <font>
-                                          <Font name="Segoe UI" size="12.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
-                                       </VBox.margin>
-                                    </Label>
+                                    <VBox alignment="CENTER" prefHeight="513.0" prefWidth="197.0" AnchorPane.bottomAnchor="-13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <ImageView fitHeight="176.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/icon.png" />
+                                             </image>
+                                             <VBox.margin>
+                                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="23.0" prefWidth="254.0" text="Library Management System" textFill="WHITE">
+                                             <font>
+                                                <Font name="Segoe UI" size="18.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" right="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label alignment="CENTER" prefHeight="23.0" prefWidth="205.0" text="Transfer books' set to the internet" textFill="WHITE">
+                                             <font>
+                                                <Font name="Segoe UI" size="12.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                  </children>
-                              </VBox>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="476.0" prefWidth="807.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="503.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Pane maxHeight="90.0" maxWidth="90.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #FFFF8D; -fx-background-radius: 50;">
+                                             <children>
+                                                <FontAwesomeIcon glyphName="LOCK" layoutX="31.0" layoutY="61.0" size="45" styleClass="icon" />
+                                             </children>
+                                          </Pane>
+                                          <Text fx:id="alertText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alert-text" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="Segoe UI Emoji" size="18.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets top="20.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <HBox alignment="CENTER" prefWidth="200.0" spacing="25.0">
+                                             <children>
+                                                <FontAwesomeIcon glyphName="USER" size="20">
+                                                   <HBox.margin>
+                                                      <Insets top="25.0" />
+                                                   </HBox.margin></FontAwesomeIcon>
+                                                <JFXTextField fx:id="usernameInput" labelFloat="true" prefHeight="35.0" prefWidth="275.0" promptText="%username">
+                                                   <font>
+                                                      <Font name="Segoe UI Emoji" size="15.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets bottom="5.0" left="10.0" right="10.0" top="25.0" />
+                                                   </HBox.margin>
+                                                </JFXTextField>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefWidth="200.0" spacing="25.0">
+                                             <children>
+                                                <FontAwesomeIcon glyphName="KEY" size="20">
+                                                   <HBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </HBox.margin></FontAwesomeIcon>
+                                                <JFXPasswordField fx:id="passwordInput" labelFloat="true" onAction="#LoginAction" prefHeight="35.0" prefWidth="275.0" promptText="%password">
+                                                   <font>
+                                                      <Font name="Segoe UI Emoji" size="15.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                                   </HBox.margin>
+                                                </JFXPasswordField>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="15.0" right="15.0" top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox>
+                                             <children>
+                                                <JFXCheckBox checkedColor="#ffffff00" text="Remember me (TODO)">
+                                                   <HBox.margin>
+                                                      <Insets bottom="40.0" left="80.0" top="15.0" />
+                                                   </HBox.margin>
+                                                </JFXCheckBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefWidth="200.0" spacing="25.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#LoginAction" prefHeight="35.0" prefWidth="140.0" styleClass="login-button" text="%buttonLogin">
+                                                   <font>
+                                                      <Font name="Segoe UI Emoji" size="15.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="140.0" styleClass="forgot-button" text="Forgot password? (TODO)">
+                                                   <font>
+                                                      <Font name="Segoe UI Emoji" size="15.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
                            </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="476.0" prefWidth="807.0">
-                           <children>
-                              <JFXTextField fx:id="usernameInput" focusColor="#56BFA1" labelFloat="true" layoutX="88.0" layoutY="147.0" prefHeight="35.0" prefWidth="275.0" promptText="%username">
-                                 <font>
-                                    <Font name="Segoe UI Emoji" size="15.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXPasswordField fx:id="passwordInput" focusColor="#49A086" labelFloat="true" layoutX="88.0" layoutY="216.0" onAction="#LoginAction" prefHeight="35.0" prefWidth="275.0" promptText="%password">
-                                 <font>
-                                    <Font name="Segoe UI Emoji" size="15.0" />
-                                 </font>
-                              </JFXPasswordField>
-                              <Button layoutX="223.0" layoutY="285.0" mnemonicParsing="false" onAction="#LoginAction" prefHeight="35.0" prefWidth="140.0" styleClass="login-button" text="%buttonLogin">
-                                 <font>
-                                    <Font name="Segoe UI Emoji" size="15.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="72.0" layoutY="386.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" styleClass="login-button" text="Sign up (work in progress)" />
-                              <Separator layoutX="72.0" layoutY="350.0" prefHeight="7.0" prefWidth="275.0" />
-                              <Label alignment="CENTER" layoutX="194.0" layoutY="342.0" prefHeight="23.0" prefWidth="31.0" style="-fx-background-color: B2B2B2;" text="OR" textFill="#5b5a5a" />
-                              <FontAwesomeIcon glyphName="USER" layoutX="58.0" layoutY="176.0" size="20" />
-                              <FontAwesomeIcon glyphName="KEY" layoutX="58.0" layoutY="246.0" size="20" />
-                              <FontAwesomeIcon glyphName="LOCK" layoutX="195.0" layoutY="121.0" size="45" />
-                              <Button layoutX="54.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="140.0" styleClass="login-button" text="forget Password">
-                                 <font>
-                                    <Font name="Segoe UI Emoji" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
+            </VBox>
          </children>
-      </VBox>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </center>
+</BorderPane>
