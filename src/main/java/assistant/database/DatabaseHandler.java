@@ -118,7 +118,7 @@ public class DatabaseHandler {
                 statement.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "bookID varchar(200) primary key,"
                         + "memberID varchar(200),"
-                        + "checkOut timestamp default CURRENT_TIMESTAMP,"
+                        + "checkOut timestamp default CURRENT_TIMESTAMP," // TODO: change name to checkOutTime
                         + "renew_count integer default 0,"
                         + "FOREIGN KEY (bookID) REFERENCES BOOK(id),"
                         + "FOREIGN KEY (memberID) REFERENCES MEMBER(id)"

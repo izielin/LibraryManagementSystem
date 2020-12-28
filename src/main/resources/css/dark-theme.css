@@ -43,16 +43,18 @@
 
 
 /*Login Screen Styles*/
-.login-button
+.common-button:hover
 {
     -fx-border-color: -fx-yellow;
     -fx-background-color: -fx-yellow;
     -fx-text-fill:  -fx-dark;
+
 }
-.login-button:hover{
+.common-button{
     -fx-border-color: -fx-yellow;
     -fx-background-color: transparent;
     -fx-text-fill: -fx-yellow;
+    -fx-font-size: 13pt;
 }
 
 .forgot-button
@@ -62,8 +64,10 @@
     -fx-border-color: -fx-gray;
     -fx-border-width: 0 0 1 0;
 }
-.login-button:hover{
+.forgot-button:hover{
     -fx-text-fill: -fx-yellow;
+    -fx-border-color: -fx-yellow;
+
 }
 
 .check-box{
@@ -173,20 +177,33 @@
 }
 
 /*Toolbar buttons*/
-.toolbar-button
+.toolbar-button, .title-button
 {
     -fx-border-color: transparent;
     -fx-background-color: derive(-fx-dark, 10%);
     -fx-background-radius: 0px;
     -fx-border-radius: 0px;
 }
-.toolbar-button:hover
+.toolbar-button:hover, .title-button:hover
 {
     -fx-background-color: -fx-yellow;
     -fx-text-fill: -fx-dark;
 }
 
-.toolbar-button:hover .glyph-icon, .toolbar-button:hover .glyph-icon
+.toolbar-button:hover .glyph-icon, .title-button:hover .glyph-icon
 {
     -fx-fill: -fx-dark;
+}
+
+/* Text Styling*/
+.main-text {
+    -fx-fill: -fx-gray;
+    -fx-font-size: 13pt;
+    -fx-text-alignment: center;
+}
+
+/* Submission View Style */
+
+.submission-container {
+    -fx-background-color: derive(-fx-dark, 10%);
 }

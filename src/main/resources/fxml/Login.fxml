@@ -129,7 +129,7 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefWidth="200.0" spacing="25.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#LoginAction" prefHeight="35.0" prefWidth="140.0" styleClass="login-button" text="%buttonLogin">
+                                                <Button mnemonicParsing="false" onAction="#LoginAction" prefHeight="35.0" prefWidth="140.0" styleClass="common-button" text="%buttonLogin">
                                                    <font>
                                                       <Font name="Segoe UI Emoji" size="15.0" />
                                                    </font>

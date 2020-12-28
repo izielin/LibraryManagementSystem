@@ -9,8 +9,6 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,8 +25,10 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,7 +45,6 @@ public class MainController implements Initializable {
     private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
     private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
-
 
     @FXML
     private BorderPane rootPane;
@@ -67,7 +66,24 @@ public class MainController implements Initializable {
     private Text bookTitle;
     @FXML
     private Text bookAuthor;
-
+    @FXML
+    private Text feeHolder;
+    @FXML
+    private Text dayHolder;
+    @FXML
+    private Text checkOutHolder;
+    @FXML
+    private Text bookPublisherHolder;
+    @FXML
+    private Text bookAuthorHolder;
+    @FXML
+    private Text bookTitleHolder;
+    @FXML
+    private Text memberContactHolder;
+    @FXML
+    private Text memberEmailHolder;
+    @FXML
+    private Text memberNameHolder;
     @FXML
     private JFXHamburger hamburger;
     @FXML
@@ -130,7 +146,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void MenuViewBook() {
-    loadWindow(FXML_LIST_BOOK);
+        loadWindow(FXML_LIST_BOOK);
     }
 
     @FXML
@@ -235,49 +251,46 @@ public class MainController implements Initializable {
 
     @FXML
     private void loadBookCheckOut() {
-        ObservableList<String> checkOutData = FXCollections.observableArrayList();
         isReadyForSubmission = false;
 
-        String bookID = bookIdInput.getText();
-        String query = "SELECT * FROM CHECK_OUT WHERE bookID = '" + bookID + "'";
-        ResultSet resultSet = databaseHandler.execQuery(query);
-
         try {
-            while (resultSet.next()) {
-                String memberID = resultSet.getString("memberID");
-                Timestamp timestamp = resultSet.getTimestamp("checkOut");
-                int renewCount = resultSet.getInt("renew_count");
+            String id = bookIdInput.getText();
+            String query = "SELECT CHECK_OUT.bookID, CHECK_OUT.memberID, CHECK_OUT.checkOut, CHECK_OUT.renew_count, " +
+                    "MEMBER.name, MEMBER.mobile, MEMBER.email, " +
+                    "BOOK.title, BOOK.author, BOOK.publisher, BOOK.isAvailable " +
+                    "FROM CHECK_OUT INNER JOIN MEMBER " +
+                    "ON CHECK_OUT.memberID = MEMBER.id " +
+                    "INNER JOIN BOOK " +
+                    "ON CHECK_OUT.bookID = BOOK.id " +
+                    "WHERE bookID = '" + id + "'";
 
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.timestamp") + ": " + timestamp.toString());
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.renew") + ": " + renewCount);
+            ResultSet resultSet = databaseHandler.execQuery(query);
 
-                checkOutData.add("");
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.book") + ": ");
-                query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
-                ResultSet bookResultSet = databaseHandler.execQuery(query);
+            if (resultSet.next()) {
 
-                while (bookResultSet.next()) {
-                    checkOutData.add(getResourceBundle().getString("bookTitle") + ": " + bookResultSet.getString("title"));
-                    checkOutData.add(getResourceBundle().getString("bookID") + ": " + bookResultSet.getString("id"));
-                    checkOutData.add(getResourceBundle().getString("bookAuthor") + ": " + bookResultSet.getString("author"));
-                    checkOutData.add(getResourceBundle().getString("publisher") + ": " + bookResultSet.getString("publisher"));
-                }
+                memberNameHolder.setText(resultSet.getString("name"));
+                memberEmailHolder.setText(resultSet.getString("mobile"));
+                memberContactHolder.setText(resultSet.getString("email"));
 
-                checkOutData.add("");
-                checkOutData.add(getResourceBundle().getString("checkOutDataList.member") + ": ");
-                query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
-                ResultSet memberResultSet = databaseHandler.execQuery(query);
-                while (memberResultSet.next()) {
-                    checkOutData.add(getResourceBundle().getString("memberName") + ": " + memberResultSet.getString("name"));
-                    checkOutData.add(getResourceBundle().getString("memberMobile") + ": " + memberResultSet.getString("mobile"));
-                    checkOutData.add(getResourceBundle().getString("memberEmail") + ": " + memberResultSet.getString("email"));
-                }
+                bookTitleHolder.setText(resultSet.getString("title"));
+                bookAuthorHolder.setText(resultSet.getString("author"));
+                bookPublisherHolder.setText(resultSet.getString("publisher"));
+
+                Timestamp chekOutTime = resultSet.getTimestamp("checkOut");
+                Date dateOfChekOut = new Date(chekOutTime.getTime());
+
+                long timeElapsed = System.currentTimeMillis() - chekOutTime.getTime();
+                long daysElapsed = TimeUnit.DAYS.convert(timeElapsed, TimeUnit.MILLISECONDS);
+
+                checkOutHolder.setText(dateOfChekOut.toString());
+                dayHolder.setText(Long.toString(daysElapsed));
+                feeHolder.setText("Not Supported Yet");
+
                 isReadyForSubmission = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        checkOutDataList.getItems().setAll(checkOutData);
     }
 
     @FXML

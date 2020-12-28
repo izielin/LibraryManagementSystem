@@ -10,7 +10,7 @@
    <children>
       <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragged="#dragged" onMousePressed="#pressed" styleClass="root" stylesheets="@../css/dark-theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton onMouseClicked="#minimize" prefWidth="25.0">
+            <JFXButton onMouseClicked="#minimize" prefWidth="25.0" styleClass="title-button">
                <graphic>
                   <FontAwesomeIcon glyphName="MINUS" styleClass="menu-icon">
                      <cursor>
@@ -19,7 +19,7 @@
                   </FontAwesomeIcon>
                </graphic>
             </JFXButton>
-            <JFXButton onMouseClicked="#fullScreen" prefWidth="25.0">
+            <JFXButton onMouseClicked="#fullScreen" prefWidth="25.0" styleClass="title-button">
                <graphic>
                   <FontAwesomeIcon glyphName="CIRCLE" styleClass="menu-icon">
                      <cursor>
@@ -28,7 +28,7 @@
                   </FontAwesomeIcon>
                </graphic>
             </JFXButton>
-            <JFXButton onMouseClicked="#close" prefWidth="25.0">
+            <JFXButton onMouseClicked="#close" prefWidth="25.0" styleClass="title-button">
                <graphic>
                   <FontAwesomeIcon glyphName="CLOSE" styleClass="menu-icon">
                      <cursor>
