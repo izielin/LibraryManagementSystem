@@ -2,20 +2,20 @@ package assistant.UI.Controllers;
 
 import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -25,9 +25,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,10 +44,12 @@ public class MainController implements Initializable {
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
     private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
 
+
+
     @FXML
-    private BorderPane rootPane;
+    private StackPane rootPane;
     @FXML
-    private ListView<String> checkOutDataList;
+    private BorderPane mainBorderPane;
     @FXML
     private JFXTextField bookIDInput;
     @FXML
@@ -88,6 +88,12 @@ public class MainController implements Initializable {
     private JFXHamburger hamburger;
     @FXML
     private JFXDrawer drawer;
+    @FXML
+    private JFXButton renewButton;
+    @FXML
+    private JFXButton submissionButton;
+    @FXML
+    private HBox submissionDataContainer;
 
     DatabaseHandler databaseHandler;
     boolean isReadyForSubmission = false;
@@ -122,7 +128,7 @@ public class MainController implements Initializable {
     }
 
     public void setTitleBar() {
-        rootPane.setTop(Utils.fxmlLoader("/fxml/CustomTitleBar.fxml"));
+        mainBorderPane.setTop(Utils.fxmlLoader("/fxml/CustomTitleBar.fxml"));
     }
 
     // menu actions
@@ -251,6 +257,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void loadBookCheckOut() {
+        clearEntries();
         isReadyForSubmission = false;
 
         try {
@@ -267,7 +274,6 @@ public class MainController implements Initializable {
             ResultSet resultSet = databaseHandler.execQuery(query);
 
             if (resultSet.next()) {
-
                 memberNameHolder.setText(resultSet.getString("name"));
                 memberEmailHolder.setText(resultSet.getString("mobile"));
                 memberContactHolder.setText(resultSet.getString("email"));
@@ -287,10 +293,63 @@ public class MainController implements Initializable {
                 feeHolder.setText("Not Supported Yet");
 
                 isReadyForSubmission = true;
+                toggleControls(false);
+            } else {
+                BoxBlur blur = new BoxBlur(3, 3, 3);
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                List<JFXButton> controls = new ArrayList<>();;
+                controls.add(new JFXButton("Okay"));
+                controls.add(new JFXButton("Cancel"));
+                JFXButton button = new JFXButton("OK");
+                button.getStyleClass().add("dialog-button");
+
+                JFXDialog dialog = new JFXDialog(rootPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
+
+                controls.forEach(controlButton -> {
+                    controlButton.getStyleClass().add("dialog-button");
+                    controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
+                        dialog.close();
+                    });
+                });
+
+                dialogLayout.setHeading(new Label("No such Book exist in Check Out Records"));
+                dialogLayout.setBody(new Label("Content"));
+                dialogLayout.setActions(controls);
+                dialog.show();
+                dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
+                    mainBorderPane.setEffect(null);
+                });
+                mainBorderPane.setEffect(blur);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void clearEntries() {
+        memberNameHolder.setText("");
+        memberEmailHolder.setText("");
+        memberContactHolder.setText("");
+
+        bookTitleHolder.setText("");
+        bookAuthorHolder.setText("");
+        bookPublisherHolder.setText("");
+
+        checkOutHolder.setText("");
+        dayHolder.setText("");
+        feeHolder.setText("");
+
+        toggleControls(true);
+    }
+
+    private void toggleControls(boolean enableFlag){
+            renewButton.setDisable(enableFlag);
+            submissionButton.setDisable(enableFlag);
+            if(enableFlag){
+                submissionDataContainer.setOpacity(0);
+            } else {
+                submissionDataContainer.setOpacity(1);
+            }
     }
 
     @FXML
@@ -307,7 +366,7 @@ public class MainController implements Initializable {
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
                     showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
                     bookIdInput.clear();
-                    checkOutDataList.getItems().clear();
+                    toggleControls(true);
                 } else {
                     showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
                 }
@@ -328,7 +387,6 @@ public class MainController implements Initializable {
 
                 if (databaseHandler.execAction(action)) {
                     showSimpleAlert("information", "Success", "Book has been successfully renewed", "Operation ended successfully");
-                    checkOutDataList.getItems().clear();
                     loadBookCheckOut();
                 } else {
                     showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");

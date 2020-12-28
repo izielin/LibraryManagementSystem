@@ -207,3 +207,16 @@
 .submission-container {
     -fx-background-color: derive(-fx-dark, 10%);
 }
+
+/* Dialog Styles*/
+.dialog-button
+{
+    -fx-border-color: transparent;
+    -fx-background-color: -fx-dark;
+    -fx-background-radius: 20px;
+
+}
+.dialog-button:hover {
+    -fx-background-color: derive(-fx-dark, 10%);
+    -fx-text-fill: -fx-yellow;
+}
