@@ -45,7 +45,7 @@ public class Utils {
             if(!path.equals("/fxml/Login.fxml")) {
                 ResizeHelper.addResizeListener(stage);
             }
-
+            System.out.println(stage.getScene().getWidth());
             stage.show();
             Utils.setIcon(stage);
 

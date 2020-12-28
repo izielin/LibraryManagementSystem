@@ -10,8 +10,9 @@ public class TitleBarController {
     double x, y;
 
     @FXML
-    private void close() {
-        System.exit(0);
+    private void close(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML

@@ -1,5 +1,6 @@
 package assistant.UI.Controllers;
 
+import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -35,12 +37,21 @@ public class AddMemberController implements Initializable {
     @FXML
     private JFXButton saveAndCloseButton;
 
+    @FXML
+    private BorderPane mainBorderPane;
+
     //object of DatabaseHandler
     DatabaseHandler databaseHandler;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         databaseHandler = DatabaseHandler.getInstance();
+        setTitleBar();
+    }
+
+    public void setTitleBar() {
+        System.out.println("work");
+        mainBorderPane.setTop(Utils.fxmlLoader("/fxml/BaseTitleBar.fxml"));
     }
 
     public void executeSaveAction(ActionEvent event) {

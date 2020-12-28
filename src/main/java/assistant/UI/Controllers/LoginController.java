@@ -6,8 +6,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -39,7 +37,7 @@ public class LoginController implements Initializable {
     }
 
     public void setTitleBar() {
-        borderPane.setTop(Utils.fxmlLoader("/fxml/CustomTitleBar.fxml"));
+        borderPane.setTop(Utils.fxmlLoader("/fxml/BaseTitleBar.fxml"));
     }
 
     @FXML

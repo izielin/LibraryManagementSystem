@@ -148,7 +148,7 @@ public class MainController implements Initializable {
     }
 
     public void setTitleBar() {
-        mainBorderPane.setTop(Utils.fxmlLoader("/fxml/CustomTitleBar.fxml"));
+        mainBorderPane.setTop(Utils.fxmlLoader("/fxml/BaseTitleBar.fxml"));
     }
 
     // menu actions
