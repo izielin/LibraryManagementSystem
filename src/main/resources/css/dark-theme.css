@@ -212,11 +212,31 @@
 .dialog-button
 {
     -fx-border-color: transparent;
-    -fx-background-color: -fx-dark;
-    -fx-background-radius: 20px;
-
+    -fx-background-color: #007BFF;
+    -fx-background-radius: 6px;
+    -fx-padding: 7px;
+    -fx-font-size: 11pt;
+    -fx-text-fill: white;
 }
 .dialog-button:hover {
-    -fx-background-color: derive(-fx-dark, 10%);
-    -fx-text-fill: -fx-yellow;
+    -fx-background-color: derive(#007BFF, 20%);
+}
+
+.jfx-layout-actions {
+    -fx-hgap: 20;
+}
+
+/* PieChart Style */
+.data0.chart-pie{
+    -fx-pie-color:#007BFF;
+    -fx-border-color: transparent;
+}
+
+.data1.chart-pie{
+    -fx-pie-color:-fx-yellow;
+    -fx-border-color: transparent;
+}
+
+.chart-pie-label {
+    -fx-fill: -fx-gray;
 }

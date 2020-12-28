@@ -3,20 +3,18 @@ package assistant.UI.Controllers;
 import assistant.Utils.Utils;
 import assistant.database.DatabaseHandler;
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.events.JFXDialogEvent;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
+import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -32,8 +30,7 @@ import java.util.logging.Logger;
 
 import static assistant.Utils.Utils.getResourceBundle;
 import static assistant.Utils.Utils.loadWindow;
-import static assistant.alert.AlertMaker.alertConfirm;
-import static assistant.alert.AlertMaker.showSimpleAlert;
+import static assistant.alert.AlertMaker.*;
 
 
 public class MainController implements Initializable {
@@ -43,7 +40,6 @@ public class MainController implements Initializable {
     private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
     private static final String FXML_LIST_MEMBER = "/fxml/MemberList.fxml";
     private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
-
 
 
     @FXML
@@ -94,9 +90,17 @@ public class MainController implements Initializable {
     private JFXButton submissionButton;
     @FXML
     private HBox submissionDataContainer;
+    @FXML
+    private AnchorPane graphContainer;
+    @FXML
+    private Tab statisticTab;
+    @FXML
+    private JFXTabPane tabPane;
 
     DatabaseHandler databaseHandler;
     boolean isReadyForSubmission = false;
+    PieChart bookChart = new PieChart();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,6 +108,22 @@ public class MainController implements Initializable {
         setTitleBar();
 
         initDrawer();
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> old, Tab oldTab, Tab newTab) {
+                if (newTab.getText().equals(getResourceBundle().getString("tab3"))) {
+                    bookChart.getData().clear();
+                    initGraph();
+                }
+            }
+        });
+    }
+
+    private void initGraph() {
+
+        bookChart = new PieChart(databaseHandler.getBookStatistics());
+        graphContainer.getChildren().add(bookChart);
     }
 
     private void initDrawer() {
@@ -134,10 +154,7 @@ public class MainController implements Initializable {
     // menu actions
     @FXML
     private void MenuCloseApplication() {
-        Optional<ButtonType> result = alertConfirm("Close Application", "", "Are you sure you want to close app?");
-        if (result.orElse(null) == ButtonType.OK) {
-            System.exit(0);
-        }
+        showExitDialog(rootPane, mainBorderPane);
     }
 
     @FXML
@@ -229,30 +246,35 @@ public class MainController implements Initializable {
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
 
-        Optional<ButtonType> response = alertConfirm("Confirm chek book out operation", "",
-                "Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
-
-        if (response.orElse(null) == ButtonType.OK) {
+        JFXButton yesButton = new JFXButton("YES");
+        yesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             String action = "INSERT INTO CHECK_OUT(memberID, bookID) VALUES( " +
                     "'" + memberID + "'," +
                     "'" + bookID + "')";
             String action2 = "UPDATE BOOK SET isAvailable = false WHERE id = '" + bookID + "'";
 
             if (databaseHandler.execAction(action) && databaseHandler.execAction(action2)) {
-                showSimpleAlert("information", "Success", "", "Operation ended successfully");
-                memberIDInput.clear();
-                bookIDInput.clear();
-                bookTitle.setText(getResourceBundle().getString("bookTitle"));
-                bookAuthor.setText(getResourceBundle().getString("bookAuthor"));
-                bookStatus.setText(getResourceBundle().getString("availability"));
-                memberName.setText(getResourceBundle().getString("memberName"));
-                memberContact.setText(getResourceBundle().getString("memberContact"));
-            } else {
-                showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
+                showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), " Success", "Operation ended successfully");
+                clearCheckOutEntries();
             }
-        } else {
-            showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
-        }
+        });
+
+        JFXButton cancelButton = new JFXButton("Cancel");
+        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+                showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Failed", "Operation ended unsuccessfully"));
+
+        showJFXButton(rootPane, mainBorderPane, Arrays.asList(yesButton, cancelButton), "Confirm chek book out operation",
+                "Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
+    }
+
+    private void clearCheckOutEntries() {
+        memberIDInput.clear();
+        bookIDInput.clear();
+        bookTitle.setText(getResourceBundle().getString("bookTitle"));
+        bookAuthor.setText(getResourceBundle().getString("bookAuthor"));
+        bookStatus.setText(getResourceBundle().getString("availability"));
+        memberName.setText(getResourceBundle().getString("memberName"));
+        memberContact.setText(getResourceBundle().getString("memberContact"));
     }
 
     @FXML
@@ -295,31 +317,8 @@ public class MainController implements Initializable {
                 isReadyForSubmission = true;
                 toggleControls(false);
             } else {
-                BoxBlur blur = new BoxBlur(3, 3, 3);
-                JFXDialogLayout dialogLayout = new JFXDialogLayout();
-                List<JFXButton> controls = new ArrayList<>();;
-                controls.add(new JFXButton("Okay"));
-                controls.add(new JFXButton("Cancel"));
                 JFXButton button = new JFXButton("OK");
-                button.getStyleClass().add("dialog-button");
-
-                JFXDialog dialog = new JFXDialog(rootPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
-
-                controls.forEach(controlButton -> {
-                    controlButton.getStyleClass().add("dialog-button");
-                    controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
-                        dialog.close();
-                    });
-                });
-
-                dialogLayout.setHeading(new Label("No such Book exist in Check Out Records"));
-                dialogLayout.setBody(new Label("Content"));
-                dialogLayout.setActions(controls);
-                dialog.show();
-                dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
-                    mainBorderPane.setEffect(null);
-                });
-                mainBorderPane.setEffect(blur);
+                showJFXButton(rootPane, mainBorderPane, Arrays.asList(button), "No such Book exist in Check Out Records", "Try type different id");
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
@@ -342,20 +341,20 @@ public class MainController implements Initializable {
         toggleControls(true);
     }
 
-    private void toggleControls(boolean enableFlag){
-            renewButton.setDisable(enableFlag);
-            submissionButton.setDisable(enableFlag);
-            if(enableFlag){
-                submissionDataContainer.setOpacity(0);
-            } else {
-                submissionDataContainer.setOpacity(1);
-            }
+    private void toggleControls(boolean enableFlag) {
+        renewButton.setDisable(enableFlag);
+        submissionButton.setDisable(enableFlag);
+        if (enableFlag) {
+            submissionDataContainer.setOpacity(0);
+        } else {
+            submissionDataContainer.setOpacity(1);
+        }
     }
 
     @FXML
     private void loadSubmissionOperation() {
         if (!isReadyForSubmission) {
-            showSimpleAlert("error", "Failed", "", "Please select book to submit");
+            showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Failed", "Please select book to submit");
         } else {
             Optional<ButtonType> response = alertConfirm("Confirm submission operation", "", "Are you sure you want to return the book?");
             if (response.orElse(null) == ButtonType.OK) {
@@ -364,14 +363,12 @@ public class MainController implements Initializable {
                 String actionUpdate = "UPDATE BOOK SET isAvailable = true WHERE id = '" + bookID + "'";
 
                 if (databaseHandler.execAction(actionDelete) && databaseHandler.execAction(actionUpdate)) {
-                    showSimpleAlert("information", "Success", "Book has been Submitted", "Operation ended successfully");
+                    showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Book has been Submitted", "Operation ended successfully");
                     bookIdInput.clear();
                     toggleControls(true);
                 } else {
-                    showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
+                    showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Failed", "Operation ended unsuccessfully");
                 }
-            } else {
-                showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
             }
         }
     }
@@ -379,20 +376,18 @@ public class MainController implements Initializable {
     @FXML
     private void loadRenewOperation() {
         if (!isReadyForSubmission) {
-            showSimpleAlert("error", "Failed", "", "Please select book to renew");
+            showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Failed", "Please select book to renew");
         } else {
             Optional<ButtonType> response = alertConfirm("Confirm renew operation", "", "Are you sure you want to renew the book?");
             if (response.orElse(null) == ButtonType.OK) {
                 String action = "UPDATE CHECK_OUT SET checkOut = CURRENT_TIMESTAMP, renew_count = renew_count+1 where bookID = '" + bookIdInput.getText() + "'";
 
                 if (databaseHandler.execAction(action)) {
-                    showSimpleAlert("information", "Success", "Book has been successfully renewed", "Operation ended successfully");
+                    showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Book has been successfully renewed", "Operation ended successfully");
                     loadBookCheckOut();
                 } else {
-                    showSimpleAlert("error", "Failed", "", "Operation ended unsuccessfully");
+                    showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Failed", "Operation ended unsuccessfully");
                 }
-            } else {
-                showSimpleAlert("information", "Cancelled", "", "Operation was cancelled");
             }
         }
     }

@@ -2,6 +2,9 @@ package assistant.database;
 
 import assistant.UI.Controllers.BookListController.Book;
 import assistant.UI.Controllers.MemberListController.Member;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -238,8 +241,7 @@ public class DatabaseHandler {
         return false;
     }
 
-    public boolean updateMember(Member member)
-    {
+    public boolean updateMember(Member member) {
         try {
             String update = "UPDATE MEMBER SET NAME=?, EMAIL=?, MOBILE=? WHERE ID=?";
             PreparedStatement statement = connection.prepareStatement(update);
@@ -248,10 +250,33 @@ public class DatabaseHandler {
             statement.setString(3, member.getMobileProperty());
             statement.setString(4, member.getIdProperty());
             int res = statement.executeUpdate();
-            return (res>0);
+            return (res > 0);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public ObservableList<PieChart.Data> getBookStatistics() {
+        ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+        try {
+            String bookInMagazine = "SELECT COUNT (*) FROM BOOK WHERE isAvailable = true";
+            String bookCheckedOut = "SELECT COUNT (*) FROM BOOK WHERE isAvailable = false";
+
+            ResultSet resultSet = execQuery(bookInMagazine);
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                data.add(new PieChart.Data("Books in magazine (" + count + ")", count));
+            }
+
+            resultSet = execQuery(bookCheckedOut);
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                data.add(new PieChart.Data("Issued books (" + count + ")", count));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }
