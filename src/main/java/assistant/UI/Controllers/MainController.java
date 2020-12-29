@@ -1,7 +1,7 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.Utils;
-import assistant.database.DatabaseHandler;
+import assistant.database.db;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.beans.value.ChangeListener;
@@ -97,14 +97,14 @@ public class MainController implements Initializable {
     @FXML
     private JFXTabPane tabPane;
 
-    DatabaseHandler databaseHandler;
+    db databaseHandler;
     boolean isReadyForSubmission = false;
     PieChart bookChart = new PieChart();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        databaseHandler = DatabaseHandler.getInstance();
+        databaseHandler = db.getInstance();
         setTitleBar();
 
         initDrawer();

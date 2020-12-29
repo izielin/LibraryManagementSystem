@@ -8,9 +8,6 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -27,23 +24,6 @@
             <center>
                <VBox prefHeight="650.0" prefWidth="763.0" BorderPane.alignment="CENTER">
                   <children>
-                         <MenuBar prefHeight="30.0" prefWidth="1100.0">
-                             <Menu mnemonicParsing="false" text="File">
-                                 <MenuItem mnemonicParsing="false" onAction="#MenuCloseApplication" text="Close" />
-                             </Menu>
-                             <Menu mnemonicParsing="false" text="Add">
-                                 <MenuItem mnemonicParsing="false" onAction="#MenuAddBook" text="Add Book" />
-                                 <MenuItem mnemonicParsing="false" onAction="#MenuAddMember" text="Add Member" />
-                             </Menu>
-                             <Menu mnemonicParsing="false" text="View">
-                                 <MenuItem mnemonicParsing="false" onAction="#MenuViewBook" text="View Book" />
-                                 <MenuItem mnemonicParsing="false" onAction="#MenuViewMember" text="View Members" />
-                                 <MenuItem mnemonicParsing="false" onAction="#MenuFullScreen" text="Full Screen" />
-                             </Menu>
-                             <Menu mnemonicParsing="false" text="Help">
-                                 <MenuItem mnemonicParsing="false" text="About" />
-                             </Menu>
-                         </MenuBar>
                      <AnchorPane prefHeight="620.0" prefWidth="1175.0">
                         <children>
                            <JFXTabPane fx:id="tabPane" prefHeight="620.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-150.0" AnchorPane.topAnchor="0.0">

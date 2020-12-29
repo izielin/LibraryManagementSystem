@@ -1,7 +1,7 @@
 package assistant.UI;
 
-import assistant.UI.Controllers.MainController;
 import assistant.database.DatabaseHandler;
+import assistant.database.db;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -17,7 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         loadWindow(FXML_FILE);
-        new Thread(DatabaseHandler::getInstance).start();
+        DatabaseHandler.initDatabase();
 
     }
 

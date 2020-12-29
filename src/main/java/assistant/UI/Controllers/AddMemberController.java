@@ -1,7 +1,7 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.Utils;
-import assistant.database.DatabaseHandler;
+import assistant.database.db;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -41,11 +41,11 @@ public class AddMemberController implements Initializable {
     private BorderPane mainBorderPane;
 
     //object of DatabaseHandler
-    DatabaseHandler databaseHandler;
+    db databaseHandler;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        databaseHandler = DatabaseHandler.getInstance();
+        databaseHandler = db.getInstance();
         setTitleBar();
     }
 

@@ -1,11 +1,10 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.Utils;
-import assistant.database.DatabaseHandler;
+import assistant.database.db;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -73,7 +72,7 @@ public class MemberListController implements Initializable {
 
     private void loadData() {
         list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
+        db handler = db.getInstance();
         String query = "SELECT * FROM MEMBER";
         ResultSet resultSet = handler.execQuery(query);
         try {
@@ -102,13 +101,13 @@ public class MemberListController implements Initializable {
             showSimpleAlert("error","No member selected", "Please select a member for deletion.","");
             return;
         }
-        if (DatabaseHandler.getInstance().isMemberHasAnyBooks(selectedForDeletion)) {
+        if (db.getInstance().isMemberHasAnyBooks(selectedForDeletion)) {
             showSimpleAlert("error","Cant be deleted", "This member has some books.","");
         }else {
             Optional<ButtonType> response =alertConfirm("Deleting book", "Are you sure want to delete " + selectedForDeletion.getNameProperty() + " ?","");
 
         if (response.orElse(null) == ButtonType.OK) {
-            boolean result = DatabaseHandler.getInstance().deleteMember(selectedForDeletion);
+            boolean result = db.getInstance().deleteMember(selectedForDeletion);
             if (result) {
                 showSimpleAlert("information","Book deleted", selectedForDeletion.getNameProperty() + " was deleted successfully.","");
                 list.remove(selectedForDeletion);
@@ -143,7 +142,7 @@ public class MemberListController implements Initializable {
             String memberID = selectedMemberID.getText(); // get id of selected book
             String query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
 
-            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            ResultSet resultSet = db.getInstance().execQuery(query);
             try {
                 while (resultSet.next()) {
                     // create Book object contains data form db
@@ -157,7 +156,7 @@ public class MemberListController implements Initializable {
                     if (response.orElse(null) == ButtonType.OK) {
                         // check if selected is not lent to someone
 
-                            if (DatabaseHandler.getInstance().deleteMember(member)) { // execute deleting operation
+                            if (db.getInstance().deleteMember(member)) { // execute deleting operation
                                 showSimpleAlert("information", "Member deleted", "", "Member "
                                         + selectedMemberName.getText() + " was successfully deleted");
                                 // clear text fields
@@ -185,7 +184,7 @@ public class MemberListController implements Initializable {
         if (!selectedMemberID.getText().isEmpty()) {
             String memberID = selectedMemberID.getText(); // get id of selected book
             String query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
-            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            ResultSet resultSet = db.getInstance().execQuery(query);
             try {
                 if (resultSet.next()) {
                     // create Book object contains data form db

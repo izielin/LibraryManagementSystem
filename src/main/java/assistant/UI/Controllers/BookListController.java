@@ -1,13 +1,11 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.Utils;
-import assistant.alert.AlertMaker;
-import assistant.database.DatabaseHandler;
+import assistant.database.db;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,14 +23,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static assistant.Utils.Utils.getResourceBundle;
-import static assistant.Utils.Utils.loadWindow;
 import static assistant.alert.AlertMaker.alertConfirm;
 import static assistant.alert.AlertMaker.showSimpleAlert;
 
@@ -84,7 +80,7 @@ public class BookListController implements Initializable {
 
     public void loadData() {
         list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
+        db handler = db.getInstance();
         String query = "SELECT * FROM BOOK";
         ResultSet resultSet = handler.execQuery(query);
         try {
@@ -130,7 +126,7 @@ public class BookListController implements Initializable {
             String bookID = selectedBookID.getText(); // get id of selected book
             String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
 
-            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            ResultSet resultSet = db.getInstance().execQuery(query);
             try {
                 while (resultSet.next()) {
                     // create Book object contains data form db
@@ -144,10 +140,10 @@ public class BookListController implements Initializable {
                             "Are you sure you want to delete the book?");
                     if (response.orElse(null) == ButtonType.OK) {
                         // check if selected is not lent to someone
-                        if (!DatabaseHandler.getInstance().isInMagazine(book))
+                        if (!db.getInstance().isInMagazine(book))
                             showSimpleAlert("error", "Cant be deleted", "", "This book is already checked out and can't be deleted.");
                         else {
-                            if (DatabaseHandler.getInstance().deleteBook(book)) { // execute deleting operation
+                            if (db.getInstance().deleteBook(book)) { // execute deleting operation
                                 showSimpleAlert("information", "Book deleted", "", "Book '"
                                         + selectedBookTitle.getText() + "' was successfully deleted");
                                 // clear text fields
@@ -176,7 +172,7 @@ public class BookListController implements Initializable {
         if (!selectedBookID.getText().isEmpty()) {
             String bookID = selectedBookID.getText(); // get id of selected book
             String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
-            ResultSet resultSet = DatabaseHandler.getInstance().execQuery(query);
+            ResultSet resultSet = db.getInstance().execQuery(query);
             try {
                 if (resultSet.next()) {
                     // create Book object contains data form db
