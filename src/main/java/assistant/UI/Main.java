@@ -2,7 +2,6 @@ package assistant.UI;
 
 import assistant.Utils.FillDatabase;
 import assistant.database.DatabaseHandler;
-import assistant.database.db;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
                 if (user.getUserType().equals("EMPLOYEE")) {
                     library = user.getLibrary(); // creating an object of library in which a logged in employee works
                     closeStage();
-                    loadWindow("/fxml/LendBook.fxml");
+                    loadWindow("/fxml/UserList.fxml");
                 } else {
                     System.out.println("TO DO");
                 }

@@ -22,7 +22,7 @@ public class LendBookController implements Initializable {
     @FXML
     private TreeView<String> treeView;
 
-    private final ObservableList<CategoryFXModel> categoryList = FXCollections.observableArrayList();
+    private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private final TreeItem<String> root = new TreeItem<>();
 
     @Override
@@ -56,9 +56,6 @@ public class LendBookController implements Initializable {
 
     private void initCategoryList(List<Category> categories) {
         categoryList.clear();
-        categories.forEach(c -> {
-            CategoryFXModel toCategoryFx = CategoryConverter.convertToCategoryFx(c);
-            categoryList.add(toCategoryFx);
-        });
+        categoryList.addAll(categories);
     }
 }

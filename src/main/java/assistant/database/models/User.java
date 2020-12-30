@@ -8,16 +8,13 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "USERS")
 public class User implements BaseModel{
     @DatabaseField(generatedId = true)
-    private int id;
+    private Integer id;
 
     @DatabaseField(columnName = "USERNAME", canBeNull = false, unique = true)
     private String username;
 
     @DatabaseField(columnName = "PASSWORD", canBeNull = false)
     private String password;
-
-    @DatabaseField(columnName = "EMAIL", canBeNull = false)
-    private String email;
 
     @DatabaseField(columnName = "FIRST_NAME", canBeNull = false)
     private String firstName;
@@ -27,6 +24,9 @@ public class User implements BaseModel{
 
     @DatabaseField(columnName = "MOBILE", canBeNull = false)
     private String mobile;
+
+    @DatabaseField(columnName = "EMAIL", canBeNull = false)
+    private String email;
 
     @DatabaseField(columnName = "STREET", canBeNull = false)
     private String street;

@@ -6,35 +6,35 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CategoryFXModel {
-    private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty name = new SimpleStringProperty();
+    private final IntegerProperty categoryId = new SimpleIntegerProperty();
+    private final StringProperty categoryName = new SimpleStringProperty();
 
-    public int getId() {
-        return id.get();
+    public int getCategoryId() {
+        return categoryId.get();
     }
 
-    public IntegerProperty idProperty() {
-        return id;
+    public IntegerProperty categoryIdProperty() {
+        return categoryId;
     }
 
-    public void setId(int id) {
-        this.id.set(id);
+    public void setCategoryId(int categoryId) {
+        this.categoryId.set(categoryId);
     }
 
-    public String getName() {
-        return name.get();
+    public String getCategoryName() {
+        return categoryName.get();
     }
 
-    public StringProperty nameProperty() {
-        return name;
+    public StringProperty categoryNameProperty() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    public void setCategoryName(String categoryName) {
+        this.categoryName.set(categoryName);
     }
 
     @Override
     public String toString() {
-        return name.getValue();
+        return categoryName.getValue();
     }
 }
