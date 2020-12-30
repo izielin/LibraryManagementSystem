@@ -6,7 +6,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "COUNTRIES")
-public class Country {
+public class Country implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 

@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 
 @DatabaseTable(tableName = "CATEGORIES")
-public class Category {
+public class Category implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 

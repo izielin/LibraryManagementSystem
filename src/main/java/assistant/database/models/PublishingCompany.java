@@ -5,8 +5,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "CATEGORIES")
-public class PublishingCompany {
+@DatabaseTable(tableName = "PUBLISHERS")
+public class PublishingCompany implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 

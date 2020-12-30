@@ -6,7 +6,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "LIBRARIES")
-public class Library {
+public class Library implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -16,14 +16,14 @@ public class Library {
     @DatabaseField(columnName = "STREET", canBeNull = false)
     private String street;
 
-    @DatabaseField(columnName = "DISTRICT_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private District district;
+    @DatabaseField(columnName = "ZIP_CODE", canBeNull = false)
+    private String zipCode;
+
+    @DatabaseField(columnName = "CITY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
+    private City city;
 
     @ForeignCollectionField(eager = true)
     private ForeignCollection<Book> books;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<Member> members;
 
     @ForeignCollectionField(eager = true)
     private ForeignCollection<User> users;
@@ -55,12 +55,20 @@ public class Library {
         this.street = street;
     }
 
-    public District getDistrict() {
-        return district;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setDistrict(District district) {
-        this.district = district;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public ForeignCollection<Book> getBooks() {
@@ -69,14 +77,6 @@ public class Library {
 
     public void setBooks(ForeignCollection<Book> books) {
         this.books = books;
-    }
-
-    public ForeignCollection<Member> getMembers() {
-        return members;
-    }
-
-    public void setMembers(ForeignCollection<Member> members) {
-        this.members = members;
     }
 
     public ForeignCollection<User> getUsers() {

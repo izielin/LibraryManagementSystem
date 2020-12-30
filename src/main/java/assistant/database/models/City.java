@@ -6,7 +6,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "CITIES")
-public class City {
+public class City implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -17,10 +17,10 @@ public class City {
     private Country country;
 
     @ForeignCollectionField(eager = true)
-    private ForeignCollection<District> districts;
+    private ForeignCollection<Library> libraries;
 
     @ForeignCollectionField(eager = true)
-    private ForeignCollection<Author> authors;
+    private ForeignCollection<User> users;
 
     public City() {
     }
@@ -49,19 +49,19 @@ public class City {
         this.country = country;
     }
 
-    public ForeignCollection<District> getDistricts() {
-        return districts;
+    public ForeignCollection<Library> getLibraries() {
+        return libraries;
     }
 
-    public void setDistricts(ForeignCollection<District> districts) {
-        this.districts = districts;
+    public void setLibraries(ForeignCollection<Library> libraries) {
+        this.libraries = libraries;
     }
 
-    public ForeignCollection<Author> getAuthors() {
-        return authors;
+    public ForeignCollection<User> getUsers() {
+        return users;
     }
 
-    public void setAuthors(ForeignCollection<Author> authors) {
-        this.authors = authors;
+    public void setUsers(ForeignCollection<User> users) {
+        this.users = users;
     }
 }

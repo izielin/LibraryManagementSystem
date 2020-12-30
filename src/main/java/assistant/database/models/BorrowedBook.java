@@ -3,24 +3,25 @@ package assistant.database.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @DatabaseTable(tableName = "BORROWED_BOOKS")
-public class BorrowedBook {
+public class BorrowedBook implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "BORROW_TIME")
-    private Date borrowTime;
+    private Timestamp borrowTime;
 
     @DatabaseField(columnName = "RENEW_COUNT")
-    private int renewCount;
+    private int numberOfRenewals;
 
     @DatabaseField(columnName = "BOOK_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private Book book;
 
     @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Member member;
+    private User user;
 
     public BorrowedBook() {
     }
@@ -33,20 +34,20 @@ public class BorrowedBook {
         this.id = id;
     }
 
-    public Date getBorrowTime() {
+    public Timestamp getBorrowTime() {
         return borrowTime;
     }
 
-    public void setBorrowTime(Date borrowTime) {
+    public void setBorrowTime(Timestamp borrowTime) {
         this.borrowTime = borrowTime;
     }
 
-    public Integer getRenewCount() {
-        return renewCount;
+    public int getNumberOfRenewals() {
+        return numberOfRenewals;
     }
 
-    public void setRenewCount(Integer renewCount) {
-        this.renewCount = renewCount;
+    public void setNumberOfRenewals(int numberOfRenewals) {
+        this.numberOfRenewals = numberOfRenewals;
     }
 
     public Book getBook() {
@@ -57,11 +58,11 @@ public class BorrowedBook {
         this.book = book;
     }
 
-    public Member getMember() {
-        return member;
+    public User getUser() {
+        return user;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

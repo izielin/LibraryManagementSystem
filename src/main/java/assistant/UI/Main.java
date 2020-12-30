@@ -1,5 +1,6 @@
 package assistant.UI;
 
+import assistant.Utils.FillDatabase;
 import assistant.database.DatabaseHandler;
 import assistant.database.db;
 import javafx.application.Application;
@@ -18,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         loadWindow(FXML_FILE);
         DatabaseHandler.initDatabase();
-
+//        FillDatabase.fillDatabase();
     }
 
 

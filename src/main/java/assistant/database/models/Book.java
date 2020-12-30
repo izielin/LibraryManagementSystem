@@ -5,27 +5,28 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @DatabaseTable(tableName = "BOOKS")
-public class Book {
+public class Book implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(columnName = "ISBN_10")
+    @DatabaseField(columnName = "ISBN_10", unique = true)
     private String isbn10;
 
-    @DatabaseField(columnName = "ISBN_13")
+    @DatabaseField(columnName = "ISBN_13", unique = true)
     private String isbn13;
 
     @DatabaseField(columnName = "TITTLE", canBeNull = false)
     private String title;
 
     @DatabaseField(columnName = "ADDED_DATE")
-    private Date addedDate;
+    private Timestamp addedDate;
 
     @DatabaseField(columnName = "PUBLICATION_DATE")
-    private Date publicationDate;
+    private String publicationDate;
 
     @DatabaseField(columnName = "AUTHOR_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private Author author;
@@ -77,19 +78,19 @@ public class Book {
         this.title = title;
     }
 
-    public Date getAddedDate() {
+    public Timestamp getAddedDate() {
         return addedDate;
     }
 
-    public void setAddedDate(Date addedDate) {
+    public void setAddedDate(Timestamp addedDate) {
         this.addedDate = addedDate;
     }
 
-    public Date getPublicationDate() {
+    public String getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(String publicationDate) {
         this.publicationDate = publicationDate;
     }
 

@@ -15,7 +15,7 @@ public class DatabaseHandler {
     private static DatabaseHandler handler = null;
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
 
-    private static final String DB_URL = "jdbc:derby:derbyDB;create=true"; // place where database will be create (folder name, if database not exist create one)
+    private static final String DB_URL = "jdbc:derby:derbyDB;create=true"; // Declare JDBC Driver -> place where database will be create (folder name, if database not exist create one)
     private static ConnectionSource connection; // store connection between application and database
     private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 
@@ -30,10 +30,18 @@ public class DatabaseHandler {
     }
 
     private static void createConnectionSource(){
+       //Setting JDBC Driver
         try {
-            Class.forName(driver).getDeclaredConstructor(); // creating an instance of class
+            Class.forName(driver).getDeclaredConstructor();
+        } catch (ClassNotFoundException |  NoSuchMethodException e) {
+            System.out.println("Where is your Oracle JDBC Driver?");
+            e.printStackTrace();
+        }
+        System.out.println("Oracle JDBC Driver Registered!");
+
+        try {
             connection = new JdbcConnectionSource(DB_URL); // creating connection (session) with a database.
-        } catch (SQLException | ClassNotFoundException | NoSuchMethodException e) {
+        } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
             System.exit(0);
         }
@@ -58,17 +66,15 @@ public class DatabaseHandler {
 
     private static void createTable(){
         try {
+            TableUtils.createTableIfNotExists(connection, User.class);
             TableUtils.createTableIfNotExists(connection, Author.class);
             TableUtils.createTableIfNotExists(connection, Book.class);
             TableUtils.createTableIfNotExists(connection, BorrowedBook.class);
-            TableUtils.createTableIfNotExists(connection, Category.class);
             TableUtils.createTableIfNotExists(connection, City.class);
             TableUtils.createTableIfNotExists(connection, Country.class);
-            TableUtils.createTableIfNotExists(connection, District.class);
             TableUtils.createTableIfNotExists(connection, Library.class);
-            TableUtils.createTableIfNotExists(connection, Member.class);
             TableUtils.createTableIfNotExists(connection, PublishingCompany.class);
-            TableUtils.createTableIfNotExists(connection, User.class);
+            TableUtils.createTableIfNotExists(connection, Category.class);
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
         }

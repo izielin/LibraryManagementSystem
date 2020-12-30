@@ -1,6 +1,10 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.Utils;
+import assistant.Utils.exceptions.ApplicationException;
+import assistant.database.dao.CommonDao;
+import assistant.database.models.Library;
+import assistant.database.models.User;
 import assistant.settings.Settings;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -18,9 +22,10 @@ import java.util.ResourceBundle;
 import static assistant.Utils.Utils.loadWindow;
 
 public class LoginController implements Initializable {
+    static Library library;
 
     @FXML
-    private  BorderPane borderPane;
+    private BorderPane borderPane;
     @FXML
     private Text alertText;
     @FXML
@@ -32,6 +37,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         settings = Settings.getSettings();
         setTitleBar();
     }
@@ -44,15 +50,27 @@ public class LoginController implements Initializable {
     private void LoginAction() throws IOException {
         String username = usernameInput.getText();
         String password = DigestUtils.sha1Hex(passwordInput.getText());
+        CommonDao dao = new CommonDao();
 
-        if (username.equals(settings.getUsername()) && password.equals(settings.getPassword())) {
-            closeStage();
-            loadWindow("/fxml/Main.fxml");
-        } else {
-            alertText.setText("Invalid username or password");
-            usernameInput.getStyleClass().add("wrong-login-data");
-            passwordInput.getStyleClass().add("wrong-login-data");
-            passwordInput.clear();
+        try {
+            User user = dao.findById(User.class, dao.isLogin(username, password)); // creating object of logged user
+            if (user != null) {
+                // calling up different windows depending on the type of user
+                if (user.getUserType().equals("EMPLOYEE")) {
+                    library = user.getLibrary(); // creating an object of library in which a logged in employee works
+                    closeStage();
+                    loadWindow("/fxml/LendBook.fxml");
+                } else {
+                    System.out.println("TO DO");
+                }
+            } else {
+                alertText.setText("Invalid username or password");
+                usernameInput.getStyleClass().add("wrong-login-data");
+                passwordInput.getStyleClass().add("wrong-login-data");
+                passwordInput.clear();
+            }
+        } catch (ApplicationException e) {
+            e.printStackTrace();
         }
     }
 
@@ -64,6 +82,5 @@ public class LoginController implements Initializable {
     private void closeStage() {
         ((Stage) usernameInput.getScene().getWindow()).close();
     }
-
 
 }

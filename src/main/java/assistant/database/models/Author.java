@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 
 @DatabaseTable(tableName = "AUTHORS")
-public class Author {
+public class Author implements BaseModel{
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -20,8 +20,8 @@ public class Author {
     @DatabaseField(columnName = "LAST_NAME", canBeNull = false)
     private String lastName;
 
-    @DatabaseField(columnName = "CITY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private City city;
+    @DatabaseField(columnName = "COUNTRY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
+    private Country country;
 
     @ForeignCollectionField(eager = true)
     // eager = true => results should be retrieved when the parent object is retrieved
@@ -65,12 +65,12 @@ public class Author {
         this.lastName = lastName;
     }
 
-    public City getCity() {
-        return city;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public ForeignCollection<Book> getBooks() {
