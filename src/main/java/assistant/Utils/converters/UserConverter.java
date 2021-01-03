@@ -20,4 +20,21 @@ public class UserConverter {
         model.setLibrary(user.getLibrary());
         return model;
     }
+
+    public static User convertToUser(UserFXModel userFXModel){
+        User model = new User();
+        model.setId(userFXModel.getId());
+        model.setUsername(userFXModel.getUsername());
+        model.setPassword(userFXModel.getPassword());
+        model.setFirstName(userFXModel.getFirstName());
+        model.setLastName(userFXModel.getLastName());
+        model.setMobile(userFXModel.getMobile());
+        model.setEmail(userFXModel.getEmail());
+        model.setStreet(userFXModel.getStreet());
+        model.setZipCode(userFXModel.getZipCode());
+        model.setCity(userFXModel.getCity());
+        model.setUserType(userFXModel.getUserType());
+        model.setLibrary(userFXModel.getLibrary());
+        return model;
+    }
 }

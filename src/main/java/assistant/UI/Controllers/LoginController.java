@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import static assistant.Utils.Utils.loadWindow;
 
 public class LoginController implements Initializable {
-    static Library library;
+    static User currentlyLoggedUser;
 
     @FXML
     private BorderPane borderPane;
@@ -57,9 +57,9 @@ public class LoginController implements Initializable {
             if (user != null) {
                 // calling up different windows depending on the type of user
                 if (user.getUserType().equals("EMPLOYEE")) {
-                    library = user.getLibrary(); // creating an object of library in which a logged in employee works
+                    currentlyLoggedUser = user; // creating an object of currently logged user
                     closeStage();
-                    loadWindow("/fxml/UserList.fxml");
+                    loadWindow("/fxml/Main.fxml");
                 } else {
                     System.out.println("TO DO");
                 }

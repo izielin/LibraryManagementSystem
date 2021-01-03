@@ -45,7 +45,7 @@ public class LendBookController implements Initializable {
         categories.forEach(c -> {
             TreeItem<String> categoryItem = new TreeItem<>(c.getName());
             c.getBooks().forEach(b -> {
-                        if (b.getLibrary().getId() == LoginController.library.getId()) {
+                        if (b.getLibrary().getId() == LoginController.currentlyLoggedUser.getLibrary().getId()) {
                             categoryItem.getChildren().add(new TreeItem<>(b.getTitle()));
                         }
                     }

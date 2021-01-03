@@ -1,16 +1,14 @@
 package assistant.UI.Controllers;
 
-import assistant.Utils.Utils;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -19,26 +17,29 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static assistant.Utils.Utils.getResourceBundle;
-import static assistant.Utils.Utils.loadWindow;
+import static assistant.Utils.Utils.*;
 import static assistant.alert.AlertMaker.*;
 
 
-public class MainController implements Initializable {
+public class MainController {
 
     private static final String FXML_ADD_BOOK = "/fxml/AddBook.fxml";
     private static final String FXML_LIST_BOOK = "/fxml/BookList.fxml";
     private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
     private static final String FXML_LIST_MEMBER = "/fxml/UserList.fxml";
     private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
+    @FXML
+    private VBox mainVbox;
+
+    @FXML
+    private JFXHamburger menuHamburger;
+
+    @FXML
+    private JFXDrawer menuDrawer;
 
 
     @FXML
@@ -80,8 +81,6 @@ public class MainController implements Initializable {
     @FXML
     private Text memberNameHolder;
     @FXML
-    private JFXHamburger hamburger;
-    @FXML
     private JFXDrawer drawer;
     @FXML
     private JFXButton renewButton;
@@ -96,18 +95,23 @@ public class MainController implements Initializable {
     @FXML
     private JFXTabPane tabPane;
 
+    @FXML
+//    private ToolBarController toolBarController;
+
 //    db databaseHandler;
-    boolean isReadyForSubmission = false;
-    PieChart bookChart = new PieChart();
+//    boolean isReadyForSubmission = false;
+//    PieChart bookChart = new PieChart();
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
 //        databaseHandler = db.getInstance();
         setTitleBar();
 
-//        initDrawer();
-//
+        initDrawer();
+//        toolBarController.setMainController(this);
+
+
+//user1
 //        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 //            @Override
 //            public void changed(ObservableValue<? extends Tab> old, Tab oldTab, Tab newTab) {
@@ -125,29 +129,49 @@ public class MainController implements Initializable {
 //        graphContainer.getChildren().add(bookChart);
 //    }
 
-//    private void initDrawer() {
-//        try {
-//            VBox toolbar = FXMLLoader.load(getClass().getResource(FXML_TOOLBAR), getResourceBundle());
-//            drawer.setSidePane(toolbar);
-//        } catch (IOException e) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        HamburgerSlideCloseTransition task = new HamburgerSlideCloseTransition(hamburger);
-//        task.setRate(-1);
-//        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (Event event) -> {
-//            task.setRate(task.getRate() * -1);
-//            task.play();
-//            if (drawer.isOpened()) {
-//                drawer.close();
-//            } else {
-//                drawer.open();
-//            }
-//        });
-//
-//    }
+    private void initDrawer() {
+        HamburgerSlideCloseTransition task = new HamburgerSlideCloseTransition(menuHamburger);
+        try {
+            AnchorPane toolbar = FXMLLoader.load(getClass().getResource(FXML_TOOLBAR), getResourceBundle());
+            menuDrawer.setSidePane(toolbar);
+            VBox vbox = (VBox) toolbar.lookup("#menuVbox");
+            for (Node node : vbox.getChildren()) {
+                if (node.getAccessibleText() != null) {
+                    node.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                        switch (node.getAccessibleText()) {
+                            case "userList":
+                                System.out.println("work");
+                                setCenter("/fxml/UserList.fxml");
+                                menuDrawer.close();
+                        }
+                    });
+                }
+            }
+        } catch (IOException e) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        task.setRate(-1);
+        menuHamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (Event event) -> {
+            task.setRate(task.getRate() * -1);
+            task.play();
+            if (menuDrawer.isOpened()) {
+                menuDrawer.close();
+            } else {
+                menuDrawer.open();
+            }
+        });
+
+    }
+
 
     public void setTitleBar() {
-        mainBorderPane.setTop(Utils.fxmlLoader("/fxml/BaseTitleBar.fxml"));
+        String TITLE_BAR_FXML = "/fxml/BaseTitleBar.fxml";
+        mainBorderPane.setTop(fxmlLoader(TITLE_BAR_FXML));
+    }
+
+    public void setCenter(String fxmlPath) {
+        mainVbox.getChildren().clear();
+        mainVbox.getChildren().add(fxmlLoader(fxmlPath));
     }
 
     // menu actions

@@ -1,20 +1,18 @@
 package assistant.UI.Controllers;
 
+import assistant.FXModels.CityFXModel;
 import assistant.FXModels.UserFXModel;
-import assistant.Utils.Utils;
+import assistant.Utils.Initialize;
 import assistant.Utils.converters.UserConverter;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.dao.CommonDao;
 import assistant.database.models.City;
-import assistant.database.models.Library;
 import assistant.database.models.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,15 +23,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import assistant.FXModels.UserFXModel.*;
 
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserController implements Initializable {
+public class AddUserController implements Initializable {
 
 
     private boolean isInEditMode = false;
@@ -49,15 +45,8 @@ public class UserController implements Initializable {
     @FXML
     private JFXTextField memberZipCode;
     @FXML
-    private JFXComboBox memberCity;
-    @FXML
-    public TableView<UserFXModel> tableView;
-    @FXML
-    private TableColumn<UserFXModel, String> usernameColumn;
-    @FXML
-    private TableColumn<UserFXModel, String> firstNameColumn;
-    @FXML
-    private TableColumn<UserFXModel, String> lastNameColumn;
+    private JFXComboBox<CityFXModel> memberCity;
+
     @FXML
     private TableColumn<UserFXModel, String> mobileColumn;
     @FXML
@@ -89,45 +78,24 @@ public class UserController implements Initializable {
     @FXML
     private BorderPane mainBorderPane;
 
+    private ObjectProperty<UserFXModel> userFXModel = new SimpleObjectProperty<>(new UserFXModel());
+    private static ObservableList<CityFXModel> cityFXModelObservableList = FXCollections.observableArrayList();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        setTitleBar();
-        try {
-            initColumn();
-        } catch (ApplicationException e) {
-            e.printStackTrace();
-        }
+
+
+
+
+
+
+    public void executeSaveAction() throws ApplicationException {
+        User user = UserConverter.convertToUser(getUserFXModel());
+        CommonDao commonDao = new CommonDao();
+        City city = commonDao.findById(City.class, getUserFXModel().getCity().getId());
+
+        user.setCity(city);
+        commonDao.createOrUpdate(user);
     }
 
-    public void setTitleBar() {
-        System.out.println("work");
-        mainBorderPane.setTop(Utils.fxmlLoader("/fxml/BaseTitleBar.fxml"));
-    }
-
-    private void initColumn() throws ApplicationException {
-        tableView.setItems(loadData());
-        usernameColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().usernameProperty());
-        firstNameColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().lastNameProperty());
-        mobileColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().mobileProperty());
-        emailColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().emailProperty());
-        streetColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().streetProperty());
-        zipCodeColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().zipCodeProperty());
-        cityColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().cityProperty());
-    }
-
-    private ObservableList<UserFXModel> loadData() throws ApplicationException {
-        ObservableList<UserFXModel> observableArrayList = FXCollections.observableArrayList();
-        CommonDao dao = new CommonDao();
-        List<User> users = dao.queryForAll(User.class);
-        observableArrayList.clear();
-        users.forEach(user -> {
-            UserFXModel userFx = UserConverter.convertToUserFx(user);
-            observableArrayList.add(userFx);
-        });
-        return observableArrayList;
-    }
 //    public void executeSaveAction(ActionEvent event) {
 //        String name = memberName.getText();
 //        String id = memberID.getText();
@@ -215,21 +183,7 @@ public class UserController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleRowData(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 2) { // checking the number of mouse clicks on a single row
-            Member rowData = tableView.getSelectionModel().getSelectedItem(); // creating Book object from data in selected row
-            if (rowData == null) { // check if selected row is not null
-                showSimpleAlert("error", "No member selected", "No data to load", "Please select row with book data");
-            } else {
-                //passing values to text fields
-                selectedMemberID.setText(rowData.getIdProperty());
-                selectedMemberName.setText(rowData.getNameProperty());
-                selectedMemberMobile.setText(rowData.getMobileProperty());
-                selectedMemberEmail.setText(rowData.getEmailProperty());
-            }
-        }
-    }
+
 
     public void deleteSelectedMember() {
         // check if selectedBookID text field is empty, if not, it means that the book to be deleted has been selected
@@ -491,4 +445,30 @@ public class UserController implements Initializable {
 //            this.libraryProperty.set(libraryProperty);
 //        }
 //    }
+
+
+    public UserFXModel getUserFXModel() {
+        return userFXModel.get();
+    }
+
+    public ObjectProperty<UserFXModel> userFXModelProperty() {
+        return userFXModel;
+    }
+
+    public void setUserFXModel(UserFXModel userFXModel) {
+        this.userFXModel.set(userFXModel);
+    }
+
+    public static ObservableList<CityFXModel> getCityFXModelObservableList() {
+        return cityFXModelObservableList;
+    }
+
+    public static void setCityFXModelObservableList(ObservableList<CityFXModel> cityFXModelObservableList) {
+        AddUserController.cityFXModelObservableList = cityFXModelObservableList;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }

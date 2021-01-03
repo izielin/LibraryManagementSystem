@@ -1,41 +1,26 @@
 package assistant.UI.Controllers;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
+import static assistant.Utils.Utils.fxmlLoader;
 import static assistant.Utils.Utils.loadWindow;
 
 
 public class ToolBarController {
-    private static final String FXML_ADD_BOOK = "/fxml/AddBook.fxml";
-    private static final String FXML_LIST_BOOK = "/fxml/BookList.fxml";
-    private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
-    private static final String FXML_LIST_MEMBER = "/fxml/UserList.fxml";
-    private static final String FXML_SETTINGS = "/fxml/Settings.fxml";
+    @FXML
+    private JFXButton logoutButton;
 
     // open other windows
     @FXML
-    private void executeAddMember() {
-        loadWindow(FXML_ADD_MEMBER);
+    void logout() {
+        ((Stage) logoutButton.getScene().getWindow()).close();
+        loadWindow("/fxml/Login.fxml");
     }
 
-    @FXML
-    private void executeAddBook() {
-        loadWindow(FXML_ADD_BOOK);
+    public void exit(ActionEvent event) {
+        System.exit(0);
     }
-
-    @FXML
-    private void loadMemberTable() {
-        loadWindow(FXML_LIST_MEMBER);
-    }
-
-    @FXML
-    private void loadBookTable() {
-        loadWindow(FXML_LIST_BOOK);
-    }
-
-    @FXML
-    private void loadSettings() {
-        loadWindow(FXML_SETTINGS);
-    }
-
 }

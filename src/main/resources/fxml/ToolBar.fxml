@@ -2,34 +2,187 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="150.0" stylesheets="@../css/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ToolBarController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #CECECE;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ToolBarController">
    <children>
-      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#executeAddMember" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.addMember">
-         <graphic>
-            <FontAwesomeIcon glyphName="USER_PLUS" size="25" />
-         </graphic>
-      </JFXButton>
-      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#executeAddBook" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.addBook">
-         <graphic>
-            <FontAwesomeIcon glyphName="BOOK" size="25" />
-         </graphic>
-      </JFXButton>
-      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadMemberTable" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.viewMembers">
-         <graphic>
-            <FontAwesomeIcon glyphName="TH_LIST" size="25" />
-         </graphic>
-      </JFXButton>
-      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadBookTable" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="%sideMenu.viewBooks">
-         <graphic>
-            <FontAwesomeIcon glyphName="TH" size="25" />
-         </graphic>
-      </JFXButton>
-      <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadSettings" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="Settings">
-         <graphic>
-            <FontAwesomeIcon glyphName="COGS" size="25" />
-         </graphic>
-      </JFXButton>
+      <AnchorPane maxWidth="50.0" prefHeight="630.4" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="0.0">
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+      <VBox fx:id="menuVbox" prefWidth="220.0">
+         <children>
+            <JFXButton accessibleText="HomeView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Home">
+               <graphic>
+                  <FontAwesomeIcon glyphName="HOME" size="1.5em" text="" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Add New">
+               <graphic>
+                  <FontAwesomeIcon glyphName="PLUS" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="bookUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="60.0" layoutY="310.0" prefHeight="50.0" prefWidth="170.0" text="Book">
+               <graphic>
+                  <FontAwesomeIcon glyphName="BOOK" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton accessibleText="addUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="User">
+               <graphic>
+                  <FontAwesomeIcon glyphName="USER" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="addView" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Other">
+               <graphic>
+                  <FontAwesomeIcon glyphName="TH" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Lists">
+               <graphic>
+                  <FontAwesomeIcon glyphName="TH_LIST" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="bookUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Book">
+               <graphic>
+                  <FontAwesomeIcon glyphName="BOOK" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="userList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="User">
+               <graphic>
+                  <FontAwesomeIcon glyphName="GROUP" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="borrowedList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Borrowed Books">
+               <graphic>
+                  <FontAwesomeIcon glyphName="TH" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="LendBookView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Lend book">
+               <graphic>
+                  <FontAwesomeIcon glyphName="BOOKMARK" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="submissionBook" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Submit Book">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CHECK_CIRCLE" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="Settings" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Settings">
+               <graphic>
+                  <FontAwesomeIcon glyphName="GEARS" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <JFXButton fx:id="logoutButton" onAction="#logout" prefWidth="200.0" text="Logout">
+               <graphic>
+                  <FontAwesomeIcon glyphName="SIGN_OUT" size="1.5em" />
+               </graphic>
+            </JFXButton>
+            <JFXButton onAction="#exit" prefWidth="200.0" text="Exit">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CLOSE" size="1.5em" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
    </children>
-</VBox>
+</AnchorPane>

@@ -27,7 +27,7 @@ public class UserFXModel {
     }
 
     public void setId(int id) {
-        this.id.set(new Integer(id));
+        this.id.set(id);
     }
 
     public String getUsername() {
