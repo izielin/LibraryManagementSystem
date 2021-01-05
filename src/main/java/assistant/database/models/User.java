@@ -5,10 +5,12 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 @DatabaseTable(tableName = "USERS")
-public class User implements BaseModel{
+public class User implements BaseModel {
     @DatabaseField(generatedId = true)
-    private Integer id;
+    private int id;
 
     @DatabaseField(columnName = "USERNAME", canBeNull = false, unique = true)
     private String username;
@@ -27,6 +29,9 @@ public class User implements BaseModel{
 
     @DatabaseField(columnName = "EMAIL", canBeNull = false)
     private String email;
+
+    @DatabaseField(columnName = "REGISTRATION_DATE")
+    private String registrationDate;
 
     @DatabaseField(columnName = "STREET", canBeNull = false)
     private String street;
@@ -151,5 +156,13 @@ public class User implements BaseModel{
 
     public void setBorrowedBooks(ForeignCollection<BorrowedBook> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registration_date) {
+        this.registrationDate = registration_date;
     }
 }

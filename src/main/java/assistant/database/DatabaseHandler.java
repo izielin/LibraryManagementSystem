@@ -21,7 +21,9 @@ public class DatabaseHandler {
 
     public static void initDatabase(){
         createConnectionSource();
+        dropTable();
         createTable();
+        closeConnectionSource();
     }
 
     public static DatabaseHandler getInstance() {
@@ -75,6 +77,22 @@ public class DatabaseHandler {
             TableUtils.createTableIfNotExists(connection, Library.class);
             TableUtils.createTableIfNotExists(connection, PublishingCompany.class);
             TableUtils.createTableIfNotExists(connection, Category.class);
+        } catch (SQLException e) {
+            LOGGER.warn(e.getMessage());
+        }
+    }
+
+    private  static  void  dropTable(){
+        try {
+            TableUtils.dropTable(connection, User.class, true);
+            TableUtils.dropTable(connection, Author.class, true);
+            TableUtils.dropTable(connection, Book.class, true);
+            TableUtils.dropTable(connection, BorrowedBook.class, true);
+            TableUtils.dropTable(connection, City.class, true);
+            TableUtils.dropTable(connection, Country.class, true);
+            TableUtils.dropTable(connection, Library.class, true);
+            TableUtils.dropTable(connection, PublishingCompany.class, true);
+            TableUtils.dropTable(connection, Category.class, true);
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
         }

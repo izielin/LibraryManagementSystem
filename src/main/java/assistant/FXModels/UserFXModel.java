@@ -4,6 +4,8 @@ import assistant.database.models.City;
 import assistant.database.models.Library;
 import javafx.beans.property.*;
 
+import java.time.LocalDate;
+
 public class UserFXModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty username = new SimpleStringProperty();
@@ -12,6 +14,7 @@ public class UserFXModel {
     private final StringProperty lastName = new SimpleStringProperty();
     private final StringProperty mobile = new SimpleStringProperty();
     private final StringProperty email = new SimpleStringProperty();
+    private final StringProperty registrationDate = new SimpleStringProperty();
     private final StringProperty street = new SimpleStringProperty();
     private final StringProperty zipCode = new SimpleStringProperty();
     private final ObjectProperty<City> city = new SimpleObjectProperty<>();
@@ -104,6 +107,18 @@ public class UserFXModel {
 
     public String getStreet() {
         return street.get();
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate.get();
+    }
+
+    public StringProperty registrationDateProperty() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate.set(registrationDate);
     }
 
     public StringProperty streetProperty() {

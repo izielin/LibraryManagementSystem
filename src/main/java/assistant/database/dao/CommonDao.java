@@ -1,5 +1,6 @@
 package assistant.database.dao;
 
+import assistant.UI.Controllers.LoginController;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.DatabaseHandler;
 import assistant.database.models.BaseModel;
@@ -10,14 +11,14 @@ import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import static assistant.Utils.Utils.getResourceBundle;
+import static assistant.Utils.ProjectTools.getResourceBundle;
 
 public class CommonDao {
     /*
@@ -121,17 +122,34 @@ public class CommonDao {
         dao.delete(deleteBuilder.prepare());
     }
 
-    public int isLogin(String username, String password) throws ApplicationException {
+    public User isLogin(String username, String password) throws ApplicationException {
         Dao<User, Object> dao = getDao(User.class);
+        QueryBuilder<User, Object> queryBuilder = dao.queryBuilder();
         try {
-            GenericRawResults<User> rawResults = dao.queryRaw("SELECT * FROM USERS where username = '" + username + "' and password = '" + password + "'", dao.getRawRowMapper());
-            for (User user : rawResults) {
-                return user.getId();
-            }
+            queryBuilder.setWhere(queryBuilder.where().eq("USERNAME", username).and().eq("PASSWORD", password));
+            List<User> userList = queryBuilder.query();
+            return userList.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return null;
+    }
+
+    public <T extends BaseModel> String countRecords(Class<T> cls, String query) throws ApplicationException, SQLException {
+        Dao<T, Object> dao = getDao(cls);
+        GenericRawResults<String[]> rawResults =
+                dao.queryRaw(query);
+        for (String[] s : rawResults) {
+            return s[0];
+        }
+        return null;
+    }
+
+    public <T extends BaseModel> List<String[]> groupByQuery(Class<T> cls, String query) throws ApplicationException, SQLException {
+        Dao<T, Object> dao = getDao(cls);
+        GenericRawResults<String[]> rawResults =
+                dao.queryRaw(query);
+        return rawResults.getResults();
     }
 
 }

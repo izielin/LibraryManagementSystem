@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 @DatabaseTable(tableName = "BORROWED_BOOKS")
@@ -12,7 +13,7 @@ public class BorrowedBook implements BaseModel{
     private int id;
 
     @DatabaseField(columnName = "BORROW_TIME")
-    private Timestamp borrowTime;
+    private String borrowTime;
 
     @DatabaseField(columnName = "RENEW_COUNT")
     private int numberOfRenewals;
@@ -34,11 +35,11 @@ public class BorrowedBook implements BaseModel{
         this.id = id;
     }
 
-    public Timestamp getBorrowTime() {
+    public String getBorrowTime() {
         return borrowTime;
     }
 
-    public void setBorrowTime(Timestamp borrowTime) {
+    public void setBorrowTime(String borrowTime) {
         this.borrowTime = borrowTime;
     }
 

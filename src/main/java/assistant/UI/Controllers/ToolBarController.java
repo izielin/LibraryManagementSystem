@@ -5,8 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-import static assistant.Utils.Utils.fxmlLoader;
-import static assistant.Utils.Utils.loadWindow;
+import static assistant.Utils.ProjectTools.loadWindow;
 
 
 public class ToolBarController {

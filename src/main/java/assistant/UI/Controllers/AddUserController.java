@@ -2,8 +2,7 @@ package assistant.UI.Controllers;
 
 import assistant.FXModels.CityFXModel;
 import assistant.FXModels.UserFXModel;
-import assistant.Utils.Initialize;
-import assistant.Utils.converters.UserConverter;
+import assistant.Utils.Converters;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.dao.CommonDao;
 import assistant.database.models.City;
@@ -18,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -26,7 +24,6 @@ import javafx.stage.Stage;
 
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddUserController implements Initializable {
@@ -88,7 +85,7 @@ public class AddUserController implements Initializable {
 
 
     public void executeSaveAction() throws ApplicationException {
-        User user = UserConverter.convertToUser(getUserFXModel());
+        User user = Converters.convertToUser(getUserFXModel());
         CommonDao commonDao = new CommonDao();
         City city = commonDao.findById(City.class, getUserFXModel().getCity().getId());
 

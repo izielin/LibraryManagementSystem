@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.MainController">
    <children>
-      <BorderPane fx:id="mainBorderPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="mainBorderPane" prefHeight="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
          </left>
-         <center>
-            <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <VBox fx:id="mainVbox" alignment="CENTER" prefWidth="1150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-         </center>
-         <left>
-            <JFXDrawer fx:id="menuDrawer" defaultDrawerSize="220.0" maxWidth="220.0" prefHeight="800.0" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <Pane prefWidth="220.0" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXHamburger fx:id="menuHamburger" layoutX="135.0" layoutY="49.0" />
-               </children>
-            </Pane>
-         </right>
       </BorderPane>
    </children>
 </AnchorPane>

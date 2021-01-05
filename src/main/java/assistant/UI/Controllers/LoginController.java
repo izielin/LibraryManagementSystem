@@ -1,9 +1,8 @@
 package assistant.UI.Controllers;
 
-import assistant.Utils.Utils;
+import assistant.Utils.ProjectTools;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.dao.CommonDao;
-import assistant.database.models.Library;
 import assistant.database.models.User;
 import assistant.settings.Settings;
 import com.jfoenix.controls.JFXPasswordField;
@@ -19,10 +18,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static assistant.Utils.Utils.loadWindow;
+import static assistant.Utils.ProjectTools.loadWindow;
 
 public class LoginController implements Initializable {
-    static User currentlyLoggedUser;
+    public static User currentlyLoggedUser;
 
     @FXML
     private BorderPane borderPane;
@@ -43,7 +42,7 @@ public class LoginController implements Initializable {
     }
 
     public void setTitleBar() {
-        borderPane.setTop(Utils.fxmlLoader("/fxml/BaseTitleBar.fxml"));
+        borderPane.setTop(ProjectTools.fxmlLoader("/fxml/BaseTitleBar.fxml"));
     }
 
     @FXML
@@ -53,7 +52,7 @@ public class LoginController implements Initializable {
         CommonDao dao = new CommonDao();
 
         try {
-            User user = dao.findById(User.class, dao.isLogin(username, password)); // creating object of logged user
+            User user = dao.isLogin(username, password); // creating object of logged user
             if (user != null) {
                 // calling up different windows depending on the type of user
                 if (user.getUserType().equals("EMPLOYEE")) {

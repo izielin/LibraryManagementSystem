@@ -1,18 +1,13 @@
 package assistant.UI.Controllers;
 
-import assistant.FXModels.CityFXModel;
 import assistant.FXModels.UserFXModel;
-import assistant.Utils.Initialize;
-import assistant.Utils.converters.UserConverter;
+import assistant.Utils.Converters;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.dao.CommonDao;
 import assistant.database.models.User;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,7 +25,6 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UserListController implements Initializable {
@@ -102,11 +96,11 @@ public class UserListController implements Initializable {
         observableArrayList.clear();
         users.forEach(user -> {
             if (LoginController.currentlyLoggedUser.getUserType().equals("ADMIN")) {
-                    UserFXModel userFx = UserConverter.convertToUserFx(user);
-                    observableArrayList.add(userFx);
+                UserFXModel userFx = Converters.convertToUserFx(user);
+                observableArrayList.add(userFx);
             } else {
                 if (user.getLibrary().getId() == LoginController.currentlyLoggedUser.getLibrary().getId() && user.getUserType().equals("MEMBER")) {
-                    UserFXModel userFx = UserConverter.convertToUserFx(user);
+                    UserFXModel userFx = Converters.convertToUserFx(user);
                     observableArrayList.add(userFx);
                 }
             }

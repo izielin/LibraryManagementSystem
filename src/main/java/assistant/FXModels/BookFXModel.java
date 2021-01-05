@@ -9,7 +9,8 @@ public class BookFXModel {
     private StringProperty isbn10 = new SimpleStringProperty();
     private StringProperty isbn13 = new SimpleStringProperty();
     private StringProperty title = new SimpleStringProperty();
-    private ObjectProperty<LocalDate> addedDate = new SimpleObjectProperty<>();
+    private StringProperty addedDate = new SimpleStringProperty();
+    private StringProperty lastSubmissionDate = new SimpleStringProperty();
     private StringProperty publicationDate = new SimpleStringProperty();
     private ObjectProperty<AuthorFXModel> authorFX = new SimpleObjectProperty<>();
     private ObjectProperty<CategoryFXModel> categoryFX = new SimpleObjectProperty<>();
@@ -64,16 +65,28 @@ public class BookFXModel {
         this.title.set(title);
     }
 
-    public LocalDate getAddedDate() {
+    public String getAddedDate() {
         return addedDate.get();
     }
 
-    public ObjectProperty<LocalDate> addedDateProperty() {
+    public StringProperty addedDateProperty() {
         return addedDate;
     }
 
-    public void setAddedDate(LocalDate addedDate) {
+    public void setAddedDate(String addedDate) {
         this.addedDate.set(addedDate);
+    }
+
+    public String getLastSubmissionDate() {
+        return lastSubmissionDate.get();
+    }
+
+    public StringProperty lastSubmissionDateProperty() {
+        return lastSubmissionDate;
+    }
+
+    public void setLastSubmissionDate(String lastSubmissionDate) {
+        this.lastSubmissionDate.set(lastSubmissionDate);
     }
 
     public String getPublicationDate() {

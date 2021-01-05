@@ -5,11 +5,10 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @DatabaseTable(tableName = "BOOKS")
-public class Book implements BaseModel{
+public class Book implements BaseModel {
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -23,10 +22,16 @@ public class Book implements BaseModel{
     private String title;
 
     @DatabaseField(columnName = "ADDED_DATE")
-    private Timestamp addedDate;
+    private String addedDate;
+
+    @DatabaseField(columnName = "LAST_SUBMISSION")
+    private String lastSubmission;
 
     @DatabaseField(columnName = "PUBLICATION_DATE")
     private String publicationDate;
+
+    @DatabaseField(columnName = "AVAILABILITY", defaultValue = "true")
+    private Boolean availability;
 
     @DatabaseField(columnName = "AUTHOR_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private Author author;
@@ -40,7 +45,7 @@ public class Book implements BaseModel{
     @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private Library library;
 
-    @ForeignCollectionField(eager=true)
+    @ForeignCollectionField(eager = true)
     private ForeignCollection<BorrowedBook> borrowedBooks;
 
     public Book() {
@@ -78,12 +83,28 @@ public class Book implements BaseModel{
         this.title = title;
     }
 
-    public Timestamp getAddedDate() {
+    public String getAddedDate() {
         return addedDate;
     }
 
-    public void setAddedDate(Timestamp addedDate) {
+    public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
+    }
+
+    public String getLastSubmission() {
+        return lastSubmission;
+    }
+
+    public void setLastSubmission(String lastSubmission) {
+        this.lastSubmission = lastSubmission;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
     }
 
     public String getPublicationDate() {

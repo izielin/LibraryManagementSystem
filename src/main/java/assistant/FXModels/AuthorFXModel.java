@@ -13,7 +13,7 @@ public class AuthorFXModel {
     private StringProperty fistName = new SimpleStringProperty();
     private StringProperty middleName = new SimpleStringProperty();
     private StringProperty lastName = new SimpleStringProperty();
-    private ObjectProperty<Country> country = new SimpleObjectProperty<>();
+    private ObjectProperty<CountryFXModel> country = new SimpleObjectProperty<>();
 
     public int getId() {
         return id.get();
@@ -63,15 +63,15 @@ public class AuthorFXModel {
         this.lastName.set(lastName);
     }
 
-    public Country getCountry() {
+    public CountryFXModel getCountry() {
         return country.get();
     }
 
-    public ObjectProperty<Country> countryProperty() {
+    public ObjectProperty<CountryFXModel> countryProperty() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(CountryFXModel country) {
         this.country.set(country);
     }
 

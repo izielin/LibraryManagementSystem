@@ -1,12 +1,8 @@
 package assistant.UI.Controllers;
 
-import assistant.FXModels.CategoryFXModel;
-import assistant.Utils.converters.CategoryConverter;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.dao.CommonDao;
 import assistant.database.models.Category;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
