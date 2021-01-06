@@ -1,5 +1,6 @@
 package assistant.Utils;
 
+import assistant.UI.Controllers.ListsController;
 import assistant.UI.Controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,12 +63,25 @@ public class ProjectTools {
         }
         return null;
     }
+    public static void loadAddWindow(String path, ListsController controller) {
 
-    public static Date convertToDate(LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        try {
+            FXMLLoader loader = new FXMLLoader(ProjectTools.class.getResource(path), getResourceBundle());
+            Parent parent = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.show();
+
+            stage.setOnHidden((e)->{
+                System.out.println("work1");
+                controller.executeRefresh();
+            }); //refresh table
+
+        } catch (IOException e) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+        }
+
     }
 
-    public static LocalDate convertToLocalDate(Date date) {
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
+
 }

@@ -58,7 +58,7 @@ public class CommonDao {
     public <T extends BaseModel, I> void createOrUpdate(BaseModel baseModel) throws ApplicationException {
         Dao<T, I> dao = getDao((Class<T>) baseModel.getClass());
         try {
-            dao.createOrUpdate((T) baseModel);
+            dao.create((T) baseModel);
         } catch (SQLException e) {
             LOGGER.warn(e.getCause().getMessage());
             throw new ApplicationException(getResourceBundle().getString("exception.createUpdate"));
@@ -113,6 +113,13 @@ public class CommonDao {
         } finally {
             closeConnection();
         }
+    }
+
+    public <T extends BaseModel> List<T> findByColumnName(Class<T> cls, String columnName, int id) throws ApplicationException, SQLException {
+        Dao<T, Object> dao = getDao(cls);
+        QueryBuilder<T, Object> queryBuilder = dao.queryBuilder();
+        queryBuilder.where().eq(columnName, id);
+        return dao.query(queryBuilder.prepare());
     }
 
     public <T extends BaseModel> void deleteByColumnName(Class<T> cls, String columnName, int id) throws ApplicationException, SQLException {

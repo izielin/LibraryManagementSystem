@@ -11,9 +11,9 @@ import javafx.collections.ObservableList;
 import java.util.List;
 
 public class Initializers {
-    CommonDao dao = new CommonDao();
 
-    public ObservableList<CityFXModel> initCityList(ObservableList<CityFXModel> cityFXModelObservableList) throws ApplicationException {
+    public static ObservableList<CityFXModel> initCityList(ObservableList<CityFXModel> cityFXModelObservableList) throws ApplicationException {
+        CommonDao dao = new CommonDao();
         List<City> cityList = dao.queryForAll(City.class);
         cityFXModelObservableList.clear();
         cityList.forEach(city -> {
@@ -23,7 +23,8 @@ public class Initializers {
         return cityFXModelObservableList;
     }
 
-    public ObservableList<CountryFXModel> initCountryList(ObservableList<CountryFXModel> countryFXModelObservableList) throws ApplicationException {
+    public static ObservableList<CountryFXModel> initCountryList(ObservableList<CountryFXModel> countryFXModelObservableList) throws ApplicationException {
+        CommonDao dao = new CommonDao();
         List<Country> countryList = dao.queryForAll(Country.class);
         countryFXModelObservableList.clear();
         countryList.forEach(country -> {

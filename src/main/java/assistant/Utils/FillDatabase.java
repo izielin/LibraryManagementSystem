@@ -21,6 +21,9 @@ public class FillDatabase {
         City city2 = new City();
         city2.setName("Warszawa");
         city2.setCountry(country2);
+        City city3 = new City();
+        city3.setName("Kraków");
+        city3.setCountry(country2);
 
         Library library1 = new Library();
         library1.setName("Biblioteka Uniwersytecka w Warszawie");
@@ -33,6 +36,12 @@ public class FillDatabase {
         library2.setStreet("Ludowa 4");
         library2.setZipCode("00-780");
         library2.setCity(city2);
+
+        Library library3 = new Library();
+        library3.setName("Śródmiejska Biblioteka Publiczna W Krakowie");
+        library3.setStreet("Masarska 14");
+        library3.setZipCode("31-539");
+        library3.setCity(city3);
 
         User user1 = new User();
         user1.setUsername("user1");
@@ -72,8 +81,9 @@ public class FillDatabase {
         user3.setStreet("Wysocka 51");
         user3.setRegistrationDate(LocalDate.now().toString());
         user3.setZipCode("00-780");
-        user3.setCity(city2);
-        user3.setLibrary(library1);
+        user2.setUserType("EMPLOYEE");
+        user3.setCity(city3);
+        user3.setLibrary(library3);
 
         User user4 = new User();
         user4.setUsername("user4");
@@ -99,7 +109,7 @@ public class FillDatabase {
         user5.setRegistrationDate(LocalDate.now().minusDays(1).toString());
         user5.setZipCode("00-780");
         user5.setCity(city2);
-        user5.setLibrary(library1);
+        user5.setLibrary(library2);
 
         User user6 = new User();
         user6.setUsername("user6");
@@ -112,7 +122,7 @@ public class FillDatabase {
         user6.setRegistrationDate(LocalDate.now().minusDays(1).toString());
         user6.setZipCode("00-780");
         user6.setCity(city2);
-        user6.setLibrary(library1);
+        user6.setLibrary(library3);
 
         Author author = new Author();
         author.setFistName("Joanne");
@@ -125,6 +135,11 @@ public class FillDatabase {
         author2.setMiddleName("Conan");
         author2.setLastName("Doyle");
         author2.setCountry(country1);
+
+        Author author3 = new Author();
+        author3.setFistName("Andrzej");
+        author3.setLastName("Sapkowski");
+        author3.setCountry(country2);
 
         PublishingCompany publishingCompany = new PublishingCompany();
         publishingCompany.setName("Media Rodzina");
@@ -172,7 +187,7 @@ public class FillDatabase {
         book3.setAuthor(author);
         book3.setCategory(category2);
         book3.setPublishingCompany(publishingCompany);
-        book3.setLibrary(library1);
+        book3.setLibrary(library3);
 
         Book book4 = new Book();
         book4.setIsbn10("44-1128-167-2");
@@ -194,7 +209,7 @@ public class FillDatabase {
         book5.setAuthor(author);
         book5.setCategory(category2);
         book5.setPublishingCompany(publishingCompany);
-        book5.setLibrary(library1);
+        book5.setLibrary(library2);
 
         Book book6 = new Book();
         book6.setIsbn10("83-1122-167-2");
@@ -227,7 +242,7 @@ public class FillDatabase {
         book8.setAuthor(author);
         book8.setCategory(category3);
         book8.setPublishingCompany(publishingCompany);
-        book8.setLibrary(library1);
+        book8.setLibrary(library3);
 
         Book book9 = new Book();
         book9.setIsbn10("83-7791-993-2");
@@ -238,7 +253,7 @@ public class FillDatabase {
         book9.setAuthor(author2);
         book9.setCategory(category3);
         book9.setPublishingCompany(publishingCompany2);
-        book9.setLibrary(library1);
+        book9.setLibrary(library2);
 
         Book book10 = new Book();
         book10.setIsbn10("13-1123-167-7");
@@ -249,7 +264,7 @@ public class FillDatabase {
         book10.setAuthor(author2);
         book10.setCategory(category3);
         book10.setPublishingCompany(publishingCompany2);
-        book10.setLibrary(library1);
+        book10.setLibrary(library2);
 
         Book book11 = new Book();
         book11.setIsbn10("13-1231-167-8");
@@ -273,14 +288,49 @@ public class FillDatabase {
         book12.setPublishingCompany(publishingCompany2);
         book12.setLibrary(library1);
 
+        Book book13 = new Book();
+        book13.setIsbn10("13-1120-163-1");
+        book13.setIsbn13("978-13-1120-163-1");
+        book13.setTitle("Sezon burz");
+        book13.setAddedDate(LocalDate.now().toString());
+        book13.setPublicationDate("2013");
+        book13.setAuthor(author3);
+        book13.setCategory(category2);
+        book13.setPublishingCompany(publishingCompany);
+        book13.setLibrary(library1);
+
+        Book book14 = new Book();
+        book14.setIsbn10("11-6546-111-1");
+        book14.setIsbn13("978-11-6546-111-1");
+        book14.setTitle("Krew elfów");
+        book14.setAddedDate(LocalDate.now().toString());
+        book14.setPublicationDate("1994");
+        book14.setAuthor(author3);
+        book14.setCategory(category2);
+        book14.setPublishingCompany(publishingCompany2);
+        book14.setLibrary(library2);
+
+        Book book15 = new Book();
+        book15.setIsbn10("45-6546-332-1");
+        book15.setIsbn13("765-45-6546-332-1");
+        book15.setTitle("Ostatnie życzenie");
+        book15.setAddedDate(LocalDate.now().toString());
+        book15.setPublicationDate("1993");
+        book15.setAuthor(author3);
+        book15.setCategory(category2);
+        book15.setPublishingCompany(publishingCompany2);
+        book15.setLibrary(library3);
+
         CommonDao commonDao = new CommonDao();
         try{
             commonDao.createOrUpdate(country1);
             commonDao.createOrUpdate(country2);
             commonDao.createOrUpdate(city1);
             commonDao.createOrUpdate(city2);
+            commonDao.createOrUpdate(city3);
             commonDao.createOrUpdate(library1);
             commonDao.createOrUpdate(library2);
+            commonDao.createOrUpdate(library3);
             commonDao.createOrUpdate(user1);
             commonDao.createOrUpdate(user2);
             commonDao.createOrUpdate(user3);
@@ -289,6 +339,7 @@ public class FillDatabase {
             commonDao.createOrUpdate(user6);
             commonDao.createOrUpdate(author);
             commonDao.createOrUpdate(author2);
+            commonDao.createOrUpdate(author3);
             commonDao.createOrUpdate(publishingCompany);
             commonDao.createOrUpdate(publishingCompany2);
             commonDao.createOrUpdate(category1);
@@ -307,6 +358,9 @@ public class FillDatabase {
             commonDao.createOrUpdate(book10);
             commonDao.createOrUpdate(book11);
             commonDao.createOrUpdate(book12);
+            commonDao.createOrUpdate(book13);
+            commonDao.createOrUpdate(book14);
+            commonDao.createOrUpdate(book15);
         }catch (ApplicationException e) {
             e.printStackTrace();
         }

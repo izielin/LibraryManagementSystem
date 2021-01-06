@@ -1,4 +1,4 @@
-package assistant.UI.Controllers;
+package assistant.UI.Controllers.AddControllers;
 
 import assistant.FXModels.CityFXModel;
 import assistant.FXModels.UserFXModel;

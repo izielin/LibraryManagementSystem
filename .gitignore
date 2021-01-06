@@ -239,6 +239,7 @@ dmypy.json
 
 ## custom database
 derbyDB
+SQLiteDatabase.db
 config.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,pycharm+all

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" stylesheets="@../css/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.AddBookController">
+<AnchorPane fx:id="rootPane" stylesheets="@../../css/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.AddControllers.AddBookController">
    <children>
       <BorderPane fx:id="mainBorderPane" prefHeight="382.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -49,9 +49,9 @@
                   </JFXTextField>
                   <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0">
                      <children>
-                        <JFXButton fx:id="saveButton" onAction="#executeSaveAction" prefWidth="150.0" styleClass="common-button" stylesheets="@../css/dark-theme.css" text="%buttonSave" />
-                        <JFXButton fx:id="saveAndCloseButton" onAction="#executeSaveAction" prefWidth="150.0" styleClass="common-button" stylesheets="@../css/dark-theme.css" text="%buttonSaveClose" />
-                        <JFXButton fx:id="cancelButton" onAction="#executeCancelAction" prefWidth="150.0" styleClass="common-button" stylesheets="@../css/dark-theme.css" text="%buttonCancel">
+                        <JFXButton fx:id="saveButton" onAction="#executeSaveAction" prefWidth="150.0" styleClass="common-button" stylesheets="@../../css/dark-theme.css" text="%buttonSave" />
+                        <JFXButton fx:id="saveAndCloseButton" onAction="#executeSaveAction" prefWidth="150.0" styleClass="common-button" stylesheets="@../../css/dark-theme.css" text="%buttonSaveClose" />
+                        <JFXButton fx:id="cancelButton" onAction="#executeCancelAction" prefWidth="150.0" styleClass="common-button" stylesheets="@../../css/dark-theme.css" text="%buttonCancel">
                            <font>
                               <Font size="13.0" />
                            </font>

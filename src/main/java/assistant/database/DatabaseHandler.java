@@ -15,9 +15,8 @@ public class DatabaseHandler {
     private static DatabaseHandler handler = null;
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
 
-    private static final String DB_URL = "jdbc:derby:derbyDB;create=true"; // Declare JDBC Driver -> place where database will be create (folder name, if database not exist create one)
+    private static final String DB_URL = "jdbc:sqlite:SQLiteDatabase.db"; // Declare JDBC Driver -> place where database will be create (folder name, if database not exist create one)
     private static ConnectionSource connection; // store connection between application and database
-    private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 
     public static void initDatabase(){
         createConnectionSource();
@@ -26,21 +25,7 @@ public class DatabaseHandler {
         closeConnectionSource();
     }
 
-    public static DatabaseHandler getInstance() {
-        // creating one handler for all Controllers, in the first calling, new object will be creating and in the next one, existing object will be return
-        return (handler == null) ? handler = new DatabaseHandler() : handler;
-    }
-
     private static void createConnectionSource(){
-       //Setting JDBC Driver
-        try {
-            Class.forName(driver).getDeclaredConstructor();
-        } catch (ClassNotFoundException |  NoSuchMethodException e) {
-            System.out.println("Where is your Oracle JDBC Driver?");
-            e.printStackTrace();
-        }
-        System.out.println("Oracle JDBC Driver Registered!");
-
         try {
             connection = new JdbcConnectionSource(DB_URL); // creating connection (session) with a database.
         } catch (SQLException e) {
