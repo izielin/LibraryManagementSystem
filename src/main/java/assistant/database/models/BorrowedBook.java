@@ -21,8 +21,11 @@ public class BorrowedBook implements BaseModel{
     @DatabaseField(columnName = "BOOK_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private Book book;
 
-    @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
+    @DatabaseField(columnName = "USER_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private User user;
+
+    @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
+    private Library library;
 
     public BorrowedBook() {
     }
@@ -65,5 +68,13 @@ public class BorrowedBook implements BaseModel{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 }

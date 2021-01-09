@@ -2,7 +2,7 @@ package assistant.UI.Controllers;
 
 import assistant.Utils.DonutChart;
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +31,7 @@ public class DashBoardController {
     public CategoryAxis xAxisLineChart;
     public NumberAxis yAxisLineChart;
 
-    CommonDao commonDao = new CommonDao();
+    DataAccessObject dataAccessObject = new DataAccessObject();
 
 
     public void initialize() {
@@ -41,15 +41,15 @@ public class DashBoardController {
     private void initCharts() {
         libraryName.setText(LoginController.currentlyLoggedUser.getLibrary().getName());
         try {
-            userAmount.setText(commonDao.countRecords(User.class, "select count(*) from users where user_type='MEMBER' and library_id=" + LoginController.currentlyLoggedUser.getLibrary().getId()));
-            bookAmount.setText(commonDao.countRecords(User.class, "select count(*) from books where library_id=" + LoginController.currentlyLoggedUser.getLibrary().getId()));
-            borrowedAmount.setText(commonDao.countRecords(User.class, "select count(*) from borrowed_books where library_id=" + LoginController.currentlyLoggedUser.getLibrary().getId()));
-            categoryAmount.setText(commonDao.countRecords(User.class, "select count(*) from categories"));
+            userAmount.setText(dataAccessObject.countRecords(User.class, "select count(*) from users where user_type='MEMBER' and library_id=" + LoginController.currentlyLoggedUser.getLibrary().getId()));
+            bookAmount.setText(dataAccessObject.countRecords(User.class, "select count(*) from books where library_id=" + LoginController.currentlyLoggedUser.getLibrary().getId()));
+            borrowedAmount.setText(dataAccessObject.countRecords(User.class, "select count(*) from borrowed_books where library_id=" + LoginController.currentlyLoggedUser.getLibrary().getId()));
+            categoryAmount.setText(dataAccessObject.countRecords(User.class, "select count(*) from categories"));
 
-            newUserToday.setText(commonDao.countRecords(User.class, "select count(*) from users where user_type='MEMBER' and library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and registration_date = '" + LocalDate.now() + "'"));
-            newBookToday.setText(commonDao.countRecords(User.class, "select count(*) from books where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and added_date = '" + LocalDate.now() + "'"));
-            submittedToday.setText(commonDao.countRecords(User.class, "select count(*) from books where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and last_submission = '" + LocalDate.now() + "'"));
-            borrowedToday.setText(commonDao.countRecords(User.class, "select count(*) from borrowed_books where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and borrow_time = '" + LocalDate.now() + "'"));
+            newUserToday.setText(dataAccessObject.countRecords(User.class, "select count(*) from users where user_type='MEMBER' and library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and registration_date = '" + LocalDate.now() + "'"));
+            newBookToday.setText(dataAccessObject.countRecords(User.class, "select count(*) from books where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and added_date = '" + LocalDate.now() + "'"));
+            submittedToday.setText(dataAccessObject.countRecords(User.class, "select count(*) from books where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and last_submission = '" + LocalDate.now() + "'"));
+            borrowedToday.setText(dataAccessObject.countRecords(User.class, "select count(*) from borrowed_books where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() + " and borrow_time = '" + LocalDate.now() + "'"));
 
 
             // line chart
@@ -60,7 +60,7 @@ public class DashBoardController {
             String query = "select registration_date, count(*) from users " +
                     " where library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() +
                     " group by registration_date";
-            List<String[]> usersList = commonDao.groupByQuery(User.class, query);
+            List<String[]> usersList = dataAccessObject.executeRawQuery(User.class, query);
 
             for (String[] element : usersList) {
                 series.getData().add(new XYChart.Data(element[0], Integer.parseInt(element[1])));
@@ -76,7 +76,7 @@ public class DashBoardController {
                     "WHERE library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId() +
                     " GROUP BY CATEGORIES.NAME";
             try {
-                List<String[]> categoryList = commonDao.groupByQuery(User.class, queryBookByCategory);
+                List<String[]> categoryList = dataAccessObject.executeRawQuery(User.class, queryBookByCategory);
                 categoryList.forEach(category -> donutChartData.add(new PieChart.Data(category[0], Integer.parseInt(category[1]))));
 
 
@@ -93,7 +93,7 @@ public class DashBoardController {
                     " WHERE library_id = " + LoginController.currentlyLoggedUser.getLibrary().getId()
                     + " GROUP BY availability";
             try {
-                List<String[]> statusList = commonDao.groupByQuery(User.class, queryBookByAvailability);
+                List<String[]> statusList = dataAccessObject.executeRawQuery(User.class, queryBookByAvailability);
                 statusList.forEach(availabilityStatus -> {
                     String status = (availabilityStatus[0].equals("1")) ? "Available Books" : "Borrowed Books";
                     pieChartData.add(new PieChart.Data(status, Integer.parseInt(availabilityStatus[1])));

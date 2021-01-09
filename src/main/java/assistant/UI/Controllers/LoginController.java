@@ -2,7 +2,7 @@ package assistant.UI.Controllers;
 
 import assistant.Utils.ProjectTools;
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.User;
 import assistant.settings.Settings;
 import com.jfoenix.controls.JFXPasswordField;
@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
     private void LoginAction() throws IOException {
         String username = usernameInput.getText();
         String password = DigestUtils.sha1Hex(passwordInput.getText());
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
 
         try {
             User user = dao.isLogin(username, password); // creating object of logged user

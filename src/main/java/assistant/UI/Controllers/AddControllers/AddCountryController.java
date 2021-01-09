@@ -1,11 +1,8 @@
 package assistant.UI.Controllers.AddControllers;
 
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
-import assistant.database.models.BaseModel;
-import assistant.database.models.Category;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.Country;
-import assistant.database.models.PublishingCompany;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +16,7 @@ public class AddCountryController {
     }
 
     public void executeSaveAction() throws ApplicationException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         Country country = new Country();
         country.setName(nameInput.getText());
         dao.createOrUpdate(country);

@@ -17,9 +17,9 @@ public class UserFXModel {
     private final StringProperty registrationDate = new SimpleStringProperty();
     private final StringProperty street = new SimpleStringProperty();
     private final StringProperty zipCode = new SimpleStringProperty();
-    private final ObjectProperty<City> city = new SimpleObjectProperty<>();
+    private final ObjectProperty<CityFXModel> city = new SimpleObjectProperty<>();
     private final StringProperty userType = new SimpleStringProperty();
-    private final ObjectProperty<Library> library = new SimpleObjectProperty<>();
+    private final ObjectProperty<LibraryFXModel> library = new SimpleObjectProperty<>();
 
     public int getId() {
         return id.get();
@@ -141,15 +141,15 @@ public class UserFXModel {
         this.zipCode.set(zipCode);
     }
 
-    public City getCity() {
+    public CityFXModel getCity() {
         return city.get();
     }
 
-    public ObjectProperty<City> cityProperty() {
+    public ObjectProperty<CityFXModel> cityProperty() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(CityFXModel city) {
         this.city.set(city);
     }
 
@@ -165,15 +165,15 @@ public class UserFXModel {
         this.userType.set(userType);
     }
 
-    public Library getLibrary() {
+    public LibraryFXModel getLibrary() {
         return library.get();
     }
 
-    public ObjectProperty<Library> libraryProperty() {
+    public ObjectProperty<LibraryFXModel> libraryProperty() {
         return library;
     }
 
-    public void setLibrary(Library library) {
+    public void setLibrary(LibraryFXModel library) {
         this.library.set(library);
     }
 

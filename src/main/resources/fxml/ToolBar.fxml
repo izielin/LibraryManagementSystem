@@ -40,7 +40,7 @@
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="bookUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="60.0" layoutY="310.0" prefHeight="50.0" prefWidth="170.0" text="Book">
+            <JFXButton accessibleText="AddBook" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="60.0" layoutY="310.0" prefHeight="50.0" prefWidth="170.0" text="Book">
                <graphic>
                   <FontAwesomeIcon glyphName="BOOK" />
                </graphic>
@@ -54,7 +54,7 @@
                   <Insets left="50.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton accessibleText="addUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="User">
+            <JFXButton accessibleText="AddUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="User">
                <graphic>
                   <FontAwesomeIcon glyphName="USER" />
                </graphic>
@@ -68,7 +68,7 @@
                   <Font size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="addView" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Other">
+            <JFXButton accessibleText="AddView" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Other">
                <graphic>
                   <FontAwesomeIcon glyphName="TH" />
                </graphic>
@@ -93,7 +93,7 @@
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="bookUser" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Book">
+            <JFXButton accessibleText="BookList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Book">
                <graphic>
                   <FontAwesomeIcon glyphName="BOOK" />
                </graphic>
@@ -107,7 +107,7 @@
                   <Font size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="userList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="User">
+            <JFXButton accessibleText="UserList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="User">
                <graphic>
                   <FontAwesomeIcon glyphName="GROUP" />
                </graphic>
@@ -121,7 +121,7 @@
                   <Font size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="borrowedList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Borrowed Books">
+            <JFXButton accessibleText="BorrowedList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Borrowed Books">
                <graphic>
                   <FontAwesomeIcon glyphName="TH" />
                </graphic>
@@ -146,7 +146,7 @@
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="submissionBook" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Submit Book">
+            <JFXButton accessibleText="SubmissionBook" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Submit Book">
                <graphic>
                   <FontAwesomeIcon glyphName="CHECK_CIRCLE" size="1.5em" />
                </graphic>

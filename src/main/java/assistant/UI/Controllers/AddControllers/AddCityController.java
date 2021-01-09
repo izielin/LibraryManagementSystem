@@ -3,9 +3,7 @@ package assistant.UI.Controllers.AddControllers;
 import assistant.FXModels.CountryFXModel;
 import assistant.Utils.Initializers;
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
-import assistant.database.models.BaseModel;
-import assistant.database.models.Category;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.City;
 import assistant.database.models.Country;
 import com.jfoenix.controls.JFXComboBox;
@@ -34,7 +32,7 @@ public class AddCityController {
     }
 
     public void executeSaveAction() throws ApplicationException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         Country country = dao.findById(Country.class, countryCombobox.getValue().getId());
 
         City city = new City();

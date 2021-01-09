@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.sql.*;
 
 public class DatabaseHandler {
-    private static DatabaseHandler handler = null;
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
 
     private static final String DB_URL = "jdbc:sqlite:SQLiteDatabase.db"; // Declare JDBC Driver -> place where database will be create (folder name, if database not exist create one)
@@ -22,7 +21,6 @@ public class DatabaseHandler {
         createConnectionSource();
         dropTable();
         createTable();
-        closeConnectionSource();
     }
 
     private static void createConnectionSource(){

@@ -1,12 +1,11 @@
 package assistant.Utils;
 
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class FillDatabase {
     public static  void fillDatabase(){
@@ -321,46 +320,46 @@ public class FillDatabase {
         book15.setPublishingCompany(publishingCompany2);
         book15.setLibrary(library3);
 
-        CommonDao commonDao = new CommonDao();
+        DataAccessObject dataAccessObject = new DataAccessObject();
         try{
-            commonDao.createOrUpdate(country1);
-            commonDao.createOrUpdate(country2);
-            commonDao.createOrUpdate(city1);
-            commonDao.createOrUpdate(city2);
-            commonDao.createOrUpdate(city3);
-            commonDao.createOrUpdate(library1);
-            commonDao.createOrUpdate(library2);
-            commonDao.createOrUpdate(library3);
-            commonDao.createOrUpdate(user1);
-            commonDao.createOrUpdate(user2);
-            commonDao.createOrUpdate(user3);
-            commonDao.createOrUpdate(user4);
-            commonDao.createOrUpdate(user5);
-            commonDao.createOrUpdate(user6);
-            commonDao.createOrUpdate(author);
-            commonDao.createOrUpdate(author2);
-            commonDao.createOrUpdate(author3);
-            commonDao.createOrUpdate(publishingCompany);
-            commonDao.createOrUpdate(publishingCompany2);
-            commonDao.createOrUpdate(category1);
-            commonDao.createOrUpdate(category2);
-            commonDao.createOrUpdate(category3);
-            commonDao.createOrUpdate(category4);
-            commonDao.createOrUpdate(book1);
-            commonDao.createOrUpdate(book2);
-            commonDao.createOrUpdate(book3);
-            commonDao.createOrUpdate(book4);
-            commonDao.createOrUpdate(book5);
-            commonDao.createOrUpdate(book6);
-            commonDao.createOrUpdate(book7);
-            commonDao.createOrUpdate(book8);
-            commonDao.createOrUpdate(book9);
-            commonDao.createOrUpdate(book10);
-            commonDao.createOrUpdate(book11);
-            commonDao.createOrUpdate(book12);
-            commonDao.createOrUpdate(book13);
-            commonDao.createOrUpdate(book14);
-            commonDao.createOrUpdate(book15);
+            dataAccessObject.createOrUpdate(country1);
+            dataAccessObject.createOrUpdate(country2);
+            dataAccessObject.createOrUpdate(city1);
+            dataAccessObject.createOrUpdate(city2);
+            dataAccessObject.createOrUpdate(city3);
+            dataAccessObject.createOrUpdate(library1);
+            dataAccessObject.createOrUpdate(library2);
+            dataAccessObject.createOrUpdate(library3);
+            dataAccessObject.createOrUpdate(user1);
+            dataAccessObject.createOrUpdate(user2);
+            dataAccessObject.createOrUpdate(user3);
+            dataAccessObject.createOrUpdate(user4);
+            dataAccessObject.createOrUpdate(user5);
+            dataAccessObject.createOrUpdate(user6);
+            dataAccessObject.createOrUpdate(author);
+            dataAccessObject.createOrUpdate(author2);
+            dataAccessObject.createOrUpdate(author3);
+            dataAccessObject.createOrUpdate(publishingCompany);
+            dataAccessObject.createOrUpdate(publishingCompany2);
+            dataAccessObject.createOrUpdate(category1);
+            dataAccessObject.createOrUpdate(category2);
+            dataAccessObject.createOrUpdate(category3);
+            dataAccessObject.createOrUpdate(category4);
+            dataAccessObject.createOrUpdate(book1);
+            dataAccessObject.createOrUpdate(book2);
+            dataAccessObject.createOrUpdate(book3);
+            dataAccessObject.createOrUpdate(book4);
+            dataAccessObject.createOrUpdate(book5);
+            dataAccessObject.createOrUpdate(book6);
+            dataAccessObject.createOrUpdate(book7);
+            dataAccessObject.createOrUpdate(book8);
+            dataAccessObject.createOrUpdate(book9);
+            dataAccessObject.createOrUpdate(book10);
+            dataAccessObject.createOrUpdate(book11);
+            dataAccessObject.createOrUpdate(book12);
+            dataAccessObject.createOrUpdate(book13);
+            dataAccessObject.createOrUpdate(book14);
+            dataAccessObject.createOrUpdate(book15);
         }catch (ApplicationException e) {
             e.printStackTrace();
         }

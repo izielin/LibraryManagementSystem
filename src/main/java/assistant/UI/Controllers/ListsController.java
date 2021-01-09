@@ -4,12 +4,11 @@ import assistant.FXModels.*;
 import assistant.Utils.Converters;
 import assistant.Utils.ProjectTools;
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,9 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,7 +54,7 @@ public class ListsController {
     @FXML
     private TableColumn<PublishingCompanyFXModel, String> publisherName;
 
-    CommonDao dao = new CommonDao();
+    DataAccessObject dao = new DataAccessObject();
 
     public void initialize() {
         try {
@@ -260,13 +257,13 @@ public class ListsController {
     }
 
     public void deleteCategoryById(int id) throws ApplicationException, SQLException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         dao.deleteById(Category.class, id);
         dao.deleteByColumnName(Book.class, "CATEGORY_ID", id);
     }
 
     public void deleteCountryById(int id) throws ApplicationException, SQLException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         List<City> cityList = dao.findByColumnName(City.class, "COUNTRY_ID", id);
 
         cityList.forEach(c -> {
@@ -292,7 +289,7 @@ public class ListsController {
     }
 
     public void deleteCityById(int id) throws ApplicationException, SQLException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
 
         List<Library> libraryList = dao.findByColumnName(Library.class, "CITY_ID", id);
         libraryList.forEach(l -> {
@@ -310,13 +307,13 @@ public class ListsController {
     }
 
     public void deletePublisherById(int id) throws ApplicationException, SQLException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         dao.deleteById(PublishingCompany.class, id);
         dao.deleteByColumnName(Book.class, "PUBLISHER_ID", id);
     }
 
     public void deleteAuthorById(int id) throws ApplicationException, SQLException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         dao.deleteById(Author.class, id);
         dao.deleteByColumnName(Book.class, "AUTHOR_ID", id);
     }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @DatabaseTable(tableName = "USERS")
 public class User implements BaseModel {
-    @DatabaseField(generatedId = true)
+    @DatabaseField(columnName = "ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "USERNAME", canBeNull = false, unique = true)

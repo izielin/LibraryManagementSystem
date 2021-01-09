@@ -1,15 +1,17 @@
 package assistant.database.models;
 
 import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Date;
+import java.awt.*;
+
 
 @DatabaseTable(tableName = "BOOKS")
 public class Book implements BaseModel {
-    @DatabaseField(generatedId = true)
+    @DatabaseField(columnName ="ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "ISBN_10", unique = true)
@@ -27,8 +29,14 @@ public class Book implements BaseModel {
     @DatabaseField(columnName = "LAST_SUBMISSION")
     private String lastSubmission;
 
+    @DatabaseField(columnName = "DESCRIPTION")
+    private String description;
+
     @DatabaseField(columnName = "PUBLICATION_DATE")
     private String publicationDate;
+
+    @DatabaseField(dataType = DataType.SERIALIZABLE)
+    private byte[] bookCover;
 
     @DatabaseField(columnName = "AVAILABILITY", defaultValue = "true")
     private Boolean availability;
@@ -153,5 +161,21 @@ public class Book implements BaseModel {
 
     public void setBorrowedBooks(ForeignCollection<BorrowedBook> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
+    }
+
+    public byte[] getBookCover() {
+        return bookCover;
+    }
+
+    public void setBookCover(byte[] bookCover) {
+        this.bookCover = bookCover;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

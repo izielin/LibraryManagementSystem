@@ -3,7 +3,7 @@ package assistant.UI.Controllers.AddControllers;
 import assistant.FXModels.CountryFXModel;
 import assistant.Utils.Initializers;
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -40,7 +40,7 @@ public class AddAuthorController {
 
     @FXML
     void executeSaveAction(ActionEvent event) throws ApplicationException {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         Country country = dao.findById(Country.class, countryCombobox.getValue().getId());
 
         Author author = new Author();

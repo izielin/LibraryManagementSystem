@@ -1,7 +1,7 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.exceptions.ApplicationException;
-import assistant.database.dao.CommonDao;
+import assistant.database.dao.DataAccessObject;
 import assistant.database.models.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +24,7 @@ public class LendBookController implements Initializable {
     @Override
 
     public void initialize(URL location, ResourceBundle resources) {
-        CommonDao dao = new CommonDao();
+        DataAccessObject dao = new DataAccessObject();
         try {
             List<Category> categories = dao.queryForAll(Category.class);
             initCategoryList(categories);

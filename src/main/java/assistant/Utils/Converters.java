@@ -16,9 +16,9 @@ public class Converters {
         model.setRegistrationDate(user.getRegistrationDate());
         model.setStreet(user.getStreet());
         model.setZipCode(user.getZipCode());
-        model.setCity(user.getCity());
+        model.setCity(convertToCityFXModel(user.getCity()));
         model.setUserType(user.getUserType());
-        model.setLibrary(user.getLibrary());
+        model.setLibrary(convertToLibraryFXModel(user.getLibrary()));
         return model;
     }
 
@@ -34,9 +34,9 @@ public class Converters {
         model.setRegistrationDate(userFXModel.getRegistrationDate());
         model.setStreet(userFXModel.getStreet());
         model.setZipCode(userFXModel.getZipCode());
-        model.setCity(userFXModel.getCity());
+        model.setCity(convertToCity(userFXModel.getCity()));
         model.setUserType(userFXModel.getUserType());
-        model.setLibrary(userFXModel.getLibrary());
+        model.setLibrary(convertToLibrary(userFXModel.getLibrary()));
         return model;
     }
 
@@ -52,6 +52,14 @@ public class Converters {
         model.setId(city.getId());
         model.setName(city.getName());
         model.setCountry(convertToCountryFX(city.getCountry()));
+        return model;
+    }
+
+    public static City convertToCity(CityFXModel city) {
+        City model = new City();
+        model.setId(city.getId());
+        model.setName(city.getName());
+        model.setCountry(convertToCountry(city.getCountry()));
         return model;
     }
 
@@ -93,6 +101,26 @@ public class Converters {
         CountryFXModel model = new CountryFXModel();
         model.setId(country.getId());
         model.setName(country.getName());
+        return model;
+    }
+
+    public static LibraryFXModel convertToLibraryFXModel(Library library) {
+        LibraryFXModel model = new LibraryFXModel();
+        model.setId(library.getId());
+        model.setName(library.getName());
+        model.setStreet(library.getStreet());
+        model.setZipCode(library.getZipCode());
+        model.setCityFX(convertToCityFXModel(library.getCity()));
+        return model;
+    }
+
+    public static Library convertToLibrary(LibraryFXModel library) {
+        Library model = new Library();
+        model.setId(library.getId());
+        model.setName(library.getName());
+        model.setStreet(library.getStreet());
+        model.setZipCode(library.getZipCode());
+        model.setCity(convertToCity(library.getCityFX()));
         return model;
     }
 }
