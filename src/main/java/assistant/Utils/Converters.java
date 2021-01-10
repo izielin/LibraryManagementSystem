@@ -123,4 +123,23 @@ public class Converters {
         model.setCity(convertToCity(library.getCityFX()));
         return model;
     }
+
+    public static BookFXModel convertToBookFx(Book book) {
+        BookFXModel model = new BookFXModel();
+        model.setId(book.getId());
+        model.setIsbn10(book.getIsbn10());
+        model.setIsbn13(book.getIsbn13());
+        model.setTitle(book.getTitle());
+        model.setAddedDate(book.getAddedDate());
+        model.setLastSubmissionDate(book.getLastSubmission());
+        model.setDescription(book.getDescription());
+        model.setPublicationDate(book.getPublicationDate());
+        model.setBookCover(book.getBookCover());
+        model.setAvailability(book.getAvailability());
+        model.setAuthorFX(convertToAuthorFXModel(book.getAuthor()));
+        model.setCategoryFX(convertToCategoryFx(book.getCategory()));
+        model.setPublishingCompanyFX(convertToPublisherFX(book.getPublishingCompany()));
+        model.setLibraryFX(convertToLibraryFXModel(book.getLibrary()));
+        return model;
+    }
 }

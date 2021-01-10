@@ -19,6 +19,7 @@ package assistant.UI.Controllers.AddControllers;
 //import static assistant.alert.AlertMaker.showSimpleAlert;
 //
 
+import assistant.FXModels.BookFXModel;
 import assistant.UI.Controllers.LoginController;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.dao.DataAccessObject;
@@ -27,6 +28,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,18 +37,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -166,23 +172,26 @@ public class AddBookController implements Initializable {
     }
 
     @FXML
-    private void chooseFile() {
+    private void chooseFile() throws MalformedURLException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File file = fileChooser.showOpenDialog(null);
 
+        System.out.println(file);
+
         if (file != null) {
-            bookCover.setImage(new Image(file.toURI().toString()));
+            bookCover.setImage(new Image(file.toURI().toURL().toExternalForm()));
             filePath.setText("Selected File: " + file.getAbsolutePath());
         }
 
         selectedCover = file;
+        System.out.println(selectedCover);
 
     }
 
 
     @FXML
-    void saveButton(ActionEvent event) throws ApplicationException, SQLException, IOException {
+    void saveButton() throws ApplicationException, SQLException, IOException {
         DataAccessObject dao = new DataAccessObject();
         Book book = null;
         if (editedBookID == null) {
@@ -219,12 +228,14 @@ public class AddBookController implements Initializable {
         book.setDescription(description.getText());
         book.setPublicationDate(releaseYear.getText());
 
-        BufferedImage bufferedImage = ImageIO.read(selectedCover);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "png", outputStream);
-        byte[] data = outputStream.toByteArray();
+        if (selectedCover != null) {
+            BufferedImage bufferedImage = ImageIO.read(selectedCover);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "jpg", outputStream);
+            byte[] data = outputStream.toByteArray();
 
-        book.setBookCover(data);
+            book.setBookCover(data);
+        }
         book.setAuthor(author);
         book.setCategory(category);
         book.setLibrary(LoginController.currentlyLoggedUser.getLibrary());
@@ -235,7 +246,12 @@ public class AddBookController implements Initializable {
 
         dao.createOrUpdate(book);
         showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Success", "Book was successfully created!");
-        clearFields();
+        if (editedBookID != null) {
+            JFXButton okButton = new JFXButton("Okay");
+            okButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> ((Stage) bookTitle.getScene().getWindow()).close());
+            showJFXButton(rootPane, mainAnchorPane, Arrays.asList(okButton), "Success", "User was successfully created!");
+        } else
+            clearFields();
 
     }
 
@@ -252,6 +268,33 @@ public class AddBookController implements Initializable {
         publishingCompanyName.setText("");
     }
 
+    public void inflateUI(BookFXModel book) throws IOException {
+        editedBookID = book.getId();
+        bookTitle.textProperty().bindBidirectional(book.titleProperty());
+        isbn10.textProperty().bindBidirectional(book.isbn10Property());
+        isbn13.textProperty().bindBidirectional(book.isbn13Property());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = book.getAddedDate();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        addedDate.setValue(localDate);
+
+        description.textProperty().bindBidirectional(book.descriptionProperty());
+        releaseYear.textProperty().bindBidirectional(book.publicationDateProperty());
+        bookCategory.textProperty().bindBidirectional(book.categoryFXProperty().get().nameProperty());
+        bookAuthor.textProperty().bindBidirectional(new SimpleStringProperty(book.authorFXProperty().get().toString()));
+        publishingCompanyName.textProperty().bindBidirectional(book.publishingCompanyFXProperty().getValue().nameProperty());
+
+        if (book.getBookCover() != null) {
+            ByteArrayInputStream bis = new ByteArrayInputStream(book.getBookCover());
+            BufferedImage bImage2 = ImageIO.read(bis);
+            Image image = javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
+            bookCover.setImage(image);
+        } else {
+            bookCover.setImage(new Image("/images/book.png"));
+
+        }
+    }
 }
 
 

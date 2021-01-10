@@ -1,76 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.BookListController">
+
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.BookListController">
    <children>
-      <HBox prefHeight="400.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="mainAnchorPane">
          <children>
-            <TableView fx:id="tableView" onMouseClicked="#handleRowData" prefHeight="600.0" prefWidth="800.0">
+            <TableView fx:id="tableView" prefWidth="1300.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="idColumn" prefWidth="75.0" text="%bookID" />
-                <TableColumn fx:id="titleColumn" prefWidth="75.0" text="%bookTitle" />
-                  <TableColumn fx:id="authorColumn" prefWidth="75.0" text="%bookAuthor" />
-                  <TableColumn fx:id="publisherColumn" prefWidth="75.0" text="%publisher" />
-                  <TableColumn fx:id="availabilityColumn" prefWidth="75.0" text="%availability" />
+                  <TableColumn fx:id="categoryColumn" editable="false" prefWidth="75.0" text="Category" />
+                  <TableColumn editable="false" prefWidth="75.0" text="Book Details">
+                     <columns>
+                      <TableColumn fx:id="idColumn" editable="false" maxWidth="1500.0" prefWidth="75.0" text="%bookID" />
+                      <TableColumn fx:id="titleColumn" editable="false" maxWidth="6000.0" prefWidth="75.0" text="%bookTitle" />
+                        <TableColumn fx:id="authorColumn" editable="false" prefWidth="75.0" text="%bookAuthor" />
+                        <TableColumn fx:id="isbn13" editable="false" maxWidth="4000.0" prefWidth="75.0" text="isbn 13" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" text="Location">
+                     <columns>
+                        <TableColumn fx:id="libraryColumn" prefWidth="162.0" text="Library" />
+                        <TableColumn fx:id="cityColumn" maxWidth="3000.0" prefWidth="108.0" text="City" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="availabilityColumn" editable="false" maxWidth="2200.0" prefWidth="75.0" text="Availability" />
+                  <TableColumn fx:id="editColumn" editable="false" maxWidth="2000.0" prefWidth="75.0" text="Edit" />
+                  <TableColumn fx:id="deleteColumn" editable="false" maxWidth="2000.0" prefWidth="75.0" text="Delete" />
               </columns>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0">
-               <children>
-                  <Label fx:id="titleLabel" alignment="CENTER" prefHeight="52.0" prefWidth="300.0" style="-fx-background-color: #56BFA1; -fx-text-fill: white;" text="Selected Book" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="selectedBookID" promptText="%bookID">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="selectedBookTitle" promptText="%bookTitle">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="selectedBookAuthor" promptText="%bookAuthor">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="selectedBookPublisher" promptText="%publisher">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <JFXButton onAction="#deleteSelectedBook" prefHeight="40.0" prefWidth="100.0" stylesheets="@../css/dark-theme.css" text="Delete">
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </HBox.margin>
-                        </JFXButton>
-                        <JFXButton onAction="#updateSelectedBook" prefHeight="40.0" prefWidth="100.0" stylesheets="@../css/dark-theme.css" text="Update">
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </HBox.margin>
-                        </JFXButton>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
          </children>
-      </HBox>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

@@ -77,6 +77,6 @@ public class AuthorFXModel {
 
     @Override
     public String toString() {
-        return fistName.getValue() + " " + lastName.get();
+        return fistName.getValue() + " " + middleName.getValue() + " " + lastName.get();
     }
 }

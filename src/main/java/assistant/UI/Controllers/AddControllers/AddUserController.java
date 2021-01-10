@@ -17,10 +17,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
 
@@ -28,6 +30,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -165,8 +168,13 @@ public class AddUserController implements Initializable {
         user.setLibrary(library);
 
         dao.createOrUpdate(user);
-        showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Success", "User was successfully created!");
-        clearFields();
+        if (editedUserID != null) {
+            JFXButton okButton = new JFXButton("Okay");
+            okButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> ((Stage)usernameInput.getScene().getWindow()).close());
+            showJFXButton(rootPane, mainAnchorPane, Arrays.asList(okButton), "Success", "User was successfully created!");
+        }
+        else
+            clearFields();
     }
 
     private void clearFields() {

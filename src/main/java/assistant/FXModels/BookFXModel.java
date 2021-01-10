@@ -5,17 +5,20 @@ import javafx.beans.property.*;
 import java.time.LocalDate;
 
 public class BookFXModel {
-    private IntegerProperty id = new SimpleIntegerProperty();
-    private StringProperty isbn10 = new SimpleStringProperty();
-    private StringProperty isbn13 = new SimpleStringProperty();
-    private StringProperty title = new SimpleStringProperty();
-    private StringProperty addedDate = new SimpleStringProperty();
-    private StringProperty lastSubmissionDate = new SimpleStringProperty();
-    private StringProperty publicationDate = new SimpleStringProperty();
-    private ObjectProperty<AuthorFXModel> authorFX = new SimpleObjectProperty<>();
-    private ObjectProperty<CategoryFXModel> categoryFX = new SimpleObjectProperty<>();
-    private ObjectProperty<PublishingCompanyFXModel> publishingCompanyFX = new SimpleObjectProperty<>();
-    private ObjectProperty<LibraryFXModel> libraryFX = new SimpleObjectProperty<>();
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty isbn10 = new SimpleStringProperty();
+    private final StringProperty isbn13 = new SimpleStringProperty();
+    private final StringProperty title = new SimpleStringProperty();
+    private final StringProperty addedDate = new SimpleStringProperty();
+    private final StringProperty lastSubmissionDate = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
+    private final StringProperty publicationDate = new SimpleStringProperty();
+    private final BooleanProperty availability = new SimpleBooleanProperty();
+    private final ObjectProperty<byte[]> bookCover = new SimpleObjectProperty<>();
+    private final ObjectProperty<AuthorFXModel> authorFX = new SimpleObjectProperty<>();
+    private final ObjectProperty<CategoryFXModel> categoryFX = new SimpleObjectProperty<>();
+    private final ObjectProperty<PublishingCompanyFXModel> publishingCompanyFX = new SimpleObjectProperty<>();
+    private final ObjectProperty<LibraryFXModel> libraryFX = new SimpleObjectProperty<>();
 
     public int getId() {
         return id.get();
@@ -89,6 +92,18 @@ public class BookFXModel {
         this.lastSubmissionDate.set(lastSubmissionDate);
     }
 
+    public String getDescription() {
+        return description.get();
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
     public String getPublicationDate() {
         return publicationDate.get();
     }
@@ -99,6 +114,30 @@ public class BookFXModel {
 
     public void setPublicationDate(String publicationDate) {
         this.publicationDate.set(publicationDate);
+    }
+
+    public boolean isAvailability() {
+        return availability.get();
+    }
+
+    public BooleanProperty availabilityProperty() {
+        return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability.set(availability);
+    }
+
+    public byte[] getBookCover() {
+        return bookCover.get();
+    }
+
+    public ObjectProperty<byte[]> bookCoverProperty() {
+        return bookCover;
+    }
+
+    public void setBookCover(byte[] bookCover) {
+        this.bookCover.set(bookCover);
     }
 
     public AuthorFXModel getAuthorFX() {
@@ -147,10 +186,5 @@ public class BookFXModel {
 
     public void setLibraryFX(LibraryFXModel libraryFX) {
         this.libraryFX.set(libraryFX);
-    }
-
-    @Override
-    public String toString() {
-        return "BookFXModel{" + "title=" + title + '}';
     }
 }

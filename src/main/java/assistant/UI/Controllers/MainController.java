@@ -40,7 +40,7 @@ public class MainController {
                         case "AddBook" -> setCenter("/fxml/addViews/AddBook.fxml");
                         case "AddUser" -> setCenter("/fxml/addViews/AddUser.fxml");
                         case "AddView" -> setCenter("/fxml/Lists.fxml");
-                        case "BookList" -> setCenter("/fxml/UserList.fxml");
+                        case "BookList" -> setCenter("/fxml/BookList.fxml");
                         case "UserList" -> setCenter("/fxml/UserList.fxml");
 //                        case "BorrowedList" -> setCenter("/fxml/UserList.fxml");
 //                        case "LendBookView" -> setCenter("/fxml/UserList.fxml");
