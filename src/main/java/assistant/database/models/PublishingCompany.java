@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "PUBLISHERS")
 public class PublishingCompany implements BaseModel{
-    @DatabaseField(generatedId = true)
+    @DatabaseField(columnName ="ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "NAME", canBeNull = false, unique = true)

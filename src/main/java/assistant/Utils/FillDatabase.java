@@ -100,15 +100,15 @@ public class FillDatabase {
         User user5 = new User();
         user5.setUsername("user5");
         user5.setPassword(DigestUtils.sha1Hex("user5"));
-        user5.setEmail("marii@home.pl");
-        user5.setFirstName("Maria");
+        user5.setEmail("magdaK@home.pl");
+        user5.setFirstName("Magdalena");
         user5.setLastName("Klusek");
-        user5.setMobile("649-111-239");
-        user5.setStreet("Ludowa 11");
-        user5.setRegistrationDate(LocalDate.now().minusDays(1).toString());
-        user5.setZipCode("00-780");
+        user5.setMobile("997-118-832");
+        user5.setStreet("Ludowa 16");
+        user5.setRegistrationDate(LocalDate.now().toString());
+        user5.setZipCode("00-781");
         user5.setCity(city2);
-        user5.setLibrary(library2);
+        user5.setLibrary(library1);
 
         User user6 = new User();
         user6.setUsername("user6");
@@ -122,6 +122,19 @@ public class FillDatabase {
         user6.setZipCode("00-780");
         user6.setCity(city2);
         user6.setLibrary(library3);
+
+        User user7 = new User();
+        user7.setUsername("user7");
+        user7.setPassword(DigestUtils.sha1Hex("user7"));
+        user7.setEmail("marii@home.pl");
+        user7.setFirstName("Maria");
+        user7.setLastName("Klusek");
+        user7.setMobile("649-111-239");
+        user7.setStreet("Ludowa 11");
+        user7.setRegistrationDate(LocalDate.now().minusDays(1).toString());
+        user7.setZipCode("00-780");
+        user7.setCity(city2);
+        user7.setLibrary(library2);
 
         Author author = new Author();
         author.setFistName("Joanne");

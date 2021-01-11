@@ -20,7 +20,7 @@ public class Book implements BaseModel {
     @DatabaseField(columnName = "ISBN_13", unique = true)
     private String isbn13;
 
-    @DatabaseField(columnName = "TITTLE", canBeNull = false)
+    @DatabaseField(columnName = "TITLE", canBeNull = false)
     private String title;
 
     @DatabaseField(columnName = "ADDED_DATE")

@@ -161,7 +161,7 @@ public class BookListController implements Initializable {
         });
     }
 
-    private Button createButton(String path) {
+    public Button createButton(String path) {
         JFXButton button = new JFXButton();
         Image image = new Image(path);
         ImageView imageView = new ImageView(image);

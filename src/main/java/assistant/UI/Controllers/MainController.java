@@ -43,7 +43,7 @@ public class MainController {
                         case "BookList" -> setCenter("/fxml/BookList.fxml");
                         case "UserList" -> setCenter("/fxml/UserList.fxml");
 //                        case "BorrowedList" -> setCenter("/fxml/UserList.fxml");
-//                        case "LendBookView" -> setCenter("/fxml/UserList.fxml");
+                        case "LendBookView" -> setCenter("/fxml/LendBook.fxml");
 //                        case "SubmissionBook" -> setCenter("/fxml/UserList.fxml");
 //                        case "Settings" -> setCenter("/fxml/UserList.fxml");
                     }
@@ -93,99 +93,9 @@ public class MainController {
 //        stage.setFullScreen(!stage.isFullScreen());
 //    }
 
-//    @FXML
-//    private void loadMemberInformation() {
-//        String memberID = memberIDInput.getText();
-//        String query = "SELECT * FROM MEMBER WHERE id = '" + memberID + "'";
-//        ResultSet resultSet = databaseHandler.execQuery(query);
-//        boolean flag = false;
-//        try {
-//            while (resultSet.next()) {
-//                // get data from db
-//                String mName = resultSet.getString("name");
-//                String mobile = resultSet.getString("mobile");
-//                String email = resultSet.getString("email");
 //
-//                // set data to TextField
-//                memberName.setText(mName);
-//                memberContact.setText(mobile + ", " + email);
-//                flag = true;
-//            }
-//            if (!flag) {
-//                memberName.setText("Any member is associated with this id");
-//                memberContact.setText("");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 //
-//    @FXML
-//    private void loadBookInformation() {
-//        String bookID = bookIDInput.getText();
-//        String query = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
-//        ResultSet resultSet = databaseHandler.execQuery(query);
-//        boolean flag = false;
-//        try {
-//            while (resultSet.next()) {
-//                // get data from db
-//                String bName = resultSet.getString("title");
-//                String bAuthor = resultSet.getString("author");
-//                boolean bStatus = resultSet.getBoolean("isAvailable");
 //
-//                // set data to TextField
-//                bookTitle.setText(bName);
-//                bookAuthor.setText(bAuthor);
-//                String status = bStatus ? "available" : "nAvailable";
-//                bookStatus.setText(getResourceBundle().getString(status));
-//
-//                flag = true;
-//            }
-//            if (!flag) {
-//                bookTitle.setText("Any book is associated with this id");
-//                bookAuthor.setText("");
-//                bookStatus.setText("");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    @FXML
-//    private void executeCheckOutOperation() {
-//        String memberID = memberIDInput.getText();
-//        String bookID = bookIDInput.getText();
-//
-//        JFXButton yesButton = new JFXButton("YES");
-//        yesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-//            String action = "INSERT INTO CHECK_OUT(memberID, bookID) VALUES( " +
-//                    "'" + memberID + "'," +
-//                    "'" + bookID + "')";
-//            String action2 = "UPDATE BOOK SET isAvailable = false WHERE id = '" + bookID + "'";
-//
-//            if (databaseHandler.execAction(action) && databaseHandler.execAction(action2)) {
-//                showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), " Success", "Operation ended successfully");
-//                clearCheckOutEntries();
-//            }
-//        });
-//
-//        JFXButton cancelButton = new JFXButton("Cancel");
-//        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
-//                showJFXButton(rootPane, mainBorderPane, new ArrayList<>(), "Failed", "Operation ended unsuccessfully"));
-//
-//        showJFXButton(rootPane, mainBorderPane, Arrays.asList(yesButton, cancelButton), "Confirm chek book out operation",
-//                "Are you sure you want to lend '" + bookTitle.getText() + "' to " + memberName.getText() + "?");
-//    }
-//
-//    private void clearCheckOutEntries() {
-//        memberIDInput.clear();
-//        bookIDInput.clear();
-//        bookTitle.setText(getResourceBundle().getString("bookTitle"));
-//        bookAuthor.setText(getResourceBundle().getString("bookAuthor"));
-//        bookStatus.setText(getResourceBundle().getString("availability"));
-//        memberName.setText(getResourceBundle().getString("memberName"));
-//        memberContact.setText(getResourceBundle().getString("memberContact"));
-//    }
 //
 //    @FXML
 //    private void loadBookCheckOut() {

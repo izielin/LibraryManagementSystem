@@ -65,6 +65,11 @@
             <artifactId>javafx-swing</artifactId>
             <version>15.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.drapostolos</groupId>
+            <artifactId>type-parser</artifactId>
+            <version>0.7.0</version>
+        </dependency>
     </dependencies>
 </project>
 

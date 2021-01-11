@@ -131,8 +131,8 @@ public class AddBookController implements Initializable {
             String query = "SELECT DISTINCT FIRST_NAME, MIDDLE_NAME, LAST_NAME, ID FROM AUTHORS";
             String query2 = "SELECT DISTINCT NAME, ID FROM CATEGORIES";
             String query3 = "SELECT DISTINCT NAME, ID FROM PUBLISHERS";
-            authorList = dao.executeRawQuery(PublishingCompany.class, query);
-            categoryList = dao.executeRawQuery(PublishingCompany.class, query2);
+            authorList = dao.executeRawQuery(Author.class, query);
+            categoryList = dao.executeRawQuery(Category.class, query2);
             publisherList = dao.executeRawQuery(PublishingCompany.class, query3);
 
             categoryList.forEach(item -> possibleCategoriesItems.add(item[0]));
@@ -154,12 +154,9 @@ public class AddBookController implements Initializable {
         // creating learning TextField
         autoCompletionBinding = TextFields.bindAutoCompletion(bookTitle, possibleTitleSet);
 
-        bookTitle.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.TAB) {
-                    autoCompletionLearnWord(bookTitle.getText());
-                }
+        bookTitle.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!bookTitle.focusedProperty().getValue()) {
+                autoCompletionLearnWord(bookTitle.getText());
             }
         });
     }

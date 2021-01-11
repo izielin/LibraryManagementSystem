@@ -3,7 +3,9 @@ package assistant.database.dao;
 import assistant.Utils.exceptions.ApplicationException;
 import assistant.database.DatabaseHandler;
 import assistant.database.models.BaseModel;
+import assistant.database.models.Book;
 import assistant.database.models.User;
+import com.github.drapostolos.typeparser.TypeParser;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.dao.GenericRawResults;
@@ -11,10 +13,13 @@ import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import static assistant.Utils.ProjectTools.getResourceBundle;
@@ -166,6 +171,39 @@ public class DataAccessObject {
         Dao<T, Object> dao = getDao(cls);
         GenericRawResults<String[]> rawResults = dao.queryRaw(query);
         return rawResults.getResults();
+    }
+
+    public List<Book> searchDuplicateBooksTitles(String title, Integer id) throws ApplicationException, SQLException {
+        Dao<Book, Object> dao = getDao(Book.class);
+        List<Book> list = dao.queryBuilder().where().eq("TITLE", title)
+                .and().eq("AVAILABILITY", true)
+                .and().eq("LIBRARY_ID", id).query();
+        System.out.println(Arrays.toString(list.toArray()));
+        return list;
+    }
+
+    public List<User> searchDuplicatedNames(String firstName, String lastName) throws ApplicationException, SQLException {
+        Dao<User, Object> dao = getDao(User.class);
+        List<User> list = dao.queryBuilder().where().eq("FIRST_NAME", firstName).and().eq("LAST_NAME", lastName).query();
+        System.out.println(Arrays.toString(list.toArray()));
+        return list;
+    }
+
+    public <T extends BaseModel, I> void updateItem (Class<T> cls, Integer id, String columnName , String value) throws ApplicationException, SQLException, NoSuchFieldException {
+        Dao<T, Object> dao = getDao(cls);
+        UpdateBuilder<T, Object> updateBuilder = dao.updateBuilder();
+        System.out.println(cls);
+        Field field = cls.getDeclaredField(columnName.toLowerCase());
+
+        TypeParser parser = TypeParser.newBuilder().build();
+        Object object = parser.parseType(value, field.getGenericType());
+
+        updateBuilder.updateColumnValue(columnName, object);
+        updateBuilder.where().eq("ID", id);
+
+        System.out.println(updateBuilder.prepare());
+
+        dao.update(updateBuilder.prepare());
     }
 
 }

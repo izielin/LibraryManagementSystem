@@ -239,6 +239,7 @@ dmypy.json
 
 ## custom database
 derbyDB
+*.db
 SQLiteDatabase.db
 config.txt
 

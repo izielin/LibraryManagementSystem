@@ -9,7 +9,7 @@ import java.util.Date;
 
 @DatabaseTable(tableName = "BORROWED_BOOKS")
 public class BorrowedBook implements BaseModel{
-    @DatabaseField(generatedId = true)
+    @DatabaseField(columnName ="ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "BORROW_TIME")
