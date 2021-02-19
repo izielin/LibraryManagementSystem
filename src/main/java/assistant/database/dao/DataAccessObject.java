@@ -1,6 +1,6 @@
 package assistant.database.dao;
 
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.DatabaseHandler;
 import assistant.database.models.BaseModel;
 import assistant.database.models.Book;
@@ -189,7 +189,7 @@ public class DataAccessObject {
         return list;
     }
 
-    public <T extends BaseModel, I> void updateItem (Class<T> cls, Integer id, String columnName , String value) throws ApplicationException, SQLException, NoSuchFieldException {
+    public <T extends BaseModel> void updateItem (Class<T> cls, Integer id, String columnName , String value) throws ApplicationException, SQLException, NoSuchFieldException {
         Dao<T, Object> dao = getDao(cls);
         UpdateBuilder<T, Object> updateBuilder = dao.updateBuilder();
         System.out.println(cls);

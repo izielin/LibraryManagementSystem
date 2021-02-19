@@ -4,7 +4,7 @@ import assistant.FXModels.CityFXModel;
 import assistant.FXModels.LibraryFXModel;
 import assistant.FXModels.UserFXModel;
 import assistant.Utils.Initializers;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.City;
 import assistant.database.models.Library;
@@ -27,9 +27,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -85,7 +85,6 @@ public class AddUserController implements Initializable {
     @FXML
     private ComboBox<LibraryFXModel> libraryComboBox;
 
-    private static final ObservableList<CityFXModel> cityFXModelObservableList = FXCollections.observableArrayList();
     private static final ObservableList<LibraryFXModel> libraryFXModelObservableList = FXCollections.observableArrayList();
 
     private String defaultLoginData;
@@ -95,10 +94,8 @@ public class AddUserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            Initializers.initCityList(cityFXModelObservableList);
             Initializers.initLibraryList(libraryFXModelObservableList);
 
-            cityComboBox.setItems(cityFXModelObservableList);
             libraryComboBox.setItems(libraryFXModelObservableList);
 
             defaultCheckBox.selectedProperty().addListener(
@@ -109,15 +106,14 @@ public class AddUserController implements Initializable {
                             usernameInput.setDisable(true);
                             passwordInput.setDisable(true);
 
-                            List<User> list = dao.queryForAll(User.class);
-                            int lastID = list.get(list.size() - 1).getId(); // get last registered user id
+                            List<String[]> list = dao.executeRawQuery(User.class, "SELECT ID FROM USERS ORDER BY ID DESC LIMIT 1");
 
-                            defaultLoginData = "user" + (lastID + 1); // creating default login from template user + lastID +1
+                            defaultLoginData = "user" + (Integer.parseInt(list.get(0)[0]) + 1); // creating default login from template user + lastID +1
 
                             generatedUsername.setText(defaultLoginData);
                             generatedPassword.setText(defaultLoginData);
 
-                        } catch (ApplicationException e) {
+                        } catch (ApplicationException | SQLException e) {
                             e.printStackTrace();
                         }
                     });
@@ -138,7 +134,6 @@ public class AddUserController implements Initializable {
             user = dao.findById(User.class, editedUserID);
         }
 
-        City city = dao.findById(City.class, cityComboBox.getValue().getId());
         Library library = dao.findById(Library.class, libraryComboBox.getValue().getId());
 
         if (defaultCheckBox.isSelected()) {
@@ -159,7 +154,6 @@ public class AddUserController implements Initializable {
         user.setEmail(emailInput.getText());
         user.setStreet(streetInput.getText());
         user.setZipCode(zipCodeInput.getText());
-        user.setCity(city);
         String date = selectedDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         user.setRegistrationDate(date);
         RadioButton selectedRadioButton = (RadioButton) userTypeGroup.getSelectedToggle();
@@ -182,7 +176,6 @@ public class AddUserController implements Initializable {
         List<VBox> boxes = List.of(personalData, libraryData, accountData);
         boxes.forEach(vBox -> {
             for (Node node : vBox.getChildren()) {
-                System.out.println(node);
                 if (node instanceof Text) {
                     ((Text) node).setText("");
                 }
@@ -209,7 +202,6 @@ public class AddUserController implements Initializable {
         streetInput.textProperty().bindBidirectional(user.streetProperty());
         zipCodeInput.textProperty().bindBidirectional(user.zipCodeProperty());
 
-        cityComboBox.setItems(cityFXModelObservableList);
         cityComboBox.valueProperty().bindBidirectional(user.cityProperty());
 
 

@@ -5,24 +5,29 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import static assistant.Utils.ProjectTools.fxmlLoader;
+import static assistant.alert.AlertMaker.showExitDialog;
 
 
-public class MainController {
-
-    private static final String FXML_ADD_BOOK = "/fxml/addViews/AddBook.fxml";
-    private static final String FXML_LIST_BOOK = "/fxml/BookList.fxml";
-    private static final String FXML_ADD_MEMBER = "/fxml/AddMember.fxml";
-    private static final String FXML_LIST_MEMBER = "/fxml/UserList.fxml";
+public class MainController extends TitleBarController {
     private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
+    private static final String FXML_ADD_BOOK = "/fxml/addViews/AddBook.fxml";
+    private static final String FXML_LIST_BOOK = "/fxml/listViews/BookList.fxml";
+    private static final String FXML_ADD_MEMBER = "/fxml/addViews/AddUser.fxml";
+    private static final String FXML_LIST_MEMBER = "/fxml/listViews/UserList.fxml";
+    @FXML
+    private AnchorPane mainAnchorPane;
+    @FXML
+    private StackPane rootPane;
 
     @FXML
     private BorderPane mainBorderPane;
 
     public void initialize() {
-        setTitleBar();
         insertMenu();
         setCenter("/fxml/DashBoard.fxml");
     }
@@ -39,12 +44,12 @@ public class MainController {
                         case "HomeView" -> setCenter("/fxml/DashBoard.fxml");
                         case "AddBook" -> setCenter("/fxml/addViews/AddBook.fxml");
                         case "AddUser" -> setCenter("/fxml/addViews/AddUser.fxml");
-                        case "AddView" -> setCenter("/fxml/Lists.fxml");
-                        case "BookList" -> setCenter("/fxml/BookList.fxml");
-                        case "UserList" -> setCenter("/fxml/UserList.fxml");
+                        case "AddView" -> setCenter("/fxml/listViews/Lists.fxml");
+                        case "BookList" -> setCenter("/fxml/listViews/BookList.fxml");
+                        case "UserList" -> setCenter("/fxml/listViews/UserList.fxml");
 //                        case "BorrowedList" -> setCenter("/fxml/UserList.fxml");
                         case "LendBookView" -> setCenter("/fxml/LendBook.fxml");
-//                        case "SubmissionBook" -> setCenter("/fxml/UserList.fxml");
+                        case "SubmissionBook" -> setCenter("/fxml/SubmitBook.fxml");
 //                        case "Settings" -> setCenter("/fxml/UserList.fxml");
                     }
                 });
@@ -52,46 +57,41 @@ public class MainController {
         }
     }
 
-    public void setTitleBar() {
-        String TITLE_BAR_FXML = "/fxml/BaseTitleBar.fxml";
-        mainBorderPane.setTop(fxmlLoader(TITLE_BAR_FXML));
-    }
 
     public void setCenter(String fxmlPath) {
         mainBorderPane.setCenter(fxmlLoader(fxmlPath));
     }
 
+
     // menu actions
-//    @FXML
-//    private void MenuCloseApplication() {
-//        showExitDialog(rootPane, mainBorderPane);
-//    }
-//
-//    @FXML
-//    private void MenuAddBook() {
-//        loadWindow(FXML_ADD_BOOK);
-//    }
-//
-//    @FXML
-//    private void MenuAddMember() {
-//        loadWindow(FXML_ADD_MEMBER);
-//    }
-//
-//    @FXML
-//    private void MenuViewBook() {
-//        loadWindow(FXML_LIST_BOOK);
-//    }
-//
-//    @FXML
-//    private void MenuViewMember() {
-//        loadWindow(FXML_LIST_MEMBER);
-//    }
-//
-//    @FXML
-//    private void MenuFullScreen() {
-//        Stage stage = ((Stage) bookTitle.getScene().getWindow());
-//        stage.setFullScreen(!stage.isFullScreen());
-//    }
+    public MainController() {
+        super();
+    }
+
+    @FXML
+    private void MenuCloseApplication() {
+        showExitDialog(rootPane, mainAnchorPane);
+    }
+
+    @FXML
+    private void MenuAddBook() {
+        setCenter(FXML_ADD_BOOK);
+    }
+
+    @FXML
+    private void MenuAddMember() {
+        setCenter(FXML_ADD_MEMBER);
+    }
+
+    @FXML
+    private void MenuViewBook() {
+        setCenter(FXML_LIST_BOOK);
+    }
+
+    @FXML
+    private void MenuViewMember() {
+        setCenter(FXML_LIST_MEMBER);
+    }
 
 //
 //

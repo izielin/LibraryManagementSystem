@@ -2,7 +2,7 @@ package assistant.UI.Controllers.AddControllers;
 
 import assistant.FXModels.CountryFXModel;
 import assistant.Utils.Initializers;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXComboBox;
@@ -29,7 +29,6 @@ public class AddAuthorController {
     private static final ObservableList<CountryFXModel> countryFXModelObservableList = FXCollections.observableArrayList();
 
     public void initialize() throws ApplicationException {
-        Initializers.initCountryList(countryFXModelObservableList);
         countryCombobox.setItems(countryFXModelObservableList);
     }
 
@@ -41,13 +40,11 @@ public class AddAuthorController {
     @FXML
     void executeSaveAction(ActionEvent event) throws ApplicationException {
         DataAccessObject dao = new DataAccessObject();
-        Country country = dao.findById(Country.class, countryCombobox.getValue().getId());
 
         Author author = new Author();
         author.setFistName(firstNameInput.getText());
         author.setMiddleName(middleNameInput.getText());
         author.setLastName(lastNameInput.getText());
-        author.setCountry(country);
         dao.createOrUpdate(author);
         Stage stage = ((Stage) firstNameInput.getScene().getWindow());;
         stage.close();

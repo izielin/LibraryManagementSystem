@@ -1,6 +1,6 @@
 package assistant.Utils;
 
-import assistant.UI.Controllers.ListsController;
+import assistant.UI.Controllers.ListControllers.ListsController;
 import assistant.UI.Controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,9 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;

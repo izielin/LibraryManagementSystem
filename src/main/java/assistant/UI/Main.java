@@ -5,6 +5,8 @@ import assistant.database.DatabaseHandler;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 import static assistant.Utils.ProjectTools.loadWindow;
 
 public class Main extends Application {
@@ -18,7 +20,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         loadWindow(FXML_FILE);
         DatabaseHandler.initDatabase();
-        FillDatabase.fillDatabase();
+//        FillDatabase.fillDatabase();
     }
 
 

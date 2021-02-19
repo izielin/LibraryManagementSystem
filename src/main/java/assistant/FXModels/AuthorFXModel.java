@@ -5,7 +5,6 @@
 
 package assistant.FXModels;
 
-import assistant.database.models.Country;
 import javafx.beans.property.*;
 
 public class AuthorFXModel {
@@ -13,7 +12,6 @@ public class AuthorFXModel {
     private StringProperty fistName = new SimpleStringProperty();
     private StringProperty middleName = new SimpleStringProperty();
     private StringProperty lastName = new SimpleStringProperty();
-    private ObjectProperty<CountryFXModel> country = new SimpleObjectProperty<>();
 
     public int getId() {
         return id.get();
@@ -61,18 +59,6 @@ public class AuthorFXModel {
 
     public void setLastName(String lastName) {
         this.lastName.set(lastName);
-    }
-
-    public CountryFXModel getCountry() {
-        return country.get();
-    }
-
-    public ObjectProperty<CountryFXModel> countryProperty() {
-        return country;
-    }
-
-    public void setCountry(CountryFXModel country) {
-        this.country.set(country);
     }
 
     @Override

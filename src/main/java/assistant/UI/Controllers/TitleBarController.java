@@ -6,23 +6,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class TitleBarController {
-
     double x, y;
 
-    @FXML
-    private void close(MouseEvent mouseEvent) {
+    public void close(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    @FXML
-    private void fullScreen(MouseEvent mouseEvent) {
+    public void fullScreen(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.setMaximized(!stage.isMaximized());
     }
 
-    @FXML
-    private void minimize(MouseEvent mouseEvent) {
+    public void minimize(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
@@ -38,5 +34,6 @@ public class TitleBarController {
         x = stage.getX() - mouseEvent.getScreenX();
         y = stage.getY() - mouseEvent.getScreenY();
     }
+
 
 }

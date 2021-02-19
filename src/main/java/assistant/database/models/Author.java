@@ -20,9 +20,6 @@ public class Author implements BaseModel{
     @DatabaseField(columnName = "LAST_NAME", canBeNull = false)
     private String lastName;
 
-    @DatabaseField(columnName = "COUNTRY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Country country;
-
     @ForeignCollectionField(eager = true)
     // eager = true => results should be retrieved when the parent object is retrieved
     private ForeignCollection<Book> books;
@@ -63,14 +60,6 @@ public class Author implements BaseModel{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 
     public ForeignCollection<Book> getBooks() {

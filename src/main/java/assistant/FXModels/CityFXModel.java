@@ -1,12 +1,10 @@
 package assistant.FXModels;
 
-import assistant.database.models.Country;
 import javafx.beans.property.*;
 
 public class CityFXModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
-    private ObjectProperty<CountryFXModel> country = new SimpleObjectProperty<>();
 
     public int getId() {
         return id.get();
@@ -30,18 +28,6 @@ public class CityFXModel {
 
     public void setName(String name) {
         this.name.set(name);
-    }
-
-    public CountryFXModel getCountry() {
-        return country.get();
-    }
-
-    public ObjectProperty<CountryFXModel> countryProperty() {
-        return country;
-    }
-
-    public void setCountry(CountryFXModel country) {
-        this.country.set(country);
     }
 
     @Override

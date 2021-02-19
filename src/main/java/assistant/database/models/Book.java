@@ -41,7 +41,7 @@ public class Book implements BaseModel {
     @DatabaseField(columnName = "AVAILABILITY", defaultValue = "true")
     private Boolean availability;
 
-    @DatabaseField(columnName = "AUTHOR_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
+    @DatabaseField(columnName = "AUTHOR_ID", foreign = true, foreignAutoRefresh = true,  foreignAutoCreate = true, canBeNull = false)
     private Author author;
 
     @DatabaseField(columnName = "CATEGORY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)

@@ -53,8 +53,8 @@
                                           <FontAwesomeIcon glyphName="USER" size="30" />
                                           <HBox spacing="20.0">
                                              <children>
-                                                <JFXTextField fx:id="userFirstNameInput" focusColor="#56BFA1" labelFloat="true" prefWidth="230.0" promptText="%enterMemberID" />
-                                                <JFXTextField fx:id="userLastNameInput" focusColor="#56BFA1" labelFloat="true" prefWidth="230.0" promptText="%enterMemberID" />
+                                                <JFXTextField fx:id="userFirstNameInput" disable="true" focusColor="#56BFA1" labelFloat="true" prefWidth="230.0" promptText="%enterMemberID" />
+                                                <JFXTextField fx:id="userLastNameInput" disable="true" focusColor="#56BFA1" labelFloat="true" prefWidth="230.0" promptText="%enterMemberID" />
                                              </children>
                                           </HBox>
                                        </children>

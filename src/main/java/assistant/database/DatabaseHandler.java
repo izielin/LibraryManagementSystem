@@ -19,8 +19,8 @@ public class DatabaseHandler {
 
     public static void initDatabase(){
         createConnectionSource();
-        dropTable();
-        createTable();
+//        dropTable();
+//        createTable();
     }
 
     private static void createConnectionSource(){
@@ -56,7 +56,6 @@ public class DatabaseHandler {
             TableUtils.createTableIfNotExists(connection, Book.class);
             TableUtils.createTableIfNotExists(connection, BorrowedBook.class);
             TableUtils.createTableIfNotExists(connection, City.class);
-            TableUtils.createTableIfNotExists(connection, Country.class);
             TableUtils.createTableIfNotExists(connection, Library.class);
             TableUtils.createTableIfNotExists(connection, PublishingCompany.class);
             TableUtils.createTableIfNotExists(connection, Category.class);
@@ -72,7 +71,6 @@ public class DatabaseHandler {
             TableUtils.dropTable(connection, Book.class, true);
             TableUtils.dropTable(connection, BorrowedBook.class, true);
             TableUtils.dropTable(connection, City.class, true);
-            TableUtils.dropTable(connection, Country.class, true);
             TableUtils.dropTable(connection, Library.class, true);
             TableUtils.dropTable(connection, PublishingCompany.class, true);
             TableUtils.dropTable(connection, Category.class, true);

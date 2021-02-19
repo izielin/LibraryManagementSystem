@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #CECECE;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ToolBarController">
+<AnchorPane style="-fx-background-color: #CECECE;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ToolBarController">
    <children>
       <AnchorPane maxWidth="50.0" prefHeight="630.4" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="0.0">
          <effect>
             <DropShadow />
          </effect>
       </AnchorPane>
-      <VBox fx:id="menuVbox" prefWidth="220.0">
+      <VBox fx:id="menuVbox" prefHeight="631.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <JFXButton accessibleText="HomeView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Home">
                <graphic>
@@ -121,20 +121,6 @@
                   <Font size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="BorrowedList" alignment="BASELINE_LEFT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="170.0" text="Borrowed Books">
-               <graphic>
-                  <FontAwesomeIcon glyphName="TH" />
-               </graphic>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </JFXButton>
             <JFXButton accessibleText="LendBookView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Lend book">
                <graphic>
                   <FontAwesomeIcon glyphName="BOOKMARK" size="1.5em" />
@@ -147,6 +133,17 @@
                </font>
             </JFXButton>
             <JFXButton accessibleText="SubmissionBook" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Submit Book">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CHECK_CIRCLE" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="RenewBook" alignment="BASELINE_LEFT" graphicTextGap="20.0" layoutX="10.0" layoutY="460.0" prefHeight="50.0" prefWidth="220.0" text="Renew Book">
                <graphic>
                   <FontAwesomeIcon glyphName="CHECK_CIRCLE" size="1.5em" />
                </graphic>

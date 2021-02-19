@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.BookListController">
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ListControllers.BookListController">
    <children>
       <AnchorPane fx:id="mainAnchorPane">
          <children>

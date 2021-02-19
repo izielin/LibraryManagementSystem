@@ -1,4 +1,4 @@
-package assistant.Utils.exceptions;
+package assistant.Utils;
 
 public class ApplicationException extends Exception {
     public ApplicationException(String message) {

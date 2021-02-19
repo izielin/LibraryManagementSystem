@@ -1,11 +1,11 @@
-package assistant.UI.Controllers;
+package assistant.UI.Controllers.ListControllers;
 
 import assistant.FXModels.UserFXModel;
 import assistant.UI.Controllers.AddControllers.AddUserController;
+import assistant.UI.Controllers.LoginController;
+import assistant.UI.Controllers.MainController;
 import assistant.Utils.Converters;
-import assistant.Utils.Initializers;
-import assistant.Utils.ProjectTools;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.BorrowedBook;
 import assistant.database.models.User;
@@ -19,11 +19,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -119,9 +117,9 @@ public class UserListController implements Initializable {
 
     private ObservableList<UserFXModel> loadData() throws ApplicationException {
         ObservableList<UserFXModel> observableArrayList = FXCollections.observableArrayList();
+        observableArrayList.clear();
         DataAccessObject dao = new DataAccessObject();
         List<User> users = dao.queryForAll(User.class);
-        observableArrayList.clear();
         users.forEach(user -> {
             if (LoginController.currentlyLoggedUser.getUserType().equals("ADMIN")) {
                 UserFXModel userFx = Converters.convertToUserFx(user);
@@ -194,7 +192,6 @@ public class UserListController implements Initializable {
                 selectedUserMobile.setText(rowData.getMobile());
                 selectedUserEmail.setText(rowData.getEmail());
                 selectedUserStreet.setText(rowData.getStreet());
-                selectedUserCity.setText(rowData.getCity().getName());
 
                 switch (rowData.getUserType()) {
                     case "EMPLOYEE" -> selectedUserType.setText("PRACOWNIK");

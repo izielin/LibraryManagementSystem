@@ -1,6 +1,6 @@
 package assistant.UI.Controllers.AddControllers;
 //
-//import assistant.UI.Controllers.BookListController.Book;
+//import assistant.UI.Controllers.ListControllers.BookListController.Book;
 //import assistant.Utils.Utils;
 //import assistant.database.db;
 //import com.jfoenix.controls.JFXButton;
@@ -21,7 +21,7 @@ package assistant.UI.Controllers.AddControllers;
 
 import assistant.FXModels.BookFXModel;
 import assistant.UI.Controllers.LoginController;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
@@ -29,14 +29,10 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;

@@ -1,12 +1,13 @@
-package assistant.UI.Controllers;
+package assistant.UI.Controllers.ListControllers;
 
 import assistant.FXModels.AuthorFXModel;
 import assistant.FXModels.BookFXModel;
 import assistant.FXModels.CategoryFXModel;
 import assistant.FXModels.LibraryFXModel;
 import assistant.UI.Controllers.AddControllers.AddBookController;
+import assistant.UI.Controllers.LoginController;
 import assistant.Utils.Converters;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.Book;
 import assistant.database.models.BorrowedBook;

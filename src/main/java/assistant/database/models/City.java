@@ -13,14 +13,8 @@ public class City implements BaseModel{
     @DatabaseField(columnName = "NAME", canBeNull = false, unique = true)
     private String name;
 
-    @DatabaseField(columnName = "COUNTRY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Country country;
-
     @ForeignCollectionField(eager = true)
     private ForeignCollection<Library> libraries;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<User> users;
 
     public City() {
     }
@@ -41,27 +35,11 @@ public class City implements BaseModel{
         this.name = name;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
     public ForeignCollection<Library> getLibraries() {
         return libraries;
     }
 
     public void setLibraries(ForeignCollection<Library> libraries) {
         this.libraries = libraries;
-    }
-
-    public ForeignCollection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ForeignCollection<User> users) {
-        this.users = users;
     }
 }

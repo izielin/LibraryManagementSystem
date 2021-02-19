@@ -1,6 +1,6 @@
 package assistant.UI.Controllers.AddControllers;
 
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.PublishingCompany;
 import com.jfoenix.controls.JFXTextField;

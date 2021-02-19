@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.UserListController">
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ListControllers.UserListController">
    <children>
       <AnchorPane fx:id="mainAnchorPane">
          <children>
@@ -107,7 +107,7 @@
                                  <children>
                                     <ImageView fitHeight="220.0" fitWidth="310.0" layoutX="-1.0" layoutY="-7.0" pickOnBounds="true" smooth="false">
                                        <image>
-                                          <Image url="@../images/background.jpg" />
+                                          <Image url="@../../images/background.jpg" />
                                        </image>
                                     </ImageView>
                                     <Text fx:id="selectedUserName" fill="WHITE" layoutX="6.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="295.13671875">

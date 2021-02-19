@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ListsController">
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.ListControllers.ListsController">
    <children>
-      <AnchorPane fx:id="mainAnchorPane" stylesheets="@../css/dark-theme.css">
+      <AnchorPane fx:id="mainAnchorPane" stylesheets="@../../css/dark-theme.css">
          <children>
             <AnchorPane layoutX="593.0" layoutY="14.0" prefHeight="664.0" prefWidth="509.0">
                <children>

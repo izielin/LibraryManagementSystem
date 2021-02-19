@@ -16,7 +16,6 @@ public class Converters {
         model.setRegistrationDate(user.getRegistrationDate());
         model.setStreet(user.getStreet());
         model.setZipCode(user.getZipCode());
-        model.setCity(convertToCityFXModel(user.getCity()));
         model.setUserType(user.getUserType());
         model.setLibrary(convertToLibraryFXModel(user.getLibrary()));
         return model;
@@ -34,7 +33,6 @@ public class Converters {
         model.setRegistrationDate(userFXModel.getRegistrationDate());
         model.setStreet(userFXModel.getStreet());
         model.setZipCode(userFXModel.getZipCode());
-        model.setCity(convertToCity(userFXModel.getCity()));
         model.setUserType(userFXModel.getUserType());
         model.setLibrary(convertToLibrary(userFXModel.getLibrary()));
         return model;
@@ -51,7 +49,6 @@ public class Converters {
         CityFXModel model = new CityFXModel();
         model.setId(city.getId());
         model.setName(city.getName());
-        model.setCountry(convertToCountryFX(city.getCountry()));
         return model;
     }
 
@@ -59,7 +56,6 @@ public class Converters {
         City model = new City();
         model.setId(city.getId());
         model.setName(city.getName());
-        model.setCountry(convertToCountry(city.getCountry()));
         return model;
     }
 
@@ -76,7 +72,6 @@ public class Converters {
         model.setFistName(author.getFistName());
         model.setLastName(author.getLastName());
         model.setMiddleName(author.getMiddleName());
-        model.setCountry(convertToCountry(author.getCountry()));
         return model;
     }
 
@@ -86,23 +81,9 @@ public class Converters {
         model.setFistName(author.getFistName());
         model.setLastName(author.getLastName());
         model.setMiddleName(author.getMiddleName());
-        model.setCountry(convertToCountryFX(author.getCountry()));
         return model;
     }
 
-    private static Country convertToCountry(CountryFXModel country) {
-        Country model = new Country();
-        model.setId(country.getId());
-        model.setName(country.getName());
-        return model;
-    }
-
-    public static CountryFXModel convertToCountryFX(Country country) {
-        CountryFXModel model = new CountryFXModel();
-        model.setId(country.getId());
-        model.setName(country.getName());
-        return model;
-    }
 
     public static LibraryFXModel convertToLibraryFXModel(Library library) {
         LibraryFXModel model = new LibraryFXModel();

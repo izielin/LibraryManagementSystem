@@ -18,6 +18,9 @@ public class BorrowedBook implements BaseModel{
     @DatabaseField(columnName = "RENEW_COUNT")
     private int numberOfRenewals;
 
+    @DatabaseField(columnName = "IS_RETURNED", defaultValue = "false")
+    private Boolean isReturned;
+
     @DatabaseField(columnName = "BOOK_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
     private Book book;
 
@@ -52,6 +55,14 @@ public class BorrowedBook implements BaseModel{
 
     public void setNumberOfRenewals(int numberOfRenewals) {
         this.numberOfRenewals = numberOfRenewals;
+    }
+
+    public Boolean getReturned() {
+        return isReturned;
+    }
+
+    public void setReturned(Boolean returned) {
+        isReturned = returned;
     }
 
     public Book getBook() {

@@ -39,9 +39,6 @@ public class User implements BaseModel {
     @DatabaseField(columnName = "ZIP_CODE", canBeNull = false)
     private String zipCode;
 
-    @DatabaseField(columnName = "CITY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private City city;
-
     @DatabaseField(columnName = "USER_TYPE", canBeNull = false, defaultValue = "MEMBER")
     private String userType;
 
@@ -124,14 +121,6 @@ public class User implements BaseModel {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
     }
 
     public String getUserType() {

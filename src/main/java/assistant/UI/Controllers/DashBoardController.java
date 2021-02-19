@@ -1,7 +1,7 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.DonutChart;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.User;
 import javafx.collections.FXCollections;
@@ -77,7 +77,7 @@ public class DashBoardController {
                     " GROUP BY CATEGORIES.NAME";
             try {
                 List<String[]> categoryList = dataAccessObject.executeRawQuery(User.class, queryBookByCategory);
-                categoryList.forEach(category -> donutChartData.add(new PieChart.Data(category[0], Integer.parseInt(category[1]))));
+                categoryList.forEach(category -> donutChartData.add(new PieChart.Data(category[0] + "(" + category[1] + ")", Integer.parseInt(category[1]))));
 
 
             } catch (ApplicationException | SQLException e) {

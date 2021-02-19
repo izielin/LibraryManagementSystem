@@ -1,9 +1,9 @@
-package assistant.UI.Controllers;
+package assistant.UI.Controllers.ListControllers;
 
 import assistant.FXModels.*;
 import assistant.Utils.Converters;
 import assistant.Utils.ProjectTools;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
@@ -46,10 +46,6 @@ public class ListsController {
     @FXML
     private TableColumn<CityFXModel, CountryFXModel> cityCountry;
     @FXML
-    private TableView<CountryFXModel> countryTable;
-    @FXML
-    private TableColumn<CountryFXModel, String> countryName;
-    @FXML
     private TableView<PublishingCompanyFXModel> publisherTable;
     @FXML
     private TableColumn<PublishingCompanyFXModel, String> publisherName;
@@ -63,7 +59,6 @@ public class ListsController {
             initAuthorTable();
             initCategoryTable();
             initCityTable();
-            initCountryTable();
             initPublisherTable();
             System.out.println("work4");
 
@@ -85,19 +80,6 @@ public class ListsController {
         publisherName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
     }
 
-    private void initCountryTable() throws ApplicationException {
-        ObservableList<CountryFXModel> observableArrayList = FXCollections.observableArrayList();
-        List<Country> countries = dao.queryForAll(Country.class);
-        observableArrayList.clear();
-        countries.forEach(country -> {
-            CountryFXModel fxModel = Converters.convertToCountryFX(country);
-            observableArrayList.add(fxModel);
-        });
-
-        countryTable.setItems(observableArrayList);
-        countryName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-    }
-
     private void initCityTable() throws ApplicationException {
         ObservableList<CityFXModel> observableArrayList = FXCollections.observableArrayList();
         List<City> cities = dao.queryForAll(City.class);
@@ -109,7 +91,6 @@ public class ListsController {
 
         cityTable.setItems(observableArrayList);
         cityName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        cityCountry.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
     }
 
     private void initCategoryTable() throws ApplicationException {
@@ -138,7 +119,6 @@ public class ListsController {
         authorFistName.setCellValueFactory(cellData -> cellData.getValue().fistNameProperty());
         authorMiddleName.setCellValueFactory(cellData -> cellData.getValue().middleNameProperty());
         authorLastName.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        authorCountry.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
     }
 
 
@@ -220,20 +200,6 @@ public class ListsController {
                         });
                     }
                 }
-                case "countryTable" -> {
-                    CountryFXModel rowData = (CountryFXModel) tableView.getSelectionModel().getSelectedItem();
-                    if (rowData != null) {
-                        yesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                            try {
-                                deleteCountryById(rowData.getId());
-                                executeRefresh();
-                            } catch (ApplicationException | SQLException e) {
-                                e.printStackTrace();
-                            }
-
-                        });
-                    }
-                }
                 default -> {
                     PublishingCompanyFXModel rowData = (PublishingCompanyFXModel) tableView.getSelectionModel().getSelectedItem();
                     if (rowData != null) {
@@ -260,32 +226,6 @@ public class ListsController {
         DataAccessObject dao = new DataAccessObject();
         dao.deleteById(Category.class, id);
         dao.deleteByColumnName(Book.class, "CATEGORY_ID", id);
-    }
-
-    public void deleteCountryById(int id) throws ApplicationException, SQLException {
-        DataAccessObject dao = new DataAccessObject();
-        List<City> cityList = dao.findByColumnName(City.class, "COUNTRY_ID", id);
-
-        cityList.forEach(c -> {
-            try {
-                deleteCityById(c.getId());
-            } catch (ApplicationException | SQLException e) {
-                e.printStackTrace();
-            }
-        });
-
-        List<Author> autorList = dao.findByColumnName(Author.class, "COUNTRY_ID", id);
-        autorList.forEach(a -> {
-            try {
-                dao.deleteByColumnName(Book.class, "AUTHOR_ID", a.getId()); // delete books written by a deleted author
-            } catch (ApplicationException | SQLException e) {
-                e.printStackTrace();
-            }
-        });
-        dao.deleteByColumnName(City.class, "COUNTRY_ID", id);
-        dao.deleteByColumnName(Author.class, "COUNTRY_ID", id);
-
-        dao.deleteById(Country.class, id);
     }
 
     public void deleteCityById(int id) throws ApplicationException, SQLException {

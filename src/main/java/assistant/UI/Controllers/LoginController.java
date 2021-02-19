@@ -1,7 +1,7 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.ProjectTools;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.User;
 import assistant.settings.Settings;
@@ -57,6 +57,7 @@ public class LoginController implements Initializable {
                 // calling up different windows depending on the type of user
                 if (user.getUserType().equals("EMPLOYEE")) {
                     currentlyLoggedUser = user; // creating an object of currently logged user
+                    System.out.println(currentlyLoggedUser.getLibrary().getId());
                     closeStage();
                     loadWindow("/fxml/Main.fxml");
                 } else {

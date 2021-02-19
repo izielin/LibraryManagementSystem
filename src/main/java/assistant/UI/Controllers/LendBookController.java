@@ -3,7 +3,8 @@ package assistant.UI.Controllers;
 import assistant.FXModels.BookFXModel;
 import assistant.FXModels.UserFXModel;
 import assistant.Utils.Converters;
-import assistant.Utils.exceptions.ApplicationException;
+import assistant.Utils.ApplicationException;
+import assistant.Utils.CreateSets;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.Book;
 import assistant.database.models.BorrowedBook;
@@ -106,19 +107,14 @@ public class LendBookController implements Initializable {
     @FXML
     private TableColumn<BookFXModel, String> titleColumn;
 
-    List<String[]> titleList;
-    private final List<String> possibleTitleItems = new ArrayList<>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             // filling dialog associated with autocomplete field
             DataAccessObject dao = new DataAccessObject();
-            String query = "SELECT DISTINCT TITLE FROM BOOKS";
-            titleList = dao.executeRawQuery(Book.class, query);
-            titleList.forEach(item -> possibleTitleItems.add(item[0]));
-            Set<String> possibleTitleSet = new HashSet<>(possibleTitleItems);
-            TextFields.bindAutoCompletion(bookTitleInput, possibleTitleSet);
+            TextFields.bindAutoCompletion(bookTitleInput, CreateSets.createTitleSet("SELECT DISTINCT TITLE FROM BOOKS"));
 
             // filling tableView
             initColumn();
@@ -136,6 +132,8 @@ public class LendBookController implements Initializable {
                             bookAuthorHolder.setText(book.getAuthor().getFistName() + " " + book.getAuthor().getMiddleName() + " " + book.getAuthor().getLastName());
                             bookPublisherHolder.setText(book.getPublishingCompany().getName());
                             bookInfo.setOpacity(1);
+                            userFirstNameInput.setDisable(false);
+                            userLastNameInput.setDisable(false);
                         } else if (list.size() == 0) { // if return 0 - the book with the given title does not exist in the database, return warning
                             showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Wrong Title", "The book with the given title was not found in the system");
                             bookTitleInput.setText("");
@@ -155,10 +153,11 @@ public class LendBookController implements Initializable {
                         userFirstNameInput.getParent().requestFocus();
                         List<User> list = dao.searchDuplicatedNames(userFirstNameInput.getText(), userLastNameInput.getText());
                         if (list.size() == 1) {
-                            User user = dao.findById(User.class, Integer.parseInt(memberIDInput.getText()));
+                            User user = dao.findById(User.class, list.get(0).getId());
+                            memberIdHolder.setText(Integer.toString(user.getId()));
                             memberNameHolder.setText(user.getFirstName() + " " + user.getLastName());
                             memberContactHolder.setText(user.getMobile() + " " + user.getEmail());
-                            memberAddressHolder.setText(user.getStreet() + " ," + user.getZipCode() + " " + user.getCity().getName());
+                            memberAddressHolder.setText(user.getStreet() + " ," + user.getZipCode());
                             userInfo.setOpacity(1);
                         } else if (list.size() == 0) {
                             showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Wrong Name Data", "The user with the given name data was not found in the system");
@@ -224,6 +223,8 @@ public class LendBookController implements Initializable {
                 bookAuthorHolder.setText(newSelection.getAuthorFX().getFistName() + " " + newSelection.getAuthorFX().getMiddleName() + " " + newSelection.getAuthorFX().getLastName());
                 bookPublisherHolder.setText(newSelection.getPublishingCompanyFX().getName());
                 bookInfo.setOpacity(1);
+                userFirstNameInput.setDisable(false);
+                userLastNameInput.setDisable(false);
             });
         });
         showTableDialog(rootPane, mainAnchorPane, Arrays.asList(choiceButton), "Ambiguous data was provided",
@@ -240,7 +241,6 @@ public class LendBookController implements Initializable {
         TableColumn<UserFXModel, String> lastName = new TableColumn<>();
         TableColumn<UserFXModel, String> mobile = new TableColumn<>();
         TableColumn<UserFXModel, String> street = new TableColumn<>();
-        TableColumn<UserFXModel, String> city = new TableColumn<>();
 
         duplicates.setItems(observableList);
 
@@ -248,9 +248,8 @@ public class LendBookController implements Initializable {
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         mobile.setCellValueFactory(new PropertyValueFactory<>("mobile"));
         street.setCellValueFactory(new PropertyValueFactory<>("street"));
-        city.setCellValueFactory(new PropertyValueFactory<>("city"));
 
-        duplicates.getColumns().addAll(firstName, lastName, mobile, street, city);
+        duplicates.getColumns().addAll(firstName, lastName, mobile, street);
 
         duplicates.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         JFXButton choiceButton = new JFXButton("Choose selected person");
@@ -260,7 +259,7 @@ public class LendBookController implements Initializable {
                 memberNameHolder.setText(newSelection.getFirstName());
                 memberLastNameHolder.setText(newSelection.getLastName());
                 memberContactHolder.setText(newSelection.getMobile() + ", " + newSelection.getEmail());
-                memberAddressHolder.setText(newSelection.getStreet() + ", " + newSelection.getZipCode() + " " + newSelection.getCity().getName());
+                memberAddressHolder.setText(newSelection.getStreet() + ", " + newSelection.getZipCode());
                 userInfo.setOpacity(1);
             });
         });
@@ -319,6 +318,8 @@ public class LendBookController implements Initializable {
                 bookAuthorHolder.setText(rowData.getAuthorFX().getFistName() + " " + rowData.getAuthorFX().getMiddleName() + " " + rowData.getAuthorFX().getLastName());
                 bookPublisherHolder.setText(rowData.getPublishingCompanyFX().getName());
                 bookInfo.setOpacity(1);
+                userFirstNameInput.setDisable(false);
+                userLastNameInput.setDisable(false);
             }
         }
     }
@@ -361,7 +362,9 @@ public class LendBookController implements Initializable {
 
     private void clearCheckOutEntries() {
         userFirstNameInput.clear();
+        userFirstNameInput.setDisable(true);
         userLastNameInput.clear();
+        userLastNameInput.setDisable(true);
         bookTitleInput.clear();
 
         List<VBox> boxes = List.of(userInfo, bookInfo);
