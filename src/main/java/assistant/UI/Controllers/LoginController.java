@@ -1,10 +1,13 @@
 package assistant.UI.Controllers;
 
+import assistant.Utils.FillDatabase;
 import assistant.Utils.ProjectTools;
 import assistant.Utils.ApplicationException;
+import assistant.database.DatabaseHandler;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.User;
 import assistant.settings.Settings;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -22,6 +25,7 @@ import static assistant.Utils.ProjectTools.loadWindow;
 
 public class LoginController implements Initializable {
     public static User currentlyLoggedUser;
+    public JFXCheckBox rebuildDatabase;
 
     @FXML
     private BorderPane borderPane;
@@ -50,16 +54,20 @@ public class LoginController implements Initializable {
         String username = usernameInput.getText();
         String password = DigestUtils.sha1Hex(passwordInput.getText());
         DataAccessObject dao = new DataAccessObject();
-
+        if(rebuildDatabase.isSelected()){
+            DatabaseHandler.initDatabase(true);
+            FillDatabase.fillDatabase();
+        }
         try {
             User user = dao.isLogin(username, password); // creating object of logged user
             if (user != null) {
                 // calling up different windows depending on the type of user
                 if (user.getUserType().equals("EMPLOYEE")) {
                     currentlyLoggedUser = user; // creating an object of currently logged user
-                    System.out.println(currentlyLoggedUser.getLibrary().getId());
+                    System.out.println(currentlyLoggedUser.getLibraryID());
                     closeStage();
                     loadWindow("/fxml/Main.fxml");
+
                 } else {
                     System.out.println("TO DO");
                 }

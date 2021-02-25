@@ -6,9 +6,7 @@ import assistant.Utils.Converters;
 import assistant.Utils.ApplicationException;
 import assistant.Utils.CreateSets;
 import assistant.database.dao.DataAccessObject;
-import assistant.database.models.Book;
-import assistant.database.models.BorrowedBook;
-import assistant.database.models.User;
+import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -35,8 +33,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-import static assistant.alert.AlertMaker.showJFXButton;
-import static assistant.alert.AlertMaker.showTableDialog;
+import static assistant.Utils.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showTableDialog;
 
 public class LendBookController implements Initializable {
 
@@ -108,7 +106,6 @@ public class LendBookController implements Initializable {
     private TableColumn<BookFXModel, String> titleColumn;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -124,13 +121,15 @@ public class LendBookController implements Initializable {
                 if (!bookTitleInput.getText().equals("") && bookIDHolder.getText().equals("") || !bookTitleInput.getText().equals(bookTitleHolder.getText())) {
                     try {
                         bookTitleInput.getParent().requestFocus();
-                        List<Book> list = dao.searchDuplicateBooksTitles(bookTitleInput.getText(), LoginController.currentlyLoggedUser.getId()); // create list of books with the same id
+                        List<Book> list = dao.searchDuplicateBooksTitles(bookTitleInput.getText(), LoginController.currentlyLoggedUser.getLibraryID()); // create list of books with the same id
                         if (list.size() == 1) { // if return 1 record - set data of returned book
                             Book book = dao.findById(Book.class, list.get(0).getId());
                             bookIDHolder.setText(Integer.toString(book.getId()));
                             bookTitleHolder.setText(book.getTitle());
-                            bookAuthorHolder.setText(book.getAuthor().getFistName() + " " + book.getAuthor().getMiddleName() + " " + book.getAuthor().getLastName());
-                            bookPublisherHolder.setText(book.getPublishingCompany().getName());
+                            Author author = dao.findById(Author.class, book.getAuthor());
+                            PublishingCompany publishingCompany = dao.findById(PublishingCompany.class, book.getPublishingCompany());
+                            bookAuthorHolder.setText(author.getFullName());
+                            bookPublisherHolder.setText(publishingCompany.getName());
                             bookInfo.setOpacity(1);
                             userFirstNameInput.setDisable(false);
                             userLastNameInput.setDisable(false);
@@ -199,6 +198,7 @@ public class LendBookController implements Initializable {
     }
 
     private void tableForDuplicatedBook(List<Book> list) {
+        DataAccessObject dao = new DataAccessObject();
         ObservableList<BookFXModel> observableList = FXCollections.observableArrayList();
         list.forEach(book -> observableList.add(Converters.convertToBookFx(book)));
 
@@ -220,8 +220,16 @@ public class LendBookController implements Initializable {
             choiceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                 bookIDHolder.setText(Integer.toString(newSelection.getId()));
                 bookTitleHolder.setText(newSelection.getTitle());
-                bookAuthorHolder.setText(newSelection.getAuthorFX().getFistName() + " " + newSelection.getAuthorFX().getMiddleName() + " " + newSelection.getAuthorFX().getLastName());
-                bookPublisherHolder.setText(newSelection.getPublishingCompanyFX().getName());
+                try {
+                    bookAuthorHolder.setText(dao.findById(Author.class, newSelection.getAuthorID()).getFullName());
+                } catch (ApplicationException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    bookPublisherHolder.setText(dao.findById(PublishingCompany.class, newSelection.getPublishingCompanyID()).getName());
+                } catch (ApplicationException e) {
+                    e.printStackTrace();
+                }
                 bookInfo.setOpacity(1);
                 userFirstNameInput.setDisable(false);
                 userLastNameInput.setDisable(false);
@@ -236,20 +244,7 @@ public class LendBookController implements Initializable {
         ObservableList<UserFXModel> observableList = FXCollections.observableArrayList();
         list.forEach(user -> observableList.add(Converters.convertToUserFx(user)));
 
-        TableView<UserFXModel> duplicates = new TableView<>();
-        TableColumn<UserFXModel, String> firstName = new TableColumn<>();
-        TableColumn<UserFXModel, String> lastName = new TableColumn<>();
-        TableColumn<UserFXModel, String> mobile = new TableColumn<>();
-        TableColumn<UserFXModel, String> street = new TableColumn<>();
-
-        duplicates.setItems(observableList);
-
-        firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        mobile.setCellValueFactory(new PropertyValueFactory<>("mobile"));
-        street.setCellValueFactory(new PropertyValueFactory<>("street"));
-
-        duplicates.getColumns().addAll(firstName, lastName, mobile, street);
+        TableView<UserFXModel> duplicates = getTableView(observableList);
 
         duplicates.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         JFXButton choiceButton = new JFXButton("Choose selected person");
@@ -269,6 +264,24 @@ public class LendBookController implements Initializable {
 
     }
 
+    public TableView<UserFXModel> getTableView(ObservableList<UserFXModel> observableList) {
+        TableView<UserFXModel> duplicates = new TableView<>();
+        TableColumn<UserFXModel, String> firstName = new TableColumn<>();
+        TableColumn<UserFXModel, String> lastName = new TableColumn<>();
+        TableColumn<UserFXModel, String> mobile = new TableColumn<>();
+        TableColumn<UserFXModel, String> street = new TableColumn<>();
+
+        duplicates.setItems(observableList);
+
+        firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        mobile.setCellValueFactory(new PropertyValueFactory<>("mobile"));
+        street.setCellValueFactory(new PropertyValueFactory<>("street"));
+
+        duplicates.getColumns().addAll(firstName, lastName, mobile, street);
+        return duplicates;
+    }
+
     private void initColumn() throws ApplicationException, SQLException {
         tableView.setItems(loadData());
         titleColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().titleProperty());
@@ -284,7 +297,7 @@ public class LendBookController implements Initializable {
         books.forEach(bookID -> {
             try {
                 Book book = dao.findById(Book.class, Integer.parseInt(bookID[0]));
-                if (book.getLibrary().getId() == LoginController.currentlyLoggedUser.getLibrary().getId()) {
+                if (book.getLibrary() == LoginController.currentlyLoggedUser.getLibraryID()) {
                     BookFXModel bookFXModel = Converters.convertToBookFx(book);
                     observableArrayList.add(bookFXModel);
                 }
@@ -306,7 +319,9 @@ public class LendBookController implements Initializable {
     }
 
     @FXML
-    private void handleRowData(MouseEvent mouseEvent) {
+    private void handleRowData(MouseEvent mouseEvent) throws ApplicationException {
+        DataAccessObject dao = new DataAccessObject();
+
         if (mouseEvent.getClickCount() == 2) { // checking the number of mouse clicks on a single row
             BookFXModel rowData = tableView.getSelectionModel().getSelectedItem(); // creating User object from data in selected row
             if (rowData == null) { // check if selected row is not null
@@ -315,8 +330,10 @@ public class LendBookController implements Initializable {
                 bookTitleInput.setText(rowData.getTitle());
                 bookIDHolder.setText(Integer.toString(rowData.getId()));
                 bookTitleHolder.setText(rowData.getTitle());
-                bookAuthorHolder.setText(rowData.getAuthorFX().getFistName() + " " + rowData.getAuthorFX().getMiddleName() + " " + rowData.getAuthorFX().getLastName());
-                bookPublisherHolder.setText(rowData.getPublishingCompanyFX().getName());
+                Author author = dao.findById(Author.class, rowData.getAuthorID());
+                PublishingCompany publishingCompany = dao.findById(PublishingCompany.class, rowData.getPublishingCompanyID());
+                bookAuthorHolder.setText(author.getFullName());
+                bookPublisherHolder.setText(publishingCompany.getName());
                 bookInfo.setOpacity(1);
                 userFirstNameInput.setDisable(false);
                 userLastNameInput.setDisable(false);
@@ -337,10 +354,10 @@ public class LendBookController implements Initializable {
                 User user = dao.findById(User.class, Integer.parseInt(memberID));
 
                 BorrowedBook borrowedBook = new BorrowedBook();
-                borrowedBook.setBook(book);
-                borrowedBook.setUser(user);
+                borrowedBook.setBookID(book.getId());
+                borrowedBook.setUserID(user.getId());
                 borrowedBook.setBorrowTime(LocalDate.now().toString());
-                borrowedBook.setLibrary(LoginController.currentlyLoggedUser.getLibrary());
+                borrowedBook.setLibraryID(LoginController.currentlyLoggedUser.getLibraryID());
 
                 dao.createOrUpdate(borrowedBook);
                 dao.updateItem(Book.class, book.getId(), "AVAILABILITY", "false");

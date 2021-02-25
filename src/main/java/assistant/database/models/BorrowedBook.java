@@ -15,20 +15,23 @@ public class BorrowedBook implements BaseModel{
     @DatabaseField(columnName = "BORROW_TIME")
     private String borrowTime;
 
+    @DatabaseField(columnName = "RETURN_TIME")
+    private String returnTime;
+
     @DatabaseField(columnName = "RENEW_COUNT")
     private int numberOfRenewals;
 
     @DatabaseField(columnName = "IS_RETURNED", defaultValue = "false")
     private Boolean isReturned;
 
-    @DatabaseField(columnName = "BOOK_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Book book;
+    @DatabaseField(columnName = "BOOK_ID")
+    private int bookID;
 
-    @DatabaseField(columnName = "USER_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private User user;
+    @DatabaseField(columnName = "USER_ID")
+    private int userID;
 
-    @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Library library;
+    @DatabaseField(columnName = "LIBRARY_ID")
+    private int libraryID;
 
     public BorrowedBook() {
     }
@@ -49,6 +52,14 @@ public class BorrowedBook implements BaseModel{
         this.borrowTime = borrowTime;
     }
 
+    public String getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(String returnTime) {
+        this.returnTime = returnTime;
+    }
+
     public int getNumberOfRenewals() {
         return numberOfRenewals;
     }
@@ -65,27 +76,27 @@ public class BorrowedBook implements BaseModel{
         isReturned = returned;
     }
 
-    public Book getBook() {
-        return book;
+    public int getBookID() {
+        return bookID;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public Library getLibrary() {
-        return library;
+    public int getLibraryID() {
+        return libraryID;
     }
 
-    public void setLibrary(Library library) {
-        this.library = library;
+    public void setLibraryID(int libraryID) {
+        this.libraryID = libraryID;
     }
 }

@@ -120,7 +120,7 @@
                                           </HBox>
                                           <HBox>
                                              <children>
-                                                <JFXCheckBox checkedColor="#ffffff00" text="Remember me (TODO)">
+                                                <JFXCheckBox fx:id="rebuildDatabase" checkedColor="#ffffff00" text="Rebuild Database">
                                                    <HBox.margin>
                                                       <Insets bottom="40.0" left="80.0" top="15.0" />
                                                    </HBox.margin>
@@ -130,14 +130,6 @@
                                           <HBox alignment="CENTER" prefWidth="200.0" spacing="25.0">
                                              <children>
                                                 <Button mnemonicParsing="false" onAction="#LoginAction" prefHeight="35.0" prefWidth="140.0" styleClass="common-button" text="%buttonLogin">
-                                                   <font>
-                                                      <Font name="Segoe UI Emoji" size="15.0" />
-                                                   </font>
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor>
-                                                </Button>
-                                                <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="140.0" styleClass="forgot-button" text="Forgot password? (TODO)">
                                                    <font>
                                                       <Font name="Segoe UI Emoji" size="15.0" />
                                                    </font>

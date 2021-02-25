@@ -10,75 +10,75 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.MainController">
-   <children>
-      <AnchorPane fx:id="mainAnchorPane">
-         <children>
-            <BorderPane fx:id="mainBorderPane">
-               <left>
-         </left>
-               <top>
-                  <AnchorPane minWidth="800.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <MenuBar layoutX="425.0" AnchorPane.leftAnchor="0.0">
-                           <menus>
-                              <Menu mnemonicParsing="false" text="File">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#MenuCloseApplication" text="Close" />
-                                 </items>
-                              </Menu>
-                              <Menu mnemonicParsing="false" text="Add">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#MenuAddBook" text="Add Book" />
-                                    <MenuItem mnemonicParsing="false" onAction="#MenuAddMember" text="Add Member" />
-                                 </items>
-                              </Menu>
-                              <Menu mnemonicParsing="false" text="View">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#MenuViewBook" text="View Book" />
-                                    <MenuItem mnemonicParsing="false" onAction="#MenuViewMember" text="View Members" />
-                                    <MenuItem mnemonicParsing="false" onAction="#fullScreen" text="Full Screen" />
-                                 </items>
-                              </Menu>
-                              <Menu mnemonicParsing="false" text="Help">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="About" />
-                                 </items>
-                              </Menu>
-                           </menus>
-                        </MenuBar>
-                        <JFXButton layoutX="602.0" onMouseClicked="#minimize" prefHeight="30.0" styleClass="title-button" AnchorPane.rightAnchor="60.0">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="MINUS" styleClass="menu-icon">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </FontAwesomeIcon>
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton layoutX="668.0" onMouseClicked="#fullScreen" prefHeight="30.0" styleClass="title-button" AnchorPane.rightAnchor="30.0">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="CIRCLE" styleClass="menu-icon">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </FontAwesomeIcon>
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton layoutX="734.0" onMouseClicked="#close" prefHeight="30.0" styleClass="title-button" AnchorPane.rightAnchor="0.0">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="CLOSE" styleClass="menu-icon">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </FontAwesomeIcon>
-                           </graphic>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
-               </top>
-            </BorderPane>
-         </children>
-      </AnchorPane>
-   </children>
-</StackPane>
+<AnchorPane fx:id="mainAnchorPane" prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.MainController">
+    <children>
+        <StackPane fx:id="rootPane" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <BorderPane fx:id="mainBorderPane">
+                    <left>
+                    </left>
+                    <top>
+                        <AnchorPane minWidth="800.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <MenuBar layoutX="425.0" prefHeight="25.0" prefWidth="218.0" AnchorPane.leftAnchor="0.0">
+                                    <menus>
+                                        <Menu mnemonicParsing="false" text="File">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#MenuCloseApplication" text="Close" />
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Add">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#MenuAddBook" text="Add Book" />
+                                                <MenuItem mnemonicParsing="false" onAction="#MenuAddMember" text="Add Member" />
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="View">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#MenuViewBook" text="View Book" />
+                                                <MenuItem mnemonicParsing="false" onAction="#MenuViewMember" text="View Members" />
+                                                <MenuItem mnemonicParsing="false" onAction="#fullScreen" text="Full Screen" />
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Help">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="About" />
+                                            </items>
+                                        </Menu>
+                                    </menus>
+                                </MenuBar>
+                                <JFXButton layoutX="602.0" onMouseClicked="#minimize" prefHeight="30.0" styleClass="title-button" AnchorPane.rightAnchor="60.0">
+                                    <graphic>
+                                        <FontAwesomeIcon glyphName="MINUS" styleClass="menu-icon">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </FontAwesomeIcon>
+                                    </graphic>
+                                </JFXButton>
+                                <JFXButton layoutX="668.0" onMouseClicked="#fullScreen" prefHeight="30.0" styleClass="title-button" AnchorPane.rightAnchor="30.0">
+                                    <graphic>
+                                        <FontAwesomeIcon glyphName="CIRCLE" styleClass="menu-icon">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </FontAwesomeIcon>
+                                    </graphic>
+                                </JFXButton>
+                                <JFXButton layoutX="734.0" onMouseClicked="#close" prefHeight="30.0" styleClass="title-button" AnchorPane.rightAnchor="0.0">
+                                    <graphic>
+                                        <FontAwesomeIcon glyphName="CLOSE" styleClass="menu-icon">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </FontAwesomeIcon>
+                                    </graphic>
+                                </JFXButton>
+                            </children>
+                        </AnchorPane>
+                    </top>
+                </BorderPane>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

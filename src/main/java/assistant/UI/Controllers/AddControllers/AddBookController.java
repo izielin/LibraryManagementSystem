@@ -1,27 +1,9 @@
 package assistant.UI.Controllers.AddControllers;
-//
-//import assistant.UI.Controllers.ListControllers.BookListController.Book;
-//import assistant.Utils.Utils;
-//import assistant.database.db;
-//import com.jfoenix.controls.JFXButton;
-//import com.jfoenix.controls.JFXTextField;
-//import javafx.event.ActionEvent;
-//import javafx.fxml.FXML;
-//import javafx.fxml.Initializable;
-//import javafx.scene.control.Button;
-//import javafx.scene.layout.AnchorPane;
-//import javafx.scene.layout.BorderPane;
-//import javafx.stage.Stage;
-//
-//import java.net.URL;
-//import java.util.ResourceBundle;
-//
-//import static assistant.alert.AlertMaker.showSimpleAlert;
-//
 
 import assistant.FXModels.BookFXModel;
 import assistant.UI.Controllers.LoginController;
 import assistant.Utils.ApplicationException;
+import assistant.Utils.MessageMaker;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
@@ -55,7 +37,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static assistant.alert.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showJFXButton;
 
 public class AddBookController implements Initializable {
 
@@ -182,6 +164,7 @@ public class AddBookController implements Initializable {
 
     }
 
+    // TODO: simplify getting full name of author
 
     @FXML
     void saveButton() throws ApplicationException, SQLException, IOException {
@@ -229,20 +212,22 @@ public class AddBookController implements Initializable {
 
             book.setBookCover(data);
         }
-        book.setAuthor(author);
-        book.setCategory(category);
-        book.setLibrary(LoginController.currentlyLoggedUser.getLibrary());
-        book.setPublishingCompany(publishingCompany);
+        book.setAuthor(author.getId());
+        book.setCategory(category.getId());
+        book.setLibrary(LoginController.currentlyLoggedUser.getLibraryID());
+        book.setPublishingCompany(publishingCompany.getId());
 
         filePath.setText("");
         bookCover.setImage(new Image("/images/book.png"));
 
         dao.createOrUpdate(book);
         showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Success", "Book was successfully created!");
+        dao.createOrUpdate(MessageMaker.bookCreationMessage(bookTitle.getText(), LoginController.currentlyLoggedUser, date));
+        System.out.println("Message created");
         if (editedBookID != null) {
             JFXButton okButton = new JFXButton("Okay");
             okButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> ((Stage) bookTitle.getScene().getWindow()).close());
-            showJFXButton(rootPane, mainAnchorPane, Arrays.asList(okButton), "Success", "User was successfully created!");
+            showJFXButton(rootPane, mainAnchorPane, Arrays.asList(okButton), "Success", "Book was successfully created!");
         } else
             clearFields();
 
@@ -261,7 +246,7 @@ public class AddBookController implements Initializable {
         publishingCompanyName.setText("");
     }
 
-    public void inflateUI(BookFXModel book) throws IOException {
+    public void inflateUI(BookFXModel book) throws IOException, ApplicationException {
         editedBookID = book.getId();
         bookTitle.textProperty().bindBidirectional(book.titleProperty());
         isbn10.textProperty().bindBidirectional(book.isbn10Property());
@@ -274,9 +259,9 @@ public class AddBookController implements Initializable {
 
         description.textProperty().bindBidirectional(book.descriptionProperty());
         releaseYear.textProperty().bindBidirectional(book.publicationDateProperty());
-        bookCategory.textProperty().bindBidirectional(book.categoryFXProperty().get().nameProperty());
-        bookAuthor.textProperty().bindBidirectional(new SimpleStringProperty(book.authorFXProperty().get().toString()));
-        publishingCompanyName.textProperty().bindBidirectional(book.publishingCompanyFXProperty().getValue().nameProperty());
+        bookCategory.textProperty().bindBidirectional(new SimpleStringProperty(dao.findById(Category.class, book.getCategoryID()).getName()));
+        bookAuthor.textProperty().bindBidirectional(new SimpleStringProperty(dao.findById(Author.class, book.getAuthorID()).getFullName()));
+        publishingCompanyName.textProperty().bindBidirectional(new SimpleStringProperty(dao.findById(PublishingCompany.class, book.getPublishingCompanyID()).getName()));
 
         if (book.getBookCover() != null) {
             ByteArrayInputStream bis = new ByteArrayInputStream(book.getBookCover());
@@ -289,15 +274,3 @@ public class AddBookController implements Initializable {
         }
     }
 }
-
-
-//    public void inflateUI(Book book) {
-//        bookTitle.setText(book.getTitleProperty());
-//        bookID.setText(book.getIdProperty());
-//        bookAuthorName.setText(book.getAuthorProperty());
-//        publishingCompanyName.setText(book.getPublisherProperty());
-//        bookID.setEditable(false);
-//        isInEditMode = true;
-//    }
-//}
-//

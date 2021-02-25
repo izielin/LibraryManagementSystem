@@ -2,6 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -9,338 +10,415 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.DashBoardController">
+<AnchorPane stylesheets="@../css/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.DashBoardController">
    <children>
-      <ScrollPane prefHeight="800.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <content>
-            <VBox fx:id="mainVbox" alignment="CENTER" prefHeight="951.0" prefWidth="1190.0" style="-fx-background-color: #F3F4F8;">
-               <children>
-                  <AnchorPane maxWidth="1150.0" prefHeight="68.0" prefWidth="1150.0" style="-fx-background-color: #F8F9FB;">
+      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="900.0" style="-fx-fit-to-height: true; -fx-fit-to-width: true;">
+               <content>
+                  <AnchorPane>
                      <children>
-                        <Pane layoutX="14.0" layoutY="9.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #fff;">
+                        <VBox>
                            <children>
-                              <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
-                           </children>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </Pane>
-                        <Label layoutX="74.0" layoutY="6.0" text="Analytics Dashboard">
-                           <font>
-                              <Font name="System Bold" size="27.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="libraryName" layoutX="74.0" layoutY="41.0" text="Label" AnchorPane.topAnchor="41.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="10.0" layoutY="310.0" maxWidth="1150.0" prefHeight="108.0" prefWidth="1150.0">
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                     <children>
-                        <VBox layoutX="116.0" layoutY="26.0" prefHeight="107.0" prefWidth="1135.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="113.0" spacing="40.0">
+                              <AnchorPane style="-fx-background-color: #F8F9FB;">
                                  <children>
-                                    <Pane prefHeight="113.0" prefWidth="237.0">
+                                    <Pane layoutX="14.0" layoutY="9.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #fff;">
                                        <children>
-                                          <Pane layoutX="23.0" layoutY="31.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                             <children>
-                                                <FontAwesomeIcon layoutX="10.0" layoutY="35.0" size="30" text="" wrappingWidth="31.0" />
-                                             </children>
-                                          </Pane>
-                                          <VBox alignment="CENTER" layoutX="102.0" layoutY="12.0" prefHeight="88.0" prefWidth="120.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="120.0" text="Users">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="userAmount" prefHeight="53.0" prefWidth="120.0" text="Label">
-                                                   <font>
-                                                      <Font size="36.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
+                                          <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
                                        </children>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
                                     </Pane>
-                                    <Pane layoutX="467.0" layoutY="10.0" prefHeight="113.0" prefWidth="237.0">
-                                       <children>
-                                          <Pane layoutX="23.0" layoutY="31.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                             <children>
-                                                <FontAwesomeIcon layoutX="10.0" layoutY="35.0" size="30" text="" wrappingWidth="31.0" />
-                                             </children>
-                                          </Pane>
-                                          <VBox alignment="CENTER" layoutX="102.0" layoutY="12.0" prefHeight="88.0" prefWidth="120.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="120.0" text="Books">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="bookAmount" prefHeight="53.0" prefWidth="120.0" text="Label">
-                                                   <font>
-                                                      <Font size="36.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
-                                       </children>
-                                    </Pane>
-                                    <Pane layoutX="660.0" layoutY="10.0" prefHeight="113.0" prefWidth="237.0">
-                                       <children>
-                                          <Pane layoutX="23.0" layoutY="31.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                             <children>
-                                                <FontAwesomeIcon layoutX="10.0" layoutY="35.0" size="30" text="" wrappingWidth="31.0" />
-                                             </children>
-                                          </Pane>
-                                          <VBox alignment="CENTER" layoutX="102.0" layoutY="12.0" prefHeight="88.0" prefWidth="120.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="120.0" text="Borrowed Books">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="borrowedAmount" prefHeight="53.0" prefWidth="120.0" text="Label">
-                                                   <font>
-                                                      <Font size="36.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
-                                       </children>
-                                    </Pane>
-                                    <Pane layoutX="854.0" layoutY="10.0" prefHeight="113.0" prefWidth="237.0">
-                                       <children>
-                                          <Pane layoutX="23.0" layoutY="31.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </padding>
-                                             <children>
-                                                <FontAwesomeIcon layoutX="10.0" layoutY="35.0" size="30" text="" wrappingWidth="31.0" />
-                                             </children>
-                                          </Pane>
-                                          <VBox alignment="CENTER" layoutX="102.0" layoutY="12.0" prefHeight="88.0" prefWidth="120.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="120.0" text="Categories">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="categoryAmount" prefHeight="53.0" prefWidth="120.0" text="Label">
-                                                   <font>
-                                                      <Font size="36.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
-                                       </children>
-                                    </Pane>
+                                    <Label layoutX="74.0" layoutY="6.0" text="Analytics Dashboard">
+                                       <font>
+                                          <Font name="System Bold" size="27.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="libraryName" layoutX="74.0" layoutY="41.0" text="Label" AnchorPane.topAnchor="41.0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                              </HBox>
+                              </AnchorPane>
+                              <VBox fx:id="mainVbox" alignment="TOP_CENTER" spacing="20.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <HBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="1448.0" spacing="20.0">
+                                       <children>
+                                          <Pane prefHeight="113.0" prefWidth="237.0" style="-fx-background-color: fdc12a;">
+                                             <children>
+                                                <Label layoutX="59.0" layoutY="7.0" prefHeight="27.0" prefWidth="120.0" text="TOTAL USERS">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="userAmount" layoutX="59.0" layoutY="24.0" prefHeight="29.0" prefWidth="120.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="29.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
+                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="16.0" layoutY="48.0" size="40" text="" wrappingWidth="36.0" />
+                                                <Label fx:id="userGrow" layoutX="59.0" layoutY="56.0" prefHeight="27.0" prefWidth="176.0" text="label">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="10.0" layoutY="10.0" prefHeight="113.0" prefWidth="237.0" style="-fx-background-color: fdc12a;">
+                                             <children>
+                                                <Label layoutX="59.0" layoutY="7.0" prefHeight="27.0" prefWidth="120.0" text="TOTAL BOOKS">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="bookAmount" layoutX="59.0" layoutY="24.0" prefHeight="29.0" prefWidth="120.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="29.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
+                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="16.0" layoutY="48.0" size="40" text="" wrappingWidth="36.0" />
+                                                <Label fx:id="booksGrow" layoutX="59.0" layoutY="56.0" prefHeight="27.0" prefWidth="178.0" text="label">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="247.0" layoutY="10.0" prefHeight="146.0" prefWidth="237.0" style="-fx-background-color: fdc12a;">
+                                             <children>
+                                                <Label layoutX="59.0" layoutY="7.0" prefHeight="27.0" prefWidth="163.0" text="TOTAL BORROWED BOOKS">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="borrowedAmount" layoutX="59.0" layoutY="24.0" prefHeight="29.0" prefWidth="120.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="29.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
+                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="16.0" layoutY="48.0" size="40" text="" wrappingWidth="36.0" />
+                                                <Label fx:id="borrowedGrow" layoutX="59.0" layoutY="54.0" prefHeight="27.0" prefWidth="178.0" text="label">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="484.0" layoutY="10.0" prefHeight="113.0" prefWidth="237.0" style="-fx-background-color: fdc12a;">
+                                             <children>
+                                                <Label layoutX="59.0" layoutY="7.0" prefHeight="27.0" prefWidth="178.0" text="TOTAL CATEGORIES">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="categoryAmount" layoutX="59.0" layoutY="24.0" prefHeight="29.0" prefWidth="120.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="29.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
+                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="16.0" layoutY="48.0" size="40" text="" wrappingWidth="36.0" />
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="721.0" layoutY="10.0" prefHeight="113.0" prefWidth="237.0" style="-fx-background-color: fdc12a;">
+                                             <children>
+                                                <Label layoutX="59.0" layoutY="7.0" prefHeight="27.0" prefWidth="179.0" text="TOTAL AUTHORS">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="authorsAmount" layoutX="59.0" layoutY="24.0" prefHeight="29.0" prefWidth="120.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="29.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator layoutX="11.0" layoutY="14.0" orientation="VERTICAL" prefHeight="84.0" prefWidth="5.0" />
+                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="16.0" layoutY="48.0" size="40" text="" wrappingWidth="36.0" />
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="235.0" prefHeight="435.0" prefWidth="1488.0">
+                                       <children>
+                                          <AreaChart fx:id="allUsers" alternativeRowFillVisible="false" createSymbols="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendVisible="false" prefHeight="415.0" prefWidth="561.0" style="-fx-background-color: white; -fx-border-color: #CED4DA; -fx-border-width: 1px;">
+                                             <xAxis>
+                                                <CategoryAxis prefHeight="0.0" prefWidth="544.0" side="BOTTOM" fx:id="xAxisLineChart" />
+                                             </xAxis>
+                                             <yAxis>
+                                                <NumberAxis fx:id="yAxisLineChart" forceZeroInRange="false" minorTickVisible="false" prefHeight="311.0" prefWidth="0.0" side="LEFT" tickMarkVisible="false" />
+                                             </yAxis>
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </AreaChart>
+                                          <VBox prefHeight="435.0" prefWidth="782.0">
+                                             <children>
+                                                <HBox prefHeight="260.0" prefWidth="634.0">
+                                                   <children>
+                                                      <LineChart fx:id="newUsers" alternativeRowFillVisible="false" createSymbols="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendVisible="false" style="-fx-background-color: white; -fx-border-color: #CED4DA; -fx-border-width: 1px;" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+                                                         <xAxis>
+                                                            <CategoryAxis prefHeight="0.0" prefWidth="243.0" side="BOTTOM" />
+                                                         </xAxis>
+                                                         <yAxis>
+                                                            <NumberAxis forceZeroInRange="false" minorTickVisible="false" prefHeight="158.0" prefWidth="0.0" side="LEFT" tickMarkVisible="false" />
+                                                         </yAxis>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                         <HBox.margin>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </HBox.margin>
+                                                      </LineChart>
+                                                      <BarChart fx:id="genderDifference" alternativeRowFillVisible="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendVisible="false" style="-fx-background-color: white; -fx-border-color: #CED4DA; -fx-border-width: 1px;" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+                                                         <xAxis>
+                                                            <CategoryAxis prefHeight="0.0" prefWidth="243.0" side="BOTTOM" />
+                                                         </xAxis>
+                                                         <yAxis>
+                                                            <NumberAxis forceZeroInRange="false" minorTickVisible="false" prefHeight="158.0" prefWidth="0.0" side="LEFT" tickMarkVisible="false" />
+                                                         </yAxis>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                         <HBox.margin>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </HBox.margin>
+                                                      </BarChart>
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="267.0" prefWidth="639.0">
+                                                   <children>
+                                                      <BarChart fx:id="submittedBorrowedBooks" alternativeRowFillVisible="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendVisible="false" prefHeight="219.0" prefWidth="762.0" style="-fx-background-color: white; -fx-border-color: #CED4DA; -fx-border-width: 1px;" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+                                                         <xAxis>
+                                                            <CategoryAxis prefHeight="0.0" prefWidth="556.0" side="BOTTOM" />
+                                                         </xAxis>
+                                                         <yAxis>
+                                                            <NumberAxis forceZeroInRange="false" minorTickVisible="false" prefHeight="154.0" prefWidth="0.0" side="LEFT" tickMarkVisible="false" />
+                                                         </yAxis>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                         <HBox.margin>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </HBox.margin>
+                                                      </BarChart>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1488.0" spacing="20.0">
+                                       <children>
+                                          <HBox style="-fx-border-color: #CED4DA;">
+                                             <children>
+                                                <AnchorPane fx:id="donutChartPane" maxWidth="1.7976931348623157E308" prefHeight="479.0" prefWidth="286.0" />
+                                                <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="320.0" prefWidth="300.0">
+                                                   <children>
+                                                      <VBox fx:id="progressbarVbox" alignment="TOP_CENTER" prefHeight="320.0" prefWidth="100.0" spacing="2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="employeeTable" prefHeight="296.0">
+                                            <columns>
+                                              <TableColumn fx:id="profPicture" prefWidth="70.0" />
+                                              <TableColumn fx:id="userData" prefWidth="250.0" text="User Data" />
+                                                <TableColumn fx:id="details" minWidth="0.0" prefWidth="70.0" text="Button" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets top="30.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="584.0" prefHeight="506.0" prefWidth="1488.0" spacing="20.0">
+                                       <padding>
+                                          <Insets top="30.0" />
+                                       </padding>
+                                       <children>
+                                          <BarChart fx:id="barChart" prefHeight="613.0" prefWidth="385.0" style="-fx-background-color: #fff;">
+                                             <xAxis>
+                                                <CategoryAxis side="BOTTOM" />
+                                             </xAxis>
+                                             <yAxis>
+                                                <NumberAxis side="LEFT" />
+                                             </yAxis>
+                                             <effect>
+                                                <DropShadow />
+                                             </effect>
+                                          </BarChart>
+                                          <VBox>
+                                             <children>
+                                                <AnchorPane fx:id="pieChartPane" maxWidth="350.0" />
+                                                <HBox prefHeight="202.0" prefWidth="495.0">
+                                                   <children>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="50.0">
+                                                         <children>
+                                                            <Pane style="-fx-background-color: #fff;">
+                                                               <children>
+                                                                  <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
+                                                                     <children>
+                                                                        <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                     </padding>
+                                                                  </Pane>
+                                                                  <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
+                                                                     <children>
+                                                                        <Label prefHeight="17.0" prefWidth="130.0" text="New User Today" textAlignment="CENTER" />
+                                                                        <Label fx:id="newUserToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
+                                                                           <font>
+                                                                              <Font size="20.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                               <effect>
+                                                                  <DropShadow />
+                                                               </effect>
+                                                               <VBox.margin>
+                                                                  <Insets left="20.0" right="20.0" />
+                                                               </VBox.margin>
+                                                            </Pane>
+                                                            <Pane style="-fx-background-color: #fff;">
+                                                               <children>
+                                                                  <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
+                                                                     <children>
+                                                                        <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                     </padding>
+                                                                  </Pane>
+                                                                  <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
+                                                                     <children>
+                                                                        <Label prefWidth="130.0" text="New Book Today" textAlignment="CENTER" />
+                                                                        <Label fx:id="newBookToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
+                                                                           <font>
+                                                                              <Font size="20.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                               <effect>
+                                                                  <DropShadow />
+                                                               </effect>
+                                                               <VBox.margin>
+                                                                  <Insets left="20.0" right="20.0" />
+                                                               </VBox.margin>
+                                                            </Pane>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="50.0">
+                                                         <children>
+                                                            <Pane style="-fx-background-color: #fff;">
+                                                               <children>
+                                                                  <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
+                                                                     <children>
+                                                                        <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                     </padding>
+                                                                  </Pane>
+                                                                  <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
+                                                                     <children>
+                                                                        <Label prefHeight="17.0" prefWidth="130.0" text="Borrowed Books Today" textAlignment="CENTER" />
+                                                                        <Label fx:id="borrowedToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
+                                                                           <font>
+                                                                              <Font size="20.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                               <effect>
+                                                                  <DropShadow />
+                                                               </effect>
+                                                               <VBox.margin>
+                                                                  <Insets left="20.0" right="20.0" />
+                                                               </VBox.margin>
+                                                            </Pane>
+                                                            <Pane style="-fx-background-color: #fff;">
+                                                               <children>
+                                                                  <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
+                                                                     <children>
+                                                                        <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                     </padding>
+                                                                  </Pane>
+                                                                  <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
+                                                                     <children>
+                                                                        <Label prefHeight="17.0" prefWidth="130.0" text="Submitted today" textAlignment="CENTER" />
+                                                                        <Label fx:id="submittedToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
+                                                                           <font>
+                                                                              <Font size="20.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                               <effect>
+                                                                  <DropShadow />
+                                                               </effect>
+                                                               <VBox.margin>
+                                                                  <Insets left="20.0" right="20.0" />
+                                                               </VBox.margin>
+                                                            </Pane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <ScrollPane>
+                                             <content>
+                                                <VBox fx:id="messagesVbox" prefHeight="676.0" prefWidth="399.0" spacing="20.0" />
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>
                   </AnchorPane>
-                  <HBox layoutX="10.0" layoutY="235.0" prefHeight="432.0" prefWidth="1190.0">
-                     <children>
-                        <LineChart fx:id="lineChart" prefHeight="275.0" prefWidth="605.0" style="-fx-background-color: #fff;">
-                           <xAxis>
-                              <CategoryAxis side="BOTTOM" fx:id="xAxisLineChart" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis fx:id="yAxisLineChart" side="LEFT" />
-                           </yAxis>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </LineChart>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="50.0">
-                           <children>
-                              <Pane style="-fx-background-color: #fff;">
-                                 <children>
-                                    <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                       <children>
-                                          <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Pane>
-                                    <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="130.0" text="New User Today" textAlignment="CENTER" />
-                                          <Label fx:id="newUserToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <VBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </VBox.margin>
-                              </Pane>
-                              <Pane style="-fx-background-color: #fff;">
-                                 <children>
-                                    <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                       <children>
-                                          <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Pane>
-                                    <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
-                                       <children>
-                                          <Label prefWidth="130.0" text="New Book Today" textAlignment="CENTER" />
-                                          <Label fx:id="newBookToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <VBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </VBox.margin>
-                              </Pane>
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="50.0">
-                           <children>
-                              <Pane style="-fx-background-color: #fff;">
-                                 <children>
-                                    <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                       <children>
-                                          <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Pane>
-                                    <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="130.0" text="Borrowed Books Today" textAlignment="CENTER" />
-                                          <Label fx:id="borrowedToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <VBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </VBox.margin>
-                              </Pane>
-                              <Pane style="-fx-background-color: #fff;">
-                                 <children>
-                                    <Pane layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #3754F6; -fx-background-radius: 50;">
-                                       <children>
-                                          <FontAwesomeIcon layoutX="10.0" layoutY="37.0" size="30" text="" wrappingWidth="31.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Pane>
-                                    <VBox alignment="CENTER" layoutX="72.0" layoutY="1.0" prefHeight="61.0" prefWidth="130.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="130.0" text="Submitted today" textAlignment="CENTER" />
-                                          <Label fx:id="submittedToday" prefWidth="130.0" text="Label" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <VBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </VBox.margin>
-                              </Pane>
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="80.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="1150.0" spacing="20.0">
-                     <children>
-                        <AnchorPane fx:id="donutChartPane" maxWidth="350.0" />
-                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="350.0">
-                           <children>
-                              <BarChart fx:id="barChart" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <xAxis>
-                                    <CategoryAxis side="BOTTOM" />
-                                 </xAxis>
-                                 <yAxis>
-                                    <NumberAxis side="LEFT" />
-                                 </yAxis>
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                              </BarChart>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="pieChartPane" layoutX="210.0" layoutY="10.0" maxWidth="350.0" />
-                     </children>
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets top="30.0" />
-                     </padding>
-                  </HBox>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

@@ -1,4 +1,4 @@
-package assistant.alert;
+package assistant.Utils;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;

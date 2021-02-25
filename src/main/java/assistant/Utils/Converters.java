@@ -9,32 +9,36 @@ public class Converters {
         model.setId(user.getId());
         model.setUsername(user.getUsername());
         model.setPassword(user.getPassword());
+        model.setProfilePicture(user.getProfilePicture());
         model.setFirstName(user.getFirstName());
         model.setLastName(user.getLastName());
+        model.setGender(user.getGender());
         model.setMobile(user.getMobile());
         model.setEmail(user.getEmail());
         model.setRegistrationDate(user.getRegistrationDate());
         model.setStreet(user.getStreet());
         model.setZipCode(user.getZipCode());
         model.setUserType(user.getUserType());
-        model.setLibrary(convertToLibraryFXModel(user.getLibrary()));
+        model.setLibraryID(user.getLibraryID());
         return model;
     }
 
-    public static User convertToUser(UserFXModel userFXModel) {
+    public static User convertToUser(UserFXModel user) {
         User model = new User();
-        model.setId(userFXModel.getId());
-        model.setUsername(userFXModel.getUsername());
-        model.setPassword(userFXModel.getPassword());
-        model.setFirstName(userFXModel.getFirstName());
-        model.setLastName(userFXModel.getLastName());
-        model.setMobile(userFXModel.getMobile());
-        model.setEmail(userFXModel.getEmail());
-        model.setRegistrationDate(userFXModel.getRegistrationDate());
-        model.setStreet(userFXModel.getStreet());
-        model.setZipCode(userFXModel.getZipCode());
-        model.setUserType(userFXModel.getUserType());
-        model.setLibrary(convertToLibrary(userFXModel.getLibrary()));
+        model.setId(user.getId());
+        model.setUsername(user.getUsername());
+        model.setPassword(user.getPassword());
+        model.setProfilePicture(user.getProfilePicture());
+        model.setFirstName(user.getFirstName());
+        model.setLastName(user.getLastName());
+        model.setGender(user.getGender());
+        model.setMobile(user.getMobile());
+        model.setEmail(user.getEmail());
+        model.setRegistrationDate(user.getRegistrationDate());
+        model.setStreet(user.getStreet());
+        model.setZipCode(user.getZipCode());
+        model.setUserType(user.getUserType());
+        model.setLibraryID(user.getLibraryID());
         return model;
     }
 
@@ -52,26 +56,10 @@ public class Converters {
         return model;
     }
 
-    public static City convertToCity(CityFXModel city) {
-        City model = new City();
-        model.setId(city.getId());
-        model.setName(city.getName());
-        return model;
-    }
-
     public static CategoryFXModel convertToCategoryFx(Category category) {
         CategoryFXModel model = new CategoryFXModel();
         model.setId(category.getId());
         model.setName(category.getName());
-        return model;
-    }
-
-    public static Author convertToAuthor(AuthorFXModel author) {
-        Author model = new Author();
-        model.setId(author.getId());
-        model.setFistName(author.getFistName());
-        model.setLastName(author.getLastName());
-        model.setMiddleName(author.getMiddleName());
         return model;
     }
 
@@ -91,17 +79,7 @@ public class Converters {
         model.setName(library.getName());
         model.setStreet(library.getStreet());
         model.setZipCode(library.getZipCode());
-        model.setCityFX(convertToCityFXModel(library.getCity()));
-        return model;
-    }
-
-    public static Library convertToLibrary(LibraryFXModel library) {
-        Library model = new Library();
-        model.setId(library.getId());
-        model.setName(library.getName());
-        model.setStreet(library.getStreet());
-        model.setZipCode(library.getZipCode());
-        model.setCity(convertToCity(library.getCityFX()));
+        model.setCityID(library.getCityID());
         return model;
     }
 
@@ -112,15 +90,14 @@ public class Converters {
         model.setIsbn13(book.getIsbn13());
         model.setTitle(book.getTitle());
         model.setAddedDate(book.getAddedDate());
-        model.setLastSubmissionDate(book.getLastSubmission());
         model.setDescription(book.getDescription());
         model.setPublicationDate(book.getPublicationDate());
         model.setBookCover(book.getBookCover());
         model.setAvailability(book.getAvailability());
-        model.setAuthorFX(convertToAuthorFXModel(book.getAuthor()));
-        model.setCategoryFX(convertToCategoryFx(book.getCategory()));
-        model.setPublishingCompanyFX(convertToPublisherFX(book.getPublishingCompany()));
-        model.setLibraryFX(convertToLibraryFXModel(book.getLibrary()));
+        model.setAuthorID(book.getAuthor());
+        model.setCategoryID(book.getCategory());
+        model.setPublishingCompanyID(book.getPublishingCompany());
+        model.setLibraryID(book.getLibrary());
         return model;
     }
 }

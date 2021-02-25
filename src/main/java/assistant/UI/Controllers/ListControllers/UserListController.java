@@ -8,6 +8,7 @@ import assistant.Utils.Converters;
 import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.BorrowedBook;
+import assistant.database.models.Library;
 import assistant.database.models.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
@@ -43,7 +44,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static assistant.Utils.ProjectTools.getResourceBundle;
-import static assistant.alert.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showJFXButton;
 
 public class UserListController implements Initializable {
     @FXML
@@ -125,7 +126,7 @@ public class UserListController implements Initializable {
                 UserFXModel userFx = Converters.convertToUserFx(user);
                 observableArrayList.add(userFx);
             } else {
-                if (user.getLibrary().getId() == LoginController.currentlyLoggedUser.getLibrary().getId() && user.getUserType().equals("MEMBER")) {
+                if (user.getLibraryID()== LoginController.currentlyLoggedUser.getLibraryID() && user.getUserType().equals("MEMBER")) {
                     UserFXModel userFx = Converters.convertToUserFx(user);
                     observableArrayList.add(userFx);
                 }
@@ -181,6 +182,7 @@ public class UserListController implements Initializable {
 
     @FXML
     private void handleRowData(MouseEvent mouseEvent) {
+        DataAccessObject dao = new DataAccessObject();
         if (mouseEvent.getClickCount() == 2) { // checking the number of mouse clicks on a single row
             UserFXModel rowData = tableView.getSelectionModel().getSelectedItem(); // creating User object from data in selected row
             if (rowData == null) { // check if selected row is not null
@@ -199,7 +201,11 @@ public class UserListController implements Initializable {
                     default -> selectedUserType.setText("CZYTELNIK");
                 }
 
-                selectedUserLibraryName.setText(rowData.getLibrary().getName());
+                try {
+                    selectedUserLibraryName.setText(dao.findById(Library.class, rowData.getLibraryID()).getName());
+                } catch (ApplicationException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

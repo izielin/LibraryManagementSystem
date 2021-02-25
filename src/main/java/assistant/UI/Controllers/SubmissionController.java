@@ -1,135 +1,187 @@
 package assistant.UI.Controllers;
 
+import assistant.FXModels.UserFXModel;
 import assistant.Utils.ApplicationException;
-import assistant.Utils.CreateSets;
+import assistant.Utils.Converters;
 import assistant.database.dao.DataAccessObject;
-import assistant.database.models.Book;
-import assistant.database.models.BorrowedBook;
+import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import org.controlsfx.control.textfield.TextFields;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static assistant.alert.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showTableDialog;
 
 public class SubmissionController implements Initializable {
 
-    @FXML
-    private StackPane rootPane;
 
+    public JFXTextField userFirstNameInput;
+    public StackPane rootPane;
+    public AnchorPane mainAnchorPane;
+    public VBox submissionDataContainer;
+    public JFXButton clearButton;
+    public JFXButton submitButton;
     @FXML
-    private AnchorPane mainAnchorPane;
-
-    @FXML
-    private JFXTextField bookTitleInput;
-
-    @FXML
-    private HBox submissionDataContainer;
-
-    @FXML
-    private Text memberNameHolder;
-
-    @FXML
-    private Text memberLastNameHolder;
-
-    @FXML
-    private Text memberAddressHolder;
-
-    @FXML
-    private Text memberContactHolder;
-
-    @FXML
-    private Text bookTitleHolder;
-
-    @FXML
-    private Text bookAuthorHolder;
-
-    @FXML
-    private Text bookPublisherHolder;
-
-    @FXML
-    private Text checkOutHolder;
-
-    @FXML
-    private Text dayHolder;
-
-    @FXML
-    private Text feeHolder;
-
-    @FXML
-    private JFXButton submissionButton;
-
+    private JFXTextField userLastNameInput;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DataAccessObject dao = new DataAccessObject();
-        TextFields.bindAutoCompletion(bookTitleInput, CreateSets.createTitleSet("SELECT TITLE FROM BORROWED_BOOKS INNER JOIN BOOKS ON BOOK_ID = BOOKS.ID WHERE IS_RETURNED = 0 "));
-        bookTitleInput.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!bookTitleInput.getText().equals("")&& bookTitleHolder.getText().equals("") || !bookTitleInput.getText().equals(bookTitleHolder.getText())) {
+        submitButton.setOnAction(event -> generateUserList(dao));
+        clearButton.setOnAction(event -> {
+            userFirstNameInput.clear();
+            userLastNameInput.clear();
+        });
+    }
+
+    private void generateUserList(DataAccessObject dao) {
+        try {
+            userFirstNameInput.getParent().requestFocus();
+            List<User> list = dao.searchDuplicatedNames(userFirstNameInput.getText(), userLastNameInput.getText());
+            if (list.size() == 1) {
+                System.out.println("One user case");
+                generateBorrowedBooksList(list.get(0).getId());
+            } else if (list.size() == 0) {
+                showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Wrong Name Data", "The user with the given name data was not found in the system");
+                userFirstNameInput.setText("");
+                userLastNameInput.setText("");
+            } else {
+                tableForDuplicatedUser(list);
+            }
+        } catch (ApplicationException | NullPointerException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void generateBorrowedBooksList(int userID) throws ApplicationException, SQLException {
+        DataAccessObject dao = new DataAccessObject();
+        List<BorrowedBook> borrowedBooks = dao.findByColumnName(BorrowedBook.class, "USER_ID", userID);
+//        List<Node> nodes = new ArrayList<>();
+        borrowedBooks.forEach(book -> {
+            System.out.println("here!");
+            if (!book.getReturned()) {
                 try {
-                    bookTitleInput.getParent().requestFocus();
-                    String query = "SELECT BOOK_ID , USER_ID , BORROW_TIME,\n" +
-                            "USERS.FIRST_NAME, USERS.LAST_NAME , USERS.MOBILE, USERS.EMAIL, USERS.STREET ," +
-                            "BOOKS.TITLE,\n" +
-                            "AUTHORS.FIRST_NAME , AUTHORS.MIDDLE_NAME ,AUTHORS.LAST_NAME \n" +
-                            "FROM BORROWED_BOOKS \n" +
-                            "INNER JOIN BOOKS ON BOOK_ID = BOOKS.ID \n" +
-                            "INNER JOIN USERS ON USER_ID = USERS.ID \n" +
-                            "INNER JOIN AUTHORS ON BOOKS.AUTHOR_ID = AUTHORS.ID \n" +
-                            "WHERE IS_RETURNED = 0 and BOOKS.TITLE = '" + bookTitleInput.getText() + "'";
-                    List<String[]> list = dao.executeRawQuery(BorrowedBook.class, query); // create list of books with the same id
-
-                    for (String[] s : list) {
-                        System.out.println(Arrays.toString(s));
-                    }
-                    if (list.size() == 1) { // if return 1 record - set data of returned book
-                        memberNameHolder.setText(list.get(0)[3]);
-                        memberLastNameHolder.setText(list.get(0)[4]);
-                        memberContactHolder.setText(list.get(0)[5] + ", " + list.get(0)[6]);
-                        memberAddressHolder.setText(list.get(0)[7]);
-                        bookTitleHolder.setText(list.get(0)[8]);
-                        bookAuthorHolder.setText((list.get(0)[10] == null) ? list.get(0)[9] + " " + list.get(0)[11] : list.get(0)[9] + " " + list.get(0)[10] + " " + list.get(0)[11]);
-
-                        checkOutHolder.setText(list.get(0)[2]);
-
-                        LocalDate chekOutTime = LocalDate.parse(list.get(0)[2]);
-                        LocalDate now = LocalDate.now();
-                        long daysElapsed = ChronoUnit.DAYS.between(chekOutTime, now);
-                        dayHolder.setText(Long.toString(daysElapsed));
-
-                    } else if (list.size() == 0) { // if return 0 - the book with the given title does not exist in the database, return warning
-                        showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Wrong Title", "The book with the given title was not found in the system");
-                        bookTitleInput.setText("");
-                    }
-//                    else { // if return >1 - show list with more detailed information about returned books
-//                        tableForDuplicatedBook(list);
-
-                } catch (ApplicationException | NullPointerException | SQLException e) {
+                    submissionDataContainer.getChildren().add(generateBookCell(book.getBookID(), book));
+                } catch (ApplicationException | IOException e) {
                     e.printStackTrace();
                 }
             }
         });
 
+        // grid pane
+//        for (int i = 0; i < submissionDataContainer.getRowCount(); i++) {
+//            for (int j = 0; j < submissionDataContainer.getColumnCount(); j++) {
+//                if (j + i < nodes.size())
+//                    submissionDataContainer.add(nodes.get(i + j), i, j);
+//            }
+//        }
+    }
+
+    private Node generateBookCell(int bookID, BorrowedBook borrowedBook) throws ApplicationException, IOException {
+        System.out.println("Here 2");
+        DataAccessObject dao = new DataAccessObject();
+        Book book = dao.findById(Book.class, bookID);
+        HBox hBox = new HBox();
+        VBox vBox = new VBox();
+        hBox.setStyle("-fx-background-color: white;");
+        hBox.setMaxWidth(350);
+        Image img;
+        try {
+            img = loadImage(book.getBookCover());
+        } catch (NullPointerException e) {
+            img = new Image("/images/book.png");
+        }
+        Circle circle = new Circle();
+        circle.setRadius(50.0f);
+        circle.setFill(new ImagePattern(img));
+        Label titleHolder = new Label();
+        Label authorHolder = new Label();
+        Label categoryHolder = new Label();
+        Label ISBNHolder = new Label();
+        JFXButton button = new JFXButton();
+        button.setText("submit book");
+        button.setOnAction(event -> {
+            try {
+                returnBook(book, borrowedBook);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
+        });
+        titleHolder.setText(book.getTitle());
+        authorHolder.setText(dao.findById(Author.class, book.getAuthor()).getFullName());
+        titleHolder.setText(dao.findById(Category.class, book.getCategory()).getName());
+        categoryHolder.setText(book.getTitle());
+        ISBNHolder.setText(book.getIsbn13());
+        vBox.getChildren().addAll(titleHolder, authorHolder, categoryHolder, ISBNHolder, button);
+        hBox.getChildren().addAll(circle, vBox);
+        return hBox;
+    }
+
+    private Image loadImage(byte[] byte_array) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(byte_array);
+        BufferedImage bImage2 = ImageIO.read(bis);
+        return javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
+    }
+
+    private void tableForDuplicatedUser(List<User> list) {
+        ObservableList<UserFXModel> observableList = FXCollections.observableArrayList();
+        list.forEach(user -> observableList.add(Converters.convertToUserFx(user)));
+        LendBookController controller = new LendBookController();
+        TableView<UserFXModel> duplicates = controller.getTableView(observableList);
+
+        duplicates.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        JFXButton choiceButton = new JFXButton("Choose selected person");
+        duplicates.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            choiceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+                try {
+                    generateBorrowedBooksList(newSelection.getId());
+                } catch (ApplicationException | SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
+        showTableDialog(rootPane, mainAnchorPane, Arrays.asList(choiceButton), "Ambiguous data was provided",
+                "More than one object with the mentioned values exists in the database. \n" +
+                        "Choose a specific object from the list below, and then confirm with the button 'Choose selected person'", duplicates);
     }
 
     @FXML
-    void returnBook() {
+    void returnBook(Book book, BorrowedBook borrowedBook) throws ApplicationException {
+        DataAccessObject dataAccessObject = new DataAccessObject();
+        book.setAvailability(true);
 
+        borrowedBook.setReturnTime(LocalDate.now().toString());
+        borrowedBook.setReturned(true);
+        dataAccessObject.createOrUpdate(book);
+        dataAccessObject.createOrUpdate(borrowedBook);
+
+        showJFXButton(rootPane, mainAnchorPane, new ArrayList<>(), "Success", "Book was successfully returned!");
 
     }
 }

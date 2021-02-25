@@ -1,10 +1,6 @@
 package assistant.FXModels;
 
-import assistant.database.models.City;
-import assistant.database.models.Library;
 import javafx.beans.property.*;
-
-import java.time.LocalDate;
 
 public class UserFXModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
@@ -12,14 +8,16 @@ public class UserFXModel {
     private final StringProperty password = new SimpleStringProperty();
     private final StringProperty firstName = new SimpleStringProperty();
     private final StringProperty lastName = new SimpleStringProperty();
+    private final StringProperty gender = new SimpleStringProperty();
     private final StringProperty mobile = new SimpleStringProperty();
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty registrationDate = new SimpleStringProperty();
     private final StringProperty street = new SimpleStringProperty();
     private final StringProperty zipCode = new SimpleStringProperty();
-    private final ObjectProperty<CityFXModel> city = new SimpleObjectProperty<>();
     private final StringProperty userType = new SimpleStringProperty();
-    private final ObjectProperty<LibraryFXModel> library = new SimpleObjectProperty<>();
+    private final IntegerProperty libraryID = new SimpleIntegerProperty();
+    private final ObjectProperty<byte[]> profilePicture = new SimpleObjectProperty<>();
+
 
     public int getId() {
         return id.get();
@@ -57,6 +55,18 @@ public class UserFXModel {
         this.password.set(password);
     }
 
+    public byte[] getProfilePicture() {
+        return profilePicture.get();
+    }
+
+    public ObjectProperty<byte[]> profilePictureProperty() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture.set(profilePicture);
+    }
+
     public String getFirstName() {
         return firstName.get();
     }
@@ -79,6 +89,18 @@ public class UserFXModel {
 
     public void setLastName(String lastName) {
         this.lastName.set(lastName);
+    }
+
+    public String getGender() {
+        return gender.get();
+    }
+
+    public StringProperty genderProperty() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender.set(gender);
     }
 
     public String getMobile() {
@@ -141,18 +163,6 @@ public class UserFXModel {
         this.zipCode.set(zipCode);
     }
 
-    public CityFXModel getCity() {
-        return city.get();
-    }
-
-    public ObjectProperty<CityFXModel> cityProperty() {
-        return city;
-    }
-
-    public void setCity(CityFXModel city) {
-        this.city.set(city);
-    }
-
     public String getUserType() {
         return userType.get();
     }
@@ -165,20 +175,21 @@ public class UserFXModel {
         this.userType.set(userType);
     }
 
-    public LibraryFXModel getLibrary() {
-        return library.get();
+    public int getLibraryID() {
+        return libraryID.get();
     }
 
-    public ObjectProperty<LibraryFXModel> libraryProperty() {
-        return library;
+    public IntegerProperty libraryIDProperty() {
+        return libraryID;
     }
 
-    public void setLibrary(LibraryFXModel library) {
-        this.library.set(library);
+    public void setLibraryID(int libraryID) {
+        this.libraryID.set(libraryID);
     }
 
     @Override
     public String toString() {
         return username.getValue();
     }
+
 }

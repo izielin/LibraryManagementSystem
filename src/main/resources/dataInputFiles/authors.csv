@@ -1,9 +1,22 @@
-1,Joanne,Kathleen,Rowling
-2,Arthur,Conan,Doyle
-3,Andrzej,,Sapkowski
-4,John,Ronald Reuel,Tolkien
-5,Szczepan,,Twardoch
-6,Władysław,,Reymond
-7,Jarosław,,Grzędowicz
-8,Agatha,,Christie
-9,Stephen ,,King
+ID;FIRST_NAME;MIDDLE_NAME;LAST_NAME
+1;Joanne;Kathleen;Rowling
+2;Arthur;Conan;Doyle
+3;Andrzej;;Sapkowski
+4;John;Ronald Reuel;Tolkien
+5;Agatha;;Christie
+6;Stephen;;King
+7;Jarosław;;Grzędowicz
+8;Jerome;David;Salinger
+9;Aldous;;Huxley
+10;Ray;;Bradbury
+11;Michaił;;Bułhakow
+12;Markus;;Zusak
+13;George;;Orwell
+14;Gravel;;Francois
+15;Victor;;Hugo
+16;Mario;Gianluigi;Puzo
+17;George;Raymond Richard;Martin
+18;Adam;;Mickiewicz
+19;Homer;;?
+20;John;;Flanagan
+21;Dmitrij;;Głuchowski

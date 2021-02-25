@@ -1,17 +1,12 @@
 package assistant.database.models;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import java.awt.*;
-
 
 @DatabaseTable(tableName = "BOOKS")
 public class Book implements BaseModel {
-    @DatabaseField(columnName ="ID", generatedId = true)
+    @DatabaseField(columnName = "ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "ISBN_10", unique = true)
@@ -26,35 +21,29 @@ public class Book implements BaseModel {
     @DatabaseField(columnName = "ADDED_DATE")
     private String addedDate;
 
-    @DatabaseField(columnName = "LAST_SUBMISSION")
-    private String lastSubmission;
-
     @DatabaseField(columnName = "DESCRIPTION")
     private String description;
 
     @DatabaseField(columnName = "PUBLICATION_DATE")
     private String publicationDate;
 
-    @DatabaseField(dataType = DataType.SERIALIZABLE)
+    @DatabaseField(columnName = "BOOK_COVER",dataType = DataType.SERIALIZABLE)
     private byte[] bookCover;
 
     @DatabaseField(columnName = "AVAILABILITY", defaultValue = "true")
     private Boolean availability;
 
-    @DatabaseField(columnName = "AUTHOR_ID", foreign = true, foreignAutoRefresh = true,  foreignAutoCreate = true, canBeNull = false)
-    private Author author;
+    @DatabaseField(columnName = "AUTHOR_ID")
+    private int authorID;
 
-    @DatabaseField(columnName = "CATEGORY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Category category;
+    @DatabaseField(columnName = "CATEGORY_ID")
+    private int categoryID;
 
-    @DatabaseField(columnName = "PUBLISHER_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private PublishingCompany publishingCompany;
+    @DatabaseField(columnName = "PUBLISHER_ID")
+    private int publishingCompanyID;
 
-    @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Library library;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<BorrowedBook> borrowedBooks;
+    @DatabaseField(columnName = "LIBRARY_ID")
+    private int libraryID;
 
     public Book() {
     }
@@ -99,20 +88,12 @@ public class Book implements BaseModel {
         this.addedDate = addedDate;
     }
 
-    public String getLastSubmission() {
-        return lastSubmission;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLastSubmission(String lastSubmission) {
-        this.lastSubmission = lastSubmission;
-    }
-
-    public Boolean getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(Boolean availability) {
-        this.availability = availability;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPublicationDate() {
@@ -123,46 +104,6 @@ public class Book implements BaseModel {
         this.publicationDate = publicationDate;
     }
 
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public PublishingCompany getPublishingCompany() {
-        return publishingCompany;
-    }
-
-    public void setPublishingCompany(PublishingCompany publishingCompany) {
-        this.publishingCompany = publishingCompany;
-    }
-
-    public Library getLibrary() {
-        return library;
-    }
-
-    public void setLibrary(Library library) {
-        this.library = library;
-    }
-
-    public ForeignCollection<BorrowedBook> getBorrowedBooks() {
-        return borrowedBooks;
-    }
-
-    public void setBorrowedBooks(ForeignCollection<BorrowedBook> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
-    }
-
     public byte[] getBookCover() {
         return bookCover;
     }
@@ -171,11 +112,43 @@ public class Book implements BaseModel {
         this.bookCover = bookCover;
     }
 
-    public String getDescription() {
-        return description;
+    public Boolean getAvailability() {
+        return availability;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+    public int getAuthor() {
+        return authorID;
+    }
+
+    public void setAuthor(int authorID) {
+        this.authorID = authorID;
+    }
+
+    public int getCategory() {
+        return categoryID;
+    }
+
+    public void setCategory(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public int getPublishingCompany() {
+        return publishingCompanyID;
+    }
+
+    public void setPublishingCompany(int publishingCompanyID) {
+        this.publishingCompanyID = publishingCompanyID;
+    }
+
+    public int getLibrary() {
+        return libraryID;
+    }
+
+    public void setLibrary(int libraryID) {
+        this.libraryID = libraryID;
     }
 }

@@ -15,10 +15,10 @@ public class BookFXModel {
     private final StringProperty publicationDate = new SimpleStringProperty();
     private final BooleanProperty availability = new SimpleBooleanProperty();
     private final ObjectProperty<byte[]> bookCover = new SimpleObjectProperty<>();
-    private final ObjectProperty<AuthorFXModel> authorFX = new SimpleObjectProperty<>();
-    private final ObjectProperty<CategoryFXModel> categoryFX = new SimpleObjectProperty<>();
-    private final ObjectProperty<PublishingCompanyFXModel> publishingCompanyFX = new SimpleObjectProperty<>();
-    private final ObjectProperty<LibraryFXModel> libraryFX = new SimpleObjectProperty<>();
+    private final IntegerProperty authorID = new SimpleIntegerProperty();
+    private final IntegerProperty categoryID = new SimpleIntegerProperty();
+    private final IntegerProperty publishingCompanyID = new SimpleIntegerProperty();
+    private final IntegerProperty libraryID = new SimpleIntegerProperty();
 
     public int getId() {
         return id.get();
@@ -140,51 +140,51 @@ public class BookFXModel {
         this.bookCover.set(bookCover);
     }
 
-    public AuthorFXModel getAuthorFX() {
-        return authorFX.get();
+    public int getAuthorID() {
+        return authorID.get();
     }
 
-    public ObjectProperty<AuthorFXModel> authorFXProperty() {
-        return authorFX;
+    public IntegerProperty authorIDProperty() {
+        return authorID;
     }
 
-    public void setAuthorFX(AuthorFXModel authorFX) {
-        this.authorFX.set(authorFX);
+    public void setAuthorID(int authorID) {
+        this.authorID.set(authorID);
     }
 
-    public CategoryFXModel getCategoryFX() {
-        return categoryFX.get();
+    public int getCategoryID() {
+        return categoryID.get();
     }
 
-    public ObjectProperty<CategoryFXModel> categoryFXProperty() {
-        return categoryFX;
+    public IntegerProperty categoryIDProperty() {
+        return categoryID;
     }
 
-    public void setCategoryFX(CategoryFXModel categoryFX) {
-        this.categoryFX.set(categoryFX);
+    public void setCategoryID(int categoryID) {
+        this.categoryID.set(categoryID);
     }
 
-    public PublishingCompanyFXModel getPublishingCompanyFX() {
-        return publishingCompanyFX.get();
+    public int getPublishingCompanyID() {
+        return publishingCompanyID.get();
     }
 
-    public ObjectProperty<PublishingCompanyFXModel> publishingCompanyFXProperty() {
-        return publishingCompanyFX;
+    public IntegerProperty publishingCompanyIDProperty() {
+        return publishingCompanyID;
     }
 
-    public void setPublishingCompanyFX(PublishingCompanyFXModel publishingCompanyFX) {
-        this.publishingCompanyFX.set(publishingCompanyFX);
+    public void setPublishingCompanyID(int publishingCompanyID) {
+        this.publishingCompanyID.set(publishingCompanyID);
     }
 
-    public LibraryFXModel getLibraryFX() {
-        return libraryFX.get();
+    public int getLibraryID() {
+        return libraryID.get();
     }
 
-    public ObjectProperty<LibraryFXModel> libraryFXProperty() {
-        return libraryFX;
+    public IntegerProperty libraryIDProperty() {
+        return libraryID;
     }
 
-    public void setLibraryFX(LibraryFXModel libraryFX) {
-        this.libraryFX.set(libraryFX);
+    public void setLibraryID(int libraryID) {
+        this.libraryID.set(libraryID);
     }
 }

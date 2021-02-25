@@ -34,6 +34,4 @@ public class TitleBarController {
         x = stage.getX() - mouseEvent.getScreenX();
         y = stage.getY() - mouseEvent.getScreenY();
     }
-
-
 }

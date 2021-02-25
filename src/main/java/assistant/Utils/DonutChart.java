@@ -32,7 +32,7 @@ public class DonutChart extends PieChart {
         innerChart.setLabelsVisible(false);
         innerChart.setLegendVisible(false);
 
-        circle = new Circle(40);
+        circle = new Circle(50);
         circle.setOpacity(1);
         circle.setStyle("-fx-fill:white;");
     }

@@ -1,13 +1,11 @@
 package assistant.database.models;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "LIBRARIES")
-public class Library implements BaseModel{
-    @DatabaseField(columnName ="ID", generatedId = true)
+public class Library implements BaseModel {
+    @DatabaseField(columnName = "ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "NAME", canBeNull = false, unique = true)
@@ -19,14 +17,8 @@ public class Library implements BaseModel{
     @DatabaseField(columnName = "ZIP_CODE", canBeNull = false)
     private String zipCode;
 
-    @DatabaseField(columnName = "CITY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private City city;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<Book> books;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<User> users;
+    @DatabaseField(columnName = "CITY_ID")
+    private int cityID;
 
     public Library() {
     }
@@ -63,27 +55,11 @@ public class Library implements BaseModel{
         this.zipCode = zipCode;
     }
 
-    public City getCity() {
-        return city;
+    public int getCityID() {
+        return cityID;
     }
 
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public ForeignCollection<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(ForeignCollection<Book> books) {
-        this.books = books;
-    }
-
-    public ForeignCollection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ForeignCollection<User> users) {
-        this.users = users;
+    public void setCityID(int cityID) {
+        this.cityID = cityID;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static assistant.alert.AlertMaker.showSimpleAlert;
+import static assistant.Utils.AlertMaker.showSimpleAlert;
 
 public class Settings {
     public static final String CONFIG_FILE = "config.txt";

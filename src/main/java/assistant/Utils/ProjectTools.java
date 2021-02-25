@@ -38,6 +38,7 @@ public class ProjectTools {
             stage.setScene(new Scene(parent));
             stage.initStyle(StageStyle.UNDECORATED);
 
+
             if (!path.equals("/fxml/Login.fxml")) {
                 ResizeHelper.addResizeListener(stage);
             }
@@ -60,6 +61,7 @@ public class ProjectTools {
         }
         return null;
     }
+
     public static void loadAddWindow(String path, ListsController controller) {
 
         try {
@@ -69,7 +71,7 @@ public class ProjectTools {
             stage.setScene(new Scene(parent));
             stage.show();
 
-            stage.setOnHidden((e)->{
+            stage.setOnHidden((e) -> {
                 System.out.println("work1");
                 controller.executeRefresh();
             }); //refresh table

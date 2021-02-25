@@ -1,16 +1,12 @@
 package assistant.UI.Controllers.ListControllers;
 
-import assistant.FXModels.AuthorFXModel;
 import assistant.FXModels.BookFXModel;
-import assistant.FXModels.CategoryFXModel;
-import assistant.FXModels.LibraryFXModel;
 import assistant.UI.Controllers.AddControllers.AddBookController;
 import assistant.UI.Controllers.LoginController;
 import assistant.Utils.Converters;
 import assistant.Utils.ApplicationException;
 import assistant.database.dao.DataAccessObject;
-import assistant.database.models.Book;
-import assistant.database.models.BorrowedBook;
+import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -42,7 +38,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static assistant.Utils.ProjectTools.getResourceBundle;
-import static assistant.alert.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showJFXButton;
 
 public class BookListController implements Initializable {
 
@@ -56,7 +52,7 @@ public class BookListController implements Initializable {
     private TableView<BookFXModel> tableView;
 
     @FXML
-    private TableColumn<BookFXModel, CategoryFXModel> categoryColumn;
+    private TableColumn<BookFXModel, String> categoryColumn;
 
     @FXML
     private TableColumn<BookFXModel, Integer> idColumn;
@@ -65,16 +61,10 @@ public class BookListController implements Initializable {
     private TableColumn<BookFXModel, String> titleColumn;
 
     @FXML
-    private TableColumn<BookFXModel, AuthorFXModel> authorColumn;
+    private TableColumn<BookFXModel, String> authorColumn;
 
     @FXML
     private TableColumn<BookFXModel, String> isbn13;
-
-    @FXML
-    private TableColumn<BookFXModel, LibraryFXModel> libraryColumn;
-
-    @FXML
-    private TableColumn<BookFXModel, String> cityColumn;
 
     @FXML
     private TableColumn<BookFXModel, String> availabilityColumn;
@@ -99,19 +89,32 @@ public class BookListController implements Initializable {
     }
 
     private void initColumn() throws ApplicationException {
+        DataAccessObject dao = new DataAccessObject();
         tableView.setItems(loadData());
-        categoryColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().categoryFXProperty());
         idColumn.setCellValueFactory(cellDataFeatures -> new SimpleIntegerProperty(cellDataFeatures.getValue().getId()).asObject());
         titleColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().titleProperty());
-        authorColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().authorFXProperty());
         isbn13.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().isbn13Property());
-        libraryColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().libraryFXProperty());
-        cityColumn.setCellValueFactory(cellDataFeatures -> cellDataFeatures.getValue().getLibraryFX().getCityFX().nameProperty());
         availabilityColumn.setCellValueFactory(cellData -> (cellData.getValue().isAvailability()) ? new SimpleStringProperty("Dostępna") : new SimpleStringProperty("Wypożyczona"));
         deleteColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
         editColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue()));
+        categoryColumn.setCellValueFactory(cellDataFeatures -> {
+            try {
+                return new SimpleStringProperty(dao.findById(Category.class, cellDataFeatures.getValue().getCategoryID()).getName());
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
+            return new SimpleStringProperty("Błąd wczytania danych");
+        });
+        authorColumn.setCellValueFactory(cellDataFeatures -> {
+            try {
+                return new SimpleStringProperty(dao.findById(Author.class, cellDataFeatures.getValue().getAuthorID()).getFullName());
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
+            return new SimpleStringProperty("Błąd wczytania danych");
+        });
 
-        deleteColumn.setCellFactory(param -> new TableCell<BookFXModel, BookFXModel>() {
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
             final Button button = createButton(DELETE_ICON);
 
             @Override
@@ -126,7 +129,7 @@ public class BookListController implements Initializable {
             }
         });
 
-        editColumn.setCellFactory(param -> new TableCell<BookFXModel, BookFXModel>() {
+        editColumn.setCellFactory(param -> new TableCell<>() {
             final Button button = createButton(EDIT_ICON);
 
             @Override
@@ -151,7 +154,7 @@ public class BookListController implements Initializable {
                                     applicationException.printStackTrace();
                                 }
                             }); //refresh table
-                        } catch (IOException e) {
+                        } catch (IOException | ApplicationException e) {
                             e.printStackTrace();
                         }
                     });
@@ -199,9 +202,13 @@ public class BookListController implements Initializable {
         List<Book> books = dao.queryForAll(Book.class);
         observableArrayList.clear();
         books.forEach(book -> {
-            if (book.getLibrary().getId() == LoginController.currentlyLoggedUser.getLibrary().getId()) {
-                BookFXModel bookFXModel = Converters.convertToBookFx(book);
-                observableArrayList.add(bookFXModel);
+            try {
+                if (dao.findById(Library.class, book.getLibrary()).getId() == LoginController.currentlyLoggedUser.getLibraryID()) {
+                    BookFXModel bookFXModel = Converters.convertToBookFx(book);
+                    observableArrayList.add(bookFXModel);
+                }
+            } catch (ApplicationException e) {
+                e.printStackTrace();
             }
         });
         return observableArrayList;

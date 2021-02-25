@@ -1,11 +1,8 @@
 package assistant.database.models;
 
-import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.Date;
 
 @DatabaseTable(tableName = "USERS")
 public class User implements BaseModel {
@@ -18,11 +15,17 @@ public class User implements BaseModel {
     @DatabaseField(columnName = "PASSWORD", canBeNull = false)
     private String password;
 
+    @DatabaseField(columnName = "PROFILE_PICTURE",dataType = DataType.SERIALIZABLE)
+    private byte[] profilePicture;
+
     @DatabaseField(columnName = "FIRST_NAME", canBeNull = false)
     private String firstName;
 
     @DatabaseField(columnName = "LAST_NAME", canBeNull = false)
     private String lastName;
+
+    @DatabaseField(columnName = "GENDER", canBeNull = false)
+    private String gender;
 
     @DatabaseField(columnName = "MOBILE", canBeNull = false)
     private String mobile;
@@ -42,11 +45,8 @@ public class User implements BaseModel {
     @DatabaseField(columnName = "USER_TYPE", canBeNull = false, defaultValue = "MEMBER")
     private String userType;
 
-    @DatabaseField(columnName = "LIBRARY_ID", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true, canBeNull = false)
-    private Library library;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<BorrowedBook> borrowedBooks;
+    @DatabaseField(columnName = "LIBRARY_ID")
+    private int libraryID;
 
     public User() {
     }
@@ -75,12 +75,12 @@ public class User implements BaseModel {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public byte[] getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getFirstName() {
@@ -99,12 +99,36 @@ public class User implements BaseModel {
         this.lastName = lastName;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getMobile() {
         return mobile;
     }
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getStreet() {
@@ -131,27 +155,16 @@ public class User implements BaseModel {
         this.userType = userType;
     }
 
-    public Library getLibrary() {
-        return library;
+    public int getLibraryID() {
+        return libraryID;
     }
 
-    public void setLibrary(Library library) {
-        this.library = library;
+    public void setLibraryID(int libraryID) {
+        this.libraryID = libraryID;
     }
 
-    public ForeignCollection<BorrowedBook> getBorrowedBooks() {
-        return borrowedBooks;
-    }
-
-    public void setBorrowedBooks(ForeignCollection<BorrowedBook> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
-    }
-
-    public String getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(String registration_date) {
-        this.registrationDate = registration_date;
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
     }
 }

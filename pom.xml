@@ -13,7 +13,6 @@
         <maven.compiler.target>15.0.1</maven.compiler.target>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>de.jensd</groupId>

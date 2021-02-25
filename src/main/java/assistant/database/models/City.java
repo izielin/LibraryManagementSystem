@@ -1,20 +1,15 @@
 package assistant.database.models;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "CITIES")
-public class City implements BaseModel{
-    @DatabaseField(columnName ="ID", generatedId = true)
+public class City implements BaseModel {
+    @DatabaseField(columnName = "ID", generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "NAME", canBeNull = false, unique = true)
     private String name;
-
-    @ForeignCollectionField(eager = true)
-    private ForeignCollection<Library> libraries;
 
     public City() {
     }
@@ -35,11 +30,4 @@ public class City implements BaseModel{
         this.name = name;
     }
 
-    public ForeignCollection<Library> getLibraries() {
-        return libraries;
-    }
-
-    public void setLibraries(ForeignCollection<Library> libraries) {
-        this.libraries = libraries;
-    }
 }

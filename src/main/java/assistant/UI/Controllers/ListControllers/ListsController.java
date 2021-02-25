@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import static assistant.alert.AlertMaker.showJFXButton;
+import static assistant.Utils.AlertMaker.showJFXButton;
 
 public class ListsController {
     public StackPane rootPane;
@@ -34,8 +34,6 @@ public class ListsController {
     @FXML
     private TableColumn<AuthorFXModel, String> authorLastName;
     @FXML
-    private TableColumn<AuthorFXModel, CountryFXModel> authorCountry;
-    @FXML
     private TableView<CategoryFXModel> categoryTable;
     @FXML
     private TableColumn<CategoryFXModel, String> categoryName;
@@ -43,8 +41,6 @@ public class ListsController {
     private TableView<CityFXModel> cityTable;
     @FXML
     private TableColumn<CityFXModel, String> cityName;
-    @FXML
-    private TableColumn<CityFXModel, CountryFXModel> cityCountry;
     @FXML
     private TableView<PublishingCompanyFXModel> publisherTable;
     @FXML

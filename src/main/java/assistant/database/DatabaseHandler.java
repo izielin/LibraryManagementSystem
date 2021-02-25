@@ -17,10 +17,12 @@ public class DatabaseHandler {
     private static final String DB_URL = "jdbc:sqlite:SQLiteDatabase.db"; // Declare JDBC Driver -> place where database will be create (folder name, if database not exist create one)
     private static ConnectionSource connection; // store connection between application and database
 
-    public static void initDatabase(){
+    public static void initDatabase(boolean rebuildDatabase){
         createConnectionSource();
-//        dropTable();
-//        createTable();
+        if(rebuildDatabase){
+        dropTable();
+        createTable();
+        }
     }
 
     private static void createConnectionSource(){
@@ -59,6 +61,8 @@ public class DatabaseHandler {
             TableUtils.createTableIfNotExists(connection, Library.class);
             TableUtils.createTableIfNotExists(connection, PublishingCompany.class);
             TableUtils.createTableIfNotExists(connection, Category.class);
+            TableUtils.createTableIfNotExists(connection, Message.class);
+            TableUtils.createTableIfNotExists(connection, Report.class);
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
         }
@@ -74,6 +78,8 @@ public class DatabaseHandler {
             TableUtils.dropTable(connection, Library.class, true);
             TableUtils.dropTable(connection, PublishingCompany.class, true);
             TableUtils.dropTable(connection, Category.class, true);
+            TableUtils.dropTable(connection, Message.class, true);
+            TableUtils.dropTable(connection, Report.class, true);
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
         }

@@ -1,20 +1,58 @@
-1,user1,user1,Julia,Zielińska,498-708-438,julia.zielińska@home.pl,2020-12-11,Bohaterów Getta Warszawskiego 13,40-605,EMPLOYEE,1
-2,user2,user2,Marcel,Dudek,515-111-918,marcel.dudek@home.pl,2021-01-08,Dworska 14,52-129,EMPLOYEE,1
-3,user3,user3,Igor,Nowak,175-940-278,igor.nowak@home.pl,2021-01-09,Aleja Żołnierzy Wyklętych 12,40-178,EMPLOYEE,3
-4,user4,user4,Hubert,Krawczyk,707-252-601,hubert.krawczyk@home.pl,2021-01-10,Aleja Kazimierza Jagiellończyka 2,53-434,EMPLOYEE,1
-5,user5,user5,Piotr,Czarnecki,531-225-236,piotr.czarnecki@home.pl,2021-01-11,Dworska 10,61-293,EMPLOYEE,3
-6,user6,user6,Nadzieja,Walczak,559-804-281,nadzieja.walczak@home.pl,2021-01-01,Biskupia 18,11-317,MEMBER,3
-7,user7,user7,Piotr,Krawczyk,185-298-971,piotr.krawczyk@home.pl,2020-12-17,Biskupia 17,53-344,MEMBER,3
-8,user8,user8,Anastazja,Król,611-456-671,anastazja.król@home.pl,2020-12-18,Dywizjonu 303 6,33-308,MEMBER,3
-9,user9,user9,Mateusz,Czarnecki,636-493-923,mateusz.czarnecki@home.pl,2020-12-19,Cedrowa 5,67-619,MEMBER,1
-10,user10,user10,Konrad,Walczak,344-616-637,konrad.walczak@home.pl,2020-12-20,Długi Targ 10,23-600,MEMBER,1
-11,user11,user11,Paweł,Adamczyk,335-468-208,paweł.adamczyk@home.pl,2020-12-21,Ceglana 19,30-852,MEMBER,1
-12,user12,user12,Mateusz,Krawczyk,165-796-302,mateusz.krawczyk@home.pl,2021-01-11,Ciasna 7,41-841,MEMBER,1
-13,user13,user13,Tomasz,Mazur,586-250-735,tomasz.mazur@home.pl,2021-01-12,Bzowa 8,81-831,MEMBER,1
-14,user14,user14,Jakub,Adamczyk,147-573-390,jakub.adamczyk@home.pl,2021-01-05,Długie Pobrzeże 10,62-607,MEMBER,1
-15,user15,user15,Karolina,Mazur,853-677-363,karolina.mazur@home.pl,2021-01-05,Bohaterów Getta Warszawskiego 8,69-810,MEMBER,1
-16,user16,user16,Anastazja,Szewczyk,366-814-321,anastazja.szewczyk@home.pl,2021-01-08,Ciasna 16,95-831,MEMBER,1
-17,user17,user17,Michał,Szewczyk,556-840-430,michał.szewczyk@home.pl,2021-01-09,Cicha 10,66-503,MEMBER,1
-18,user18,user18,Jakub,Nowak,612-450-628,jakub.nowak@home.pl,2021-01-10,Bohaterów Getta Warszawskiego 19,12-669,MEMBER,1
-19,user19,user19,Paulina,Czarnecki,911-541-942,paulina.czarnecki@home.pl,2021-01-11,Basztowa 8,49-450,MEMBER,3
-20,user20,user20,Agnieszka,Mazur,803-501-590,agnieszka.mazur@home.pl,2021-01-08,Basztowa 2,15-607,MEMBER,2
+ID;USERNAME;PASSWORD;FIRST_NAME;LAST_NAME;GENDER;MOBILE;EMAIL;REGISTRATION_DATE;STREET;ZIP_CODE;USER_TYPE;LIBRARY_ID
+1;user1;user1;Mateusz;Serafin;M;611-789-687;mateusz.serafin@home.pl;2020-06-01;Nowowiejska 1;15-607;EMPLOYEE;1
+2;user2;user2;Michał;Szewczyk;M;556-840-430;michał.szewczyk@home.pl;2020-06-10;Cicha 10;66-503;EMPLOYEE;1
+3;user3;user3;Adam;Mazur;M;522-737-970;adam.mazur@home.pl;2020-06-13;Nowowiejska 14;67-619;MEMBER;1
+4;user4;user4;Kacper;Halamski;M;917-393-767;kacper.halamski@home.pl;2020-06-18;Cedrowa 7;66-503;MEMBER;1
+5;user5;user5;Agnieszka;Dudek;K;457-320-750;agnieszka.dudek@home.pl;2020-06-19;Leśna 13;52-129;MEMBER;1
+6;user6;user6;Paulina;Szewczyk;K;693-129-527;paulina.szewczyk@home.pl;2020-06-24;Morelowa 14;11-317;MEMBER;1
+7;user7;user7;Aleksandra;Maciejewska;K;732-357-942;aleksandra.maciejewska@home.pl;2020-07-02;Parkowa 16;40-178;MEMBER;1
+8;user8;user8;Szymon;Mazur;M;190-615-511;szymon.mazur@home.pl;2020-07-06;Piwowarska 18;62-607;MEMBER;1
+9;user9;user9;Kaja;Czarnecki;K;114-950-276;kaja.czarnecki@home.pl;2020-07-13;Dobrzyńska 1;67-619;MEMBER;1
+10;user10;user10;Bartłomiej;Knapiński;M;494-129-940;bartłomiej.knapiński@home.pl;2020-07-15;Opatowska 24;23-600;MEMBER;1
+11;user11;user11;Weronika;Czarnecki;K;216-807-967;weronika.czarnecki@home.pl;2020-07-21;Nowy świat 29;33-308;MEMBER;1
+12;user12;user12;Filip;Sajdera;M;859-854-680;filip.sajdera@home.pl;2020-07-22;Planty 18;81-831;MEMBER;1
+13;user13;user13;Marcel;Dudek;M;515-111-918;marcel.dudek@home.pl;2020-07-25;Dworska 14;52-129;MEMBER;1
+14;user14;user14;Tymon;Kaczmarek;M;780-450-904;tymon.kaczmarek@home.pl;2020-07-27;Aleja Legionów 25;95-831;MEMBER;1
+15;user15;user15;Karolina;Mazur;K;853-677-363;karolina.mazur@home.pl;2020-08-03;Bohaterów Getta Warszawskiego 8;69-810;MEMBER;1
+16;user16;user16;Agnieszka;Mazur;K;803-501-590;agnieszka.mazur@home.pl;2020-08-25;Basztowa 2;15-607;MEMBER;1
+17;user17;user17;Anastazja;Szewczyk;K;366-814-321;anastazja.szewczyk@home.pl;2020-09-03;Ciasna 16;95-831;MEMBER;1
+18;user18;user18;Igor;Nowak;M;175-940-278;igor.nowak@home.pl;2020-09-04;Aleja Żołnierzy Wyklętych 12;40-178;MEMBER;1
+19;user19;user19;Anastazja;Mańczak;K;611-456-671;anastazja.król@home.pl;2020-09-07;Dywizjonu 303 6;33-308;MEMBER;1
+20;user20;user20;Dominik;Kukliński;M;953-993-284;dominik.kukliński@home.pl;2020-09-07;Piwowarska 4;41-841;MEMBER;1
+21;user21;user21;Piotr;Jaroch;M;185-298-971;piotr.krawczyk@home.pl;2020-09-18;Biskupia 17;53-344;MEMBER;1
+22;user22;user22;Wojciech;Golec;M;114-933-401;wojciech.golec@home.pl;2020-09-20;Aleja Tysiązclecia Państwa Polskiego 15;66-503;MEMBER;1
+23;user23;user23;Martyna;Adamczyk;K;868-489-954;martyna.adamczyk@home.pl;2020-10-10;Hutnicza 17;30-852;MEMBER;1
+24;user24;user24;Hubert;Krawczyk;M;707-252-601;hubert.krawczyk@home.pl;2020-10-11;Aleja Kazimierza Jagiellończyka 2;53-434;MEMBER;1
+25;user25;user25;Alicja;Golec;K;404-355-121;alicja.golec@home.pl;2020-10-16;Kolejowa 30;53-434;MEMBER;1
+26;user26;user26;Blanka;Jaroch;K;901-676-997;blanka.jaroch@home.pl;2020-10-18;Barwinek 23;11-317;MEMBER;1
+27;user27;user27;Paweł;Adamczyk;M;335-468-208;paweł.adamczyk@home.pl;2020-10-29;Ceglana 19;30-852;MEMBER;1
+28;user28;user28;Anastazja;Serafin;K;846-425-675;anastazja.serafin@home.pl;2020-11-02;Armi Krajowej 7;61-293;MEMBER;1
+29;user29;user29;Patrycja;Szewczyk;K;168-804-100;patrycja.szewczyk@home.pl;2020-11-09;Napękowska 22;61-293;MEMBER;1
+30;user30;user30;Karolina;Walczak;K;930-821-340;karolina.walczak@home.pl;2020-11-20;Czerwonego Krzyża 29;23-600;MEMBER;1
+31;user31;user31;Paulina;Czarnecki;K;911-541-942;paulina.czarnecki@home.pl;2020-11-24;Basztowa 8;49-450;MEMBER;1
+32;user32;user32;Jakub;Nowak;M;612-450-628;jakub.nowak@home.pl;2020-12-22;Bohaterów Getta Warszawskiego 19;12-669;MEMBER;1
+33;user33;user33;Paweł;Mańczak;M;133-850-434;paweł.mańczak@home.pl;2020-12-29;Ołowiana 1;81-831;MEMBER;1
+34;user34;user34;Natalia;Adamczyk;K;415-510-159;natalia.adamczyk@home.pl;2020-12-31;Modlińska 28;40-178;MEMBER;1
+35;user35;user35;Mateusz;Czarnecki;M;636-493-923;mateusz.czarnecki@home.pl;2021-01-02;Cedrowa 5;67-619;MEMBER;1
+36;user36;user36;Piotr;Jaroch;M;352-889-304;piotr.jaroch@home.pl;2021-01-04;Opatowska 7;41-841;MEMBER;1
+37;user37;user37;Dawid;Kaczmarek;M;445-355-176;dawid.kaczmarek@home.pl;2021-01-08;Ołowiana 11;30-852;MEMBER;1
+38;user38;user38;Jakub;Turczyn;M;678-563-697;jakub.turczyn@home.pl;2021-01-13;Basztowa 25;95-831;MEMBER;1
+39;user39;user39;Karolina;Dudzik;K;297-147-377;karolina.dudzik@home.pl;2021-01-17;Dworska 22;12-669;MEMBER;1
+40;user40;user40;Konrad;Maciejewski;M;636-829-180;konrad.maciejewski@home.pl;2021-01-18;Nowy świat 29;49-450;MEMBER;1
+41;user41;user41;Jacek;Maciak;M;497-747-729;jacek.maciak@home.pl;2021-01-22;Aleja Tysiązclecia Państwa Polskiego 23;69-810;MEMBER;1
+42;user42;user42;Igor;Orzołek;M;956-412-550;igor.orzołek@home.pl;2021-01-23;Aleja Legionów 28;62-607;MEMBER;1
+43;user43;user43;Piotr;Czarnecki;M;531-225-236;piotr.czarnecki@home.pl;2021-01-23;Dworska 10;61-293;MEMBER;1
+44;user44;user44;Julia;Król;K;158-340-505;julia.król@home.pl;2021-01-24;Czołgistów 29;33-308;MEMBER;1
+45;user45;user45;Nadzieja;Mazur;K;300-841-992;nadzieja.mazur@home.pl;2021-01-25;Karbońska 7;52-129;MEMBER;1
+46;user46;user46;Konrad;Walczak;M;344-616-637;konrad.walczak@home.pl;2021-01-25;Długi Targ 10;23-600;MEMBER;1
+47;user47;user47;Tomasz;Knapiński;M;267-127-105;tomasz.knapiński@home.pl;2021-01-26;Planty 11;69-810;MEMBER;1
+48;user48;user48;Nadzieja;Serafin;K;559-804-281;nadzieja.walczak@home.pl;2021-01-27;Biskupia 18;11-317;MEMBER;1
+49;user49;user49;Agata;Zielińska;K;630-966-837;agata.zielińska@home.pl;2021-01-28;Polna 21;40-605;MEMBER;1
+50;user50;user50;Nadia;Krawczyk;K;583-345-150;nadia.krawczyk@home.pl;2021-01-29;Jaworowa 2;40-605;MEMBER;1
+51;user51;user51;Jakub;Adamczyk;M;147-573-390;jakub.adamczyk@home.pl;2021-02-01;Długie Pobrzeże 10;62-607;MEMBER;1
+52;user52;user52;Sylwia;Nowak;K;120-110-368;sylwia.nowak@home.pl;2021-02-02;Nastole 24;53-344;MEMBER;1
+53;user53;user53;Oliwia;Mazur;K;920-635-928;oliwia.mazur@home.pl;2021-02-03;Mleczna 13;53-434;MEMBER;1
+54;user54;user54;Julia;Zielińska;K;498-708-438;julia.zielińska@home.pl;2021-02-04;Bohaterów Getta Warszawskiego 13;40-605;MEMBER;1
+55;user55;user55;Izabela;Mańczak;K;287-520-220;izabela.mańczak@home.pl;2021-02-04;Barczańska 25;53-344;MEMBER;1
+56;user56;user56;Tomasz;Mazur;M;586-250-735;tomasz.mazur@home.pl;2021-02-06;Bzowa 8;81-831;MEMBER;1
+57;user57;user57;Mateusz;Krawczyk;M;165-796-302;mateusz.krawczyk@home.pl;2021-02-10;Ciasna 7;41-841;MEMBER;1

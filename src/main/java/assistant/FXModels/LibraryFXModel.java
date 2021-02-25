@@ -7,7 +7,7 @@ public class LibraryFXModel {
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty street = new SimpleStringProperty();
     private final StringProperty zipCode = new SimpleStringProperty();
-    private final ObjectProperty<CityFXModel> cityFX = new SimpleObjectProperty<>();
+    private final IntegerProperty cityID = new SimpleIntegerProperty();
     public int getId() {
         return id.get();
     }
@@ -56,16 +56,16 @@ public class LibraryFXModel {
         this.zipCode.set(zipCode);
     }
 
-    public CityFXModel getCityFX() {
-        return cityFX.get();
+    public int getCityID() {
+        return cityID.get();
     }
 
-    public ObjectProperty<CityFXModel> cityFXProperty() {
-        return cityFX;
+    public IntegerProperty cityIDProperty() {
+        return cityID;
     }
 
-    public void setCityFX(CityFXModel cityFX) {
-        this.cityFX.set(cityFX);
+    public void setCityID(int cityID) {
+        this.cityID.set(cityID);
     }
 
     @Override

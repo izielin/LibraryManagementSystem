@@ -9,8 +9,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import static assistant.Utils.AlertMaker.showExitDialog;
 import static assistant.Utils.ProjectTools.fxmlLoader;
-import static assistant.alert.AlertMaker.showExitDialog;
+
 
 
 public class MainController extends TitleBarController {

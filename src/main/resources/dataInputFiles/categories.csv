@@ -1,6 +1,13 @@
-1,Powieść detektywistyczna
-2,Fantastyka
-3,Kryminał
-4,Powieść Przygodowa
-5,Science Fantazy
-6,Horror
+ID;CATEGORY_NAME
+1;Powieść detektywistyczna
+2;Fantastyka
+3;Kryminał
+4;Powieść Przygodowa
+5;Romans
+6;Horror
+7;Fantastyka Naukowa
+8;Powieść
+9;Fikcja Polityczna
+10;Dreszczowiec
+11;Dramat Romantyczny
+12;Epos
