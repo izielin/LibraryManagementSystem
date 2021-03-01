@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="rootPane" prefHeight="262.0" prefWidth="334.0" stylesheets="@../css/dark-theme.css"
             xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111"
-            fx:controller="assistant.UI.Controllers.SettingsController">
+            fx:controller="assistant.UI.Controllers.Employee.SettingsController">
     <children>
         <VBox prefHeight="219.0" prefWidth="334.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0">

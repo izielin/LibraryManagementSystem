@@ -7,7 +7,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import static assistant.Utils.AlertMaker.showExitDialog;
 import static assistant.Utils.ProjectTools.fxmlLoader;
@@ -15,11 +14,11 @@ import static assistant.Utils.ProjectTools.fxmlLoader;
 
 
 public class MainController extends TitleBarController {
-    private static final String FXML_TOOLBAR = "/fxml/ToolBar.fxml";
-    private static final String FXML_ADD_BOOK = "/fxml/addViews/AddBook.fxml";
-    private static final String FXML_LIST_BOOK = "/fxml/listViews/BookList.fxml";
-    private static final String FXML_ADD_MEMBER = "/fxml/addViews/AddUser.fxml";
-    private static final String FXML_LIST_MEMBER = "/fxml/listViews/UserList.fxml";
+    private static final String FXML_TOOLBAR = "/fxml/Employee/EmployeeToolBar.fxml";
+    private static final String FXML_ADD_BOOK = "/fxml/Employee/addViews/AddBook.fxml";
+    private static final String FXML_LIST_BOOK = "/fxml/Employee/listViews/BookList.fxml";
+    private static final String FXML_ADD_MEMBER = "/fxml/Employee/addViews/AddUser.fxml";
+    private static final String FXML_LIST_MEMBER = "/fxml/Employee/listViews/UserList.fxml";
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
@@ -30,7 +29,7 @@ public class MainController extends TitleBarController {
 
     public void initialize() {
         insertMenu();
-        setCenter("/fxml/DashBoard.fxml");
+        setCenter("/fxml/Employee/DashBoard.fxml");
     }
 
     private void insertMenu() {
@@ -42,15 +41,15 @@ public class MainController extends TitleBarController {
             if (node.getAccessibleText() != null) {
                 node.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                     switch (node.getAccessibleText()) {
-                        case "HomeView" -> setCenter("/fxml/DashBoard.fxml");
-                        case "AddBook" -> setCenter("/fxml/addViews/AddBook.fxml");
-                        case "AddUser" -> setCenter("/fxml/addViews/AddUser.fxml");
-                        case "AddView" -> setCenter("/fxml/listViews/Lists.fxml");
-                        case "BookList" -> setCenter("/fxml/listViews/BookList.fxml");
-                        case "UserList" -> setCenter("/fxml/listViews/UserList.fxml");
-//                        case "BorrowedList" -> setCenter("/fxml/UserList.fxml");
-                        case "LendBookView" -> setCenter("/fxml/LendBook.fxml");
-                        case "SubmissionBook" -> setCenter("/fxml/SubmitBook.fxml");
+                        case "HomeView" -> setCenter("/fxml/Employee/DashBoard.fxml");
+                        case "AddBook" -> setCenter("/fxml/Employee/addViews/AddBook.fxml");
+                        case "AddUser" -> setCenter("/fxml/Employee/addViews/AddUser.fxml");
+                        case "AddView" -> setCenter("/fxml/Employee/listViews/Lists.fxml");
+                        case "BookList" -> setCenter("/fxml/Employee/listViews/BookList.fxml");
+                        case "UserList" -> setCenter("/fxml/Employee/listViews/UserList.fxml");
+                        case "LendBookView" -> setCenter("/fxml/Employee/LendBook.fxml");
+                        case "SubmissionBook" -> setCenter("/fxml/Employee/SubmitBook.fxml");
+                        case "UserProfile" -> setCenter("/fxml/UserProfile.fxml");
 //                        case "Settings" -> setCenter("/fxml/UserList.fxml");
                     }
                 });

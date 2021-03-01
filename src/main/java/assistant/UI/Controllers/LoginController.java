@@ -1,10 +1,12 @@
 package assistant.UI.Controllers;
 
 import assistant.Utils.FillDatabase;
+import assistant.Utils.GenerateReport;
 import assistant.Utils.ProjectTools;
 import assistant.Utils.ApplicationException;
 import assistant.database.DatabaseHandler;
 import assistant.database.dao.DataAccessObject;
+import assistant.database.models.Report;
 import assistant.database.models.User;
 import assistant.settings.Settings;
 import com.jfoenix.controls.JFXCheckBox;
@@ -19,6 +21,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import static assistant.Utils.ProjectTools.loadWindow;
@@ -54,7 +58,7 @@ public class LoginController implements Initializable {
         String username = usernameInput.getText();
         String password = DigestUtils.sha1Hex(passwordInput.getText());
         DataAccessObject dao = new DataAccessObject();
-        if(rebuildDatabase.isSelected()){
+        if (rebuildDatabase.isSelected()) {
             DatabaseHandler.initDatabase(true);
             FillDatabase.fillDatabase();
         }
@@ -66,6 +70,14 @@ public class LoginController implements Initializable {
                     currentlyLoggedUser = user; // creating an object of currently logged user
                     System.out.println(currentlyLoggedUser.getLibraryID());
                     closeStage();
+                    LocalDate date = LocalDate.now();
+                    LocalDate firstDay = date.withDayOfMonth(1);
+                    LocalDate lastDay = firstDay.minusDays(1);
+                    int noOfReports = Integer.parseInt(dao.countRecords(Report.class,
+                            "select count(*) from REPORTS where LIBRARY_ID = " + currentlyLoggedUser.getLibraryID() + " and date = \"" + lastDay + "\""));
+                    if (date.equals(firstDay) && noOfReports == 0) {
+                        GenerateReport.generateNewRaport();
+                    }
                     loadWindow("/fxml/Main.fxml");
 
                 } else {
@@ -77,14 +89,9 @@ public class LoginController implements Initializable {
                 passwordInput.getStyleClass().add("wrong-login-data");
                 passwordInput.clear();
             }
-        } catch (ApplicationException e) {
+        } catch (ApplicationException | SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void CancelAction() {
-        System.exit(0);
     }
 
     private void closeStage() {

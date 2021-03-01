@@ -63,6 +63,7 @@ public class DatabaseHandler {
             TableUtils.createTableIfNotExists(connection, Category.class);
             TableUtils.createTableIfNotExists(connection, Message.class);
             TableUtils.createTableIfNotExists(connection, Report.class);
+            TableUtils.createTableIfNotExists(connection, Watched.class);
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
         }
@@ -80,6 +81,7 @@ public class DatabaseHandler {
             TableUtils.dropTable(connection, Category.class, true);
             TableUtils.dropTable(connection, Message.class, true);
             TableUtils.dropTable(connection, Report.class, true);
+            TableUtils.dropTable(connection, Watched.class, true);
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
         }

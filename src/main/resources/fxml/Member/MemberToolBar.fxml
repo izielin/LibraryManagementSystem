@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: #CECECE;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assistant.UI.Controllers.Employee.EmployeeToolBarController">
+   <children>
+      <AnchorPane maxWidth="50.0" prefHeight="630.4" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="0.0">
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+      <VBox fx:id="menuVbox" prefHeight="631.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton accessibleText="HomeView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Home">
+               <graphic>
+                  <FontAwesomeIcon glyphName="HOME" size="1.5em" text="" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="LendBookView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Profile">
+               <graphic>
+                  <FontAwesomeIcon glyphName="USER" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton accessibleText="Settings" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Settings">
+               <graphic>
+                  <FontAwesomeIcon glyphName="GEARS" size="1.5em" />
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <JFXButton fx:id="logoutButton" onAction="#logout" prefWidth="200.0" text="Logout">
+               <graphic>
+                  <FontAwesomeIcon glyphName="SIGN_OUT" size="1.5em" />
+               </graphic>
+            </JFXButton>
+            <JFXButton onAction="#exit" prefWidth="200.0" text="Exit">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CLOSE" size="1.5em" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

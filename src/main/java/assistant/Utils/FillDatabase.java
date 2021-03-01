@@ -14,6 +14,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -168,16 +171,21 @@ public class FillDatabase {
                 book.setIsbn13(attributes[2]);
                 book.setTitle(attributes[3]);
                 book.setAddedDate(attributes[4]);
-                book.setDescription(attributes[6]);
-                book.setPublicationDate(attributes[7]);
-                book.setAvailability(Boolean.valueOf(attributes[8]));
-                book.setAuthor(Integer.parseInt(attributes[9]));
-                book.setCategory(Integer.parseInt(attributes[10]));
-                book.setPublishingCompany(Integer.parseInt(attributes[11]));
-                book.setLibrary(Integer.parseInt(attributes[12]));
-
+                book.setDescription(attributes[5]);
+                book.setPublicationDate(attributes[6]);
+                book.setAvailability(Boolean.valueOf(attributes[7]));
+                book.setAuthor(Integer.parseInt(attributes[8]));
+                book.setCategory(Integer.parseInt(attributes[9]));
+                book.setPublishingCompany(Integer.parseInt(attributes[10]));
+                book.setLibrary(Integer.parseInt(attributes[11]));
+                //if (attributes.length == 13) {
+                    //book.setBookCover(attributes[12].getBytes(StandardCharsets.UTF_8));
+                //}
                 dao.createOrUpdate(book);
-                dao.createOrUpdate(MessageMaker.bookCreationMessage(attributes[3], dao.findById(User.class, 1), attributes[4]));
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                long daysBetween = ChronoUnit.DAYS.between(LocalDate.parse(attributes[4], df), LocalDate.now());
+                if (daysBetween < 30)
+                    dao.createOrUpdate(MessageMaker.bookCreationMessage(attributes[3], dao.findById(User.class, 1), attributes[4]));
             }
         } catch (IOException | ApplicationException e) {
             e.printStackTrace();
@@ -194,14 +202,14 @@ public class FillDatabase {
             while ((line = reader.readLine()) != null) {
                 DataAccessObject dao = new DataAccessObject();
                 Random rand = new Random();
-                int max=9, min = 1;
+                int max = 9, min = 1;
                 int randomNum = rand.nextInt((max - min) + 1) + min;
 
                 String[] attributes = line.split(";");
                 User user = new User();
                 user.setId(Integer.parseInt(attributes[0]));
                 user.setUsername(attributes[1]);
-                user.setPassword(DigestUtils.sha1Hex(attributes[2]));
+                user.setPassword(attributes[2]);
                 user.setFirstName(attributes[3]);
                 user.setLastName(attributes[4]);
                 user.setGender(attributes[5]);
@@ -242,11 +250,10 @@ public class FillDatabase {
                 borrowedBook.setId(Integer.parseInt(attributes[0]));
                 borrowedBook.setBorrowTime(attributes[1]);
                 borrowedBook.setReturnTime(attributes[2]);
-                borrowedBook.setNumberOfRenewals(Integer.parseInt(attributes[3]));
-                borrowedBook.setReturned(Boolean.valueOf(attributes[4]));
-                borrowedBook.setBookID(Integer.parseInt(attributes[5]));
-                borrowedBook.setUserID(Integer.parseInt(attributes[6]));
-                borrowedBook.setLibraryID(Integer.parseInt(attributes[7]));
+                borrowedBook.setReturned(Boolean.valueOf(attributes[3]));
+                borrowedBook.setBookID(Integer.parseInt(attributes[4]));
+                borrowedBook.setUserID(Integer.parseInt(attributes[5]));
+                borrowedBook.setLibraryID(Integer.parseInt(attributes[6]));
                 dao.createOrUpdate(borrowedBook);
             }
         } catch (IOException | ApplicationException e) {

@@ -6,6 +6,12 @@
     -default-color: #009688;
 }
 
+.card_separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0; /* its make really one-pixel-border */
+    -fx-border-color: #f9a602;
+}
+
 .icon {
     -fx-fill: -fx-dark;
 }

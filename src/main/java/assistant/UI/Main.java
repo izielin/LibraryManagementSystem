@@ -1,11 +1,9 @@
 package assistant.UI;
 
-import assistant.Utils.FillDatabase;
+import assistant.Utils.ExportDatabase;
 import assistant.database.DatabaseHandler;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.time.LocalDate;
 
 import static assistant.Utils.ProjectTools.loadWindow;
 
@@ -20,6 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         loadWindow(FXML_FILE);
         DatabaseHandler.initDatabase(false);
+//      ExportDatabase.exportDatabase();
     }
 
 

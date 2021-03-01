@@ -18,9 +18,6 @@ public class BorrowedBook implements BaseModel{
     @DatabaseField(columnName = "RETURN_TIME")
     private String returnTime;
 
-    @DatabaseField(columnName = "RENEW_COUNT")
-    private int numberOfRenewals;
-
     @DatabaseField(columnName = "IS_RETURNED", defaultValue = "false")
     private Boolean isReturned;
 
@@ -58,14 +55,6 @@ public class BorrowedBook implements BaseModel{
 
     public void setReturnTime(String returnTime) {
         this.returnTime = returnTime;
-    }
-
-    public int getNumberOfRenewals() {
-        return numberOfRenewals;
-    }
-
-    public void setNumberOfRenewals(int numberOfRenewals) {
-        this.numberOfRenewals = numberOfRenewals;
     }
 
     public Boolean getReturned() {

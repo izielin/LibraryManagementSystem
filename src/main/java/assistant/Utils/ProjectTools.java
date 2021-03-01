@@ -1,6 +1,6 @@
 package assistant.Utils;
 
-import assistant.UI.Controllers.ListControllers.ListsController;
+import assistant.UI.Controllers.Employee.ListControllers.ListsController;
 import assistant.UI.Controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
