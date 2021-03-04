@@ -42,8 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static assistant.Utils.AlertMaker.showJFXButton;
-import static assistant.Utils.ProjectTools.getResourceBundle;
-import static assistant.Utils.ProjectTools.loadWindow;
+import static assistant.Utils.ProjectTools.*;
 
 public class ProfileController implements Initializable {
 
@@ -272,12 +271,6 @@ public class ProfileController implements Initializable {
         emailLabel.setText(user.getEmail());
         streetLabel.setText(user.getStreet());
         cityLabel.setText(user.getZipCode() + " " + dao.findById(City.class, library.getCityID()).getName());
-    }
-
-    private Image loadImage(byte[] byte_array) throws IOException {
-        ByteArrayInputStream bis = new ByteArrayInputStream(byte_array);
-        BufferedImage bImage2 = ImageIO.read(bis);
-        return javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
     }
 
     public void executeUpdateAction() {

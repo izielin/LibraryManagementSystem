@@ -3,6 +3,7 @@ package assistant.UI.Controllers.Employee;
 import assistant.FXModels.UserFXModel;
 import assistant.Utils.ApplicationException;
 import assistant.Utils.Converters;
+import assistant.Utils.ProjectTools;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
@@ -20,13 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -96,7 +91,7 @@ public class SubmissionController implements Initializable {
             System.out.println("here!");
             if (!book.getReturned()) {
                 try {
-                    nodes.add(generateBookCell(book.getBookID(), book, "Return Book"));
+                    nodes.add(generateBookCell(book.getBookID(), book));
                 } catch (ApplicationException | IOException e) {
                     e.printStackTrace();
                 }
@@ -114,7 +109,7 @@ public class SubmissionController implements Initializable {
         bookList.setContent(table);
     }
 
-    private Node generateBookCell(int bookID, BorrowedBook borrowedBook, String buttonText) throws ApplicationException, IOException {
+    private Node generateBookCell(int bookID, BorrowedBook borrowedBook) throws ApplicationException, IOException {
         DataAccessObject dao = new DataAccessObject();
         Book book = dao.findById(Book.class, bookID);
         HBox mainHBox = new HBox();
@@ -126,11 +121,10 @@ public class SubmissionController implements Initializable {
         imageView.setPreserveRatio(true);
         Image img;
         try {
-            img = loadImage(book.getBookCover());
+            img = ProjectTools.loadImage(book.getBookCover());
         } catch (NullPointerException e) {
             img = new Image("/images/book.png");
         }
-
         imageView.setImage(img);
 
         VBox mainVbox = new VBox();
@@ -161,7 +155,7 @@ public class SubmissionController implements Initializable {
         JFXButton button = new JFXButton();
         button.setStyle("-fx-background-color: #fdc12a");
         button.setStyle("-fx-text-fill: black");
-        button.setText(buttonText);
+        button.setText("Return Book");
         button.setOnAction(event -> {
             try {
                 returnBook(book, borrowedBook);
@@ -177,12 +171,6 @@ public class SubmissionController implements Initializable {
         mainVbox.getChildren().addAll(titleHolder, separator, contentVbox);
         mainHBox.getChildren().addAll(imageView, mainVbox);
         return mainHBox;
-    }
-
-    private Image loadImage(byte[] byte_array) throws IOException {
-        ByteArrayInputStream bis = new ByteArrayInputStream(byte_array);
-        BufferedImage bImage2 = ImageIO.read(bis);
-        return javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
     }
 
     private void tableForDuplicatedUser(List<User> list) {

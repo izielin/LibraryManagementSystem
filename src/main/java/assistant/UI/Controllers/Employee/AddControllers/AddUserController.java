@@ -218,7 +218,6 @@ public class AddUserController implements Initializable {
             manRadio.setSelected(true);
         }
 
-
         libraryComboBox.setItems(libraryFXModelObservableList);
         try {
             libraryComboBox.valueProperty().bindBidirectional(new SimpleObjectProperty<>(

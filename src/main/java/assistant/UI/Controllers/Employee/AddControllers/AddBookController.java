@@ -3,7 +3,9 @@ package assistant.UI.Controllers.Employee.AddControllers;
 import assistant.FXModels.BookFXModel;
 import assistant.UI.Controllers.LoginController;
 import assistant.Utils.ApplicationException;
+import assistant.Utils.Converters;
 import assistant.Utils.MessageMaker;
+import assistant.Utils.ProjectTools;
 import assistant.database.dao.DataAccessObject;
 import assistant.database.models.*;
 import com.jfoenix.controls.JFXButton;
@@ -11,6 +13,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -41,6 +44,7 @@ import static assistant.Utils.AlertMaker.showJFXButton;
 
 public class AddBookController implements Initializable {
 
+    public JFXTextField searchInput;
     @FXML
     private StackPane rootPane;
 
@@ -90,15 +94,18 @@ public class AddBookController implements Initializable {
     List<String[]> authorList;
     List<String[]> categoryList;
     List<String[]> publisherList;
+    List<String[]> bookList;
 
     private AutoCompletionBinding<String> autoCompletionBinding;
     private final List<String> possibleAuthorsItems = new ArrayList<>();
     private final List<String> possiblePublishersItems = new ArrayList<>();
     private final List<String> possibleCategoriesItems = new ArrayList<>();
+    private final List<String> possibleBooksItems = new ArrayList<>();
 
     private Set<String> possibleAuthorsSet;
     private Set<String> possiblePublishersSet;
     private Set<String> possibleCategoriesSet;
+    private Set<String> possibleBooksSet;
     private final Set<String> possibleTitleSet = new HashSet<>();
 
     @Override
@@ -109,18 +116,22 @@ public class AddBookController implements Initializable {
             String query = "SELECT DISTINCT FIRST_NAME, MIDDLE_NAME, LAST_NAME, ID FROM AUTHORS";
             String query2 = "SELECT DISTINCT NAME, ID FROM CATEGORIES";
             String query3 = "SELECT DISTINCT NAME, ID FROM PUBLISHERS";
+            String query4 = "SELECT DISTINCT TITLE, ID FROM BOOKS";
             authorList = dao.executeRawQuery(Author.class, query);
             categoryList = dao.executeRawQuery(Category.class, query2);
             publisherList = dao.executeRawQuery(PublishingCompany.class, query3);
+            bookList = dao.executeRawQuery(Book.class, query4);
 
             categoryList.forEach(item -> possibleCategoriesItems.add(item[0]));
             publisherList.forEach(item -> possiblePublishersItems.add(item[0]));
             authorList.forEach(item -> possibleAuthorsItems.add(
                     (item[1] == null) ? item[0] + " " + item[2] : item[0] + " " + item[1] + " " + item[2]));
+            bookList.forEach(item -> possibleBooksItems.add(item[0]));
 
             possibleCategoriesSet = new HashSet<>(possibleCategoriesItems);
             possibleAuthorsSet = new HashSet<>(possibleAuthorsItems);
             possiblePublishersSet = new HashSet<>(possiblePublishersItems);
+            possibleBooksSet = new HashSet<>(possibleBooksItems);
         } catch (ApplicationException | SQLException e) {
             e.printStackTrace();
         }
@@ -128,6 +139,7 @@ public class AddBookController implements Initializable {
         TextFields.bindAutoCompletion(bookCategory, possibleCategoriesSet);
         TextFields.bindAutoCompletion(bookAuthor, possibleAuthorsSet);
         TextFields.bindAutoCompletion(publishingCompanyName, possiblePublishersSet);
+        TextFields.bindAutoCompletion(searchInput, possibleBooksSet);
 
         // creating learning TextField
         autoCompletionBinding = TextFields.bindAutoCompletion(bookTitle, possibleTitleSet);
@@ -246,11 +258,10 @@ public class AddBookController implements Initializable {
         publishingCompanyName.setText("");
     }
 
-    public void inflateUI(BookFXModel book) throws IOException, ApplicationException {
+    private void fillData(BookFXModel book) throws IOException, ApplicationException {
         editedBookID = book.getId();
         bookTitle.textProperty().bindBidirectional(book.titleProperty());
-        isbn10.textProperty().bindBidirectional(book.isbn10Property());
-        isbn13.textProperty().bindBidirectional(book.isbn13Property());
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = book.getAddedDate();
@@ -264,13 +275,31 @@ public class AddBookController implements Initializable {
         publishingCompanyName.textProperty().bindBidirectional(new SimpleStringProperty(dao.findById(PublishingCompany.class, book.getPublishingCompanyID()).getName()));
 
         if (book.getBookCover() != null) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(book.getBookCover());
-            BufferedImage bImage2 = ImageIO.read(bis);
-            Image image = javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
-            bookCover.setImage(image);
+            bookCover.setImage(ProjectTools.loadImage(book.getBookCover()));
         } else {
             bookCover.setImage(new Image("/images/book.png"));
 
         }
+    }
+
+    public void inflateUI(BookFXModel book) throws IOException, ApplicationException {
+        fillData(book);
+        isbn10.textProperty().bindBidirectional(book.isbn10Property());
+        isbn13.textProperty().bindBidirectional(book.isbn13Property());
+    }
+
+    @FXML
+    void clearButton() {
+        searchInput.setText("");
+    }
+
+    @FXML
+    void selectButton() throws SQLException, ApplicationException, IOException {
+        String query = "SELECT COALESCE (" +
+                " (SELECT ID FROM BOOKS WHERE BOOKS.LIBRARY_ID = 1 AND TITLE = \"" + searchInput.getText() + "\" AND BOOK_COVER IS NOT NULL ORDER BY ID ASC LIMIT 1)," +
+                " (SELECT ID FROM BOOKS WHERE BOOKS.LIBRARY_ID = 1 AND TITLE = \"" + searchInput.getText() + "\" ORDER BY ID ASC LIMIT 1)" +
+                ")";
+        BookFXModel bookFXModel = Converters.convertToBookFx(dao.findById(Book.class, Integer.parseInt(dao.executeRawQuery(Book.class, query).get(0)[0])));
+        fillData(bookFXModel);
     }
 }

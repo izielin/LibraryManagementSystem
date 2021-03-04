@@ -9,7 +9,7 @@ public class Watched implements BaseModel{
     private int id;
 
     @DatabaseField(columnName = "BOOK_TITLE")
-    private int bookTitle;
+    private String bookTitle;
 
     @DatabaseField(columnName = "USER_ID")
     private int userID;
@@ -22,11 +22,11 @@ public class Watched implements BaseModel{
         this.id = id;
     }
 
-    public int getBookTitle() {
+    public String getBookTitle() {
         return bookTitle;
     }
 
-    public void setBookTitle(int bookTitle) {
+    public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
     }
 

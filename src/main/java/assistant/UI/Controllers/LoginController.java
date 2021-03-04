@@ -66,23 +66,19 @@ public class LoginController implements Initializable {
             User user = dao.isLogin(username, password); // creating object of logged user
             if (user != null) {
                 // calling up different windows depending on the type of user
-                if (user.getUserType().equals("EMPLOYEE")) {
-                    currentlyLoggedUser = user; // creating an object of currently logged user
-                    System.out.println(currentlyLoggedUser.getLibraryID());
-                    closeStage();
-                    LocalDate date = LocalDate.now();
-                    LocalDate firstDay = date.withDayOfMonth(1);
-                    LocalDate lastDay = firstDay.minusDays(1);
-                    int noOfReports = Integer.parseInt(dao.countRecords(Report.class,
-                            "select count(*) from REPORTS where LIBRARY_ID = " + currentlyLoggedUser.getLibraryID() + " and date = \"" + lastDay + "\""));
-                    if (date.equals(firstDay) && noOfReports == 0) {
-                        GenerateReport.generateNewRaport();
-                    }
-                    loadWindow("/fxml/Main.fxml");
-
-                } else {
-                    System.out.println("TO DO");
+                currentlyLoggedUser = user; // creating an object of currently logged user
+                System.out.println(currentlyLoggedUser.getLibraryID());
+                closeStage();
+                LocalDate date = LocalDate.now();
+                LocalDate firstDay = date.withDayOfMonth(1);
+                LocalDate lastDay = firstDay.minusDays(1);
+                int noOfReports = Integer.parseInt(dao.countRecords(Report.class,
+                        "select count(*) from REPORTS where LIBRARY_ID = " + currentlyLoggedUser.getLibraryID() + " and date = \"" + lastDay + "\""));
+                if (date.equals(firstDay) && noOfReports == 0) {
+                    GenerateReport.generateNewRaport();
                 }
+                loadWindow("/fxml/Main.fxml");
+
             } else {
                 alertText.setText("Invalid username or password");
                 usernameInput.getStyleClass().add("wrong-login-data");

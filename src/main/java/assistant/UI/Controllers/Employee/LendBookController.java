@@ -43,6 +43,7 @@ import java.util.*;
 
 import static assistant.Utils.AlertMaker.showJFXButton;
 import static assistant.Utils.AlertMaker.showTableDialog;
+import static assistant.Utils.ProjectTools.loadImage;
 
 public class LendBookController implements Initializable {
 
@@ -233,12 +234,6 @@ public class LendBookController implements Initializable {
         mainVbox.getChildren().addAll(titleHolder, separator, contentVbox);
         return mainVbox;
 
-    }
-
-    private Image loadImage(byte[] byte_array) throws IOException {
-        ByteArrayInputStream bis = new ByteArrayInputStream(byte_array);
-        BufferedImage bImage2 = ImageIO.read(bis);
-        return javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
     }
 
     private void tableForDuplicatedBook(List<Book> list) {

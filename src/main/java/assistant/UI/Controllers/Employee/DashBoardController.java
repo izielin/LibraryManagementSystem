@@ -34,6 +34,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
 
+import static assistant.Utils.ProjectTools.loadImage;
+
 public class DashBoardController {
     public Label libraryName;
     public Label userAmount;
@@ -380,12 +382,6 @@ public class DashBoardController {
             }
         });
         return observableArrayList;
-    }
-
-    private Image loadImage(byte[] byte_array) throws IOException {
-        ByteArrayInputStream bis = new ByteArrayInputStream(byte_array);
-        BufferedImage bImage2 = ImageIO.read(bis);
-        return javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
     }
 
     private void generateProgressBar(String categoryName, String amount, double percents, String color) {

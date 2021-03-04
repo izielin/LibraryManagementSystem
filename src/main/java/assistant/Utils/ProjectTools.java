@@ -10,6 +10,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -79,8 +82,11 @@ public class ProjectTools {
         } catch (IOException e) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }
 
-
+    public static Image loadImage(byte[] byte_array) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(byte_array);
+        BufferedImage bImage2 = ImageIO.read(bis);
+        return javafx.embed.swing.SwingFXUtils.toFXImage(bImage2, null);
+    }
 }

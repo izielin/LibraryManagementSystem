@@ -29,7 +29,7 @@
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton accessibleText="LendBookView" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Profile">
+            <JFXButton accessibleText="UserProfile" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="220.0" text="Profile">
                <graphic>
                   <FontAwesomeIcon glyphName="USER" size="1.5em" />
                </graphic>

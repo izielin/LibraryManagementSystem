@@ -134,45 +134,42 @@ public class UserListController implements Initializable {
         });
 
         // Wrapping ObservableList in a FilteredList ( display all Data)
-        FilteredList<UserFXModel> filteredData = new FilteredList<UserFXModel>(observableArrayList, b -> true);
+        FilteredList<UserFXModel> filteredData = new FilteredList<>(observableArrayList, b -> true);
         searchInput.setDisable(true);
         //setting filter predicate whenever the filter changes
-        searchGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableSearchGroup, Toggle oldValueSearchGroup, Toggle newValueSearchGroup) {
-                if (searchGroup.getSelectedToggle() != null) {
-                    searchInput.setDisable(false);
-                    searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
-                        filteredData.setPredicate(user -> {
+        searchGroup.selectedToggleProperty().addListener((observableSearchGroup, oldValueSearchGroup, newValueSearchGroup) -> {
+            if (searchGroup.getSelectedToggle() != null) {
+                searchInput.setDisable(false);
+                searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredData.setPredicate(user -> {
 
-                            //if filter is empty, display all records
-                            if (newValue == null || newValue.isEmpty()) {
-                                return true;
-                            }
+                        //if filter is empty, display all records
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                            String lowerCaseFilter = newValue.toLowerCase();
-                            // check if filter is set on id or name
-                            if (radioId.isSelected()) {
-                                String userId = String.valueOf(user.getId());
-                                if (userId.contains(lowerCaseFilter)) {
-                                    return true; // filter matches id
-                                } else {
-                                    return false;
-                                }
-                            } else if (radioName.isSelected()) {
-                                //compare first name ald last name of every person with filter text
-                                if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-                                    return true; // filter matches first name
-                                } else if (user.getLastName().toLowerCase().contains(lowerCaseFilter)) {
-                                    return true; // filter matches last name
-                                } else {
-                                    return false; // dose not match
-                                }
+                        String lowerCaseFilter = newValue.toLowerCase();
+                        // check if filter is set on id or name
+                        if (radioId.isSelected()) {
+                            String userId = String.valueOf(user.getId());
+                            if (userId.contains(lowerCaseFilter)) {
+                                return true; // filter matches id
+                            } else {
+                                return false;
                             }
-                            return false;
-                        });
+                        } else if (radioName.isSelected()) {
+                            //compare first name ald last name of every person with filter text
+                            if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+                                return true; // filter matches first name
+                            } else if (user.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                                return true; // filter matches last name
+                            } else {
+                                return false; // dose not match
+                            }
+                        }
+                        return false;
                     });
-                }
+                });
             }
         });
 
@@ -217,7 +214,6 @@ public class UserListController implements Initializable {
             try {
                 DataAccessObject dao = new DataAccessObject();
                 String userID = selectedUserID.getText(); // get id of selected user
-                System.out.println(userID);
                 User user = dao.findById(User.class, Integer.parseInt(userID));
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Employee/addViews/AddUser.fxml"), getResourceBundle());
